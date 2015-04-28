@@ -1,0 +1,8 @@
+package com.example.joakes.xbox_sidekick;
+
+/**
+ * Created by joakes on 5/3/15.
+ */
+public interface IComponent {
+    void inject(GameActivity mainActivity);
+}

@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.neenbedankt.android-apt'
 
 android {
     compileSdkVersion 22
@@ -10,6 +11,7 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
@@ -19,6 +21,7 @@ android {
     }
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'LICENSE.txt'
     }
 }
 
@@ -26,8 +29,21 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.1.0'
     compile 'com.jakewharton:butterknife:6.1.0'
+    compile 'com.mcxiaoke.volley:library:1.0.15'  //not the official build
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'de.greenrobot:eventbus:2.4.0'
 
-    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.0'
+    // not official build
+    compile "com.google.dagger:dagger:2.0"
+    apt "com.google.dagger:dagger-compiler:2.0"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+//    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+//    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.0') {
+        exclude group: 'com.squareup', module: 'javawriter'
+    }
     androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
 
     testCompile 'junit:junit:4.12'
@@ -38,4 +54,7 @@ dependencies {
         exclude group: 'commons-logging', module: 'commons-logging'
         exclude group: 'org.apache.httpcomponents', module: 'httpclient'
     }
+
+    // not official build
+//    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
 }
