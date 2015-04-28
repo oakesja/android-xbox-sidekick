@@ -16,6 +16,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".AchievementsActivity"
+            android:label="@string/title_activity_achievements"
+            android:parentActivityName=".GameActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.joakes.xbox_sidekick.GameActivity" />
+        </activity>
+        <activity
+            android:name=".AchievementHelpActivity"
+            android:label="@string/title_activity_achievement_help"
+            android:parentActivityName=".AchievementsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.joakes.xbox_sidekick.AchievementsActivity" />
+        </activity>
     </application>
 
 </manifest>
