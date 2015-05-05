@@ -37,24 +37,49 @@ dependencies {
     compile "com.google.dagger:dagger:2.0"
     apt "com.google.dagger:dagger-compiler:2.0"
     provided 'org.glassfish:javax.annotation:10.0-b28'
+//    compile 'joda-time:joda-time:2.7'
 
+//    testCompile 'junit:junit:4.12'
+//    testCompile 'com.google.truth:truth:0.25'
+
+    androidTestCompile('com.android.support.test:runner:0.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile('com.android.support.test:rules:0.2') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.1') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
+//    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.1') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
+    androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestApt "com.google.dagger:dagger-compiler:2.0"
+
+//    androidTestCompile('com.android.support.test.espresso:espresso-core:2.0') {
+//        exclude group: 'com.squareup', module: 'javawriter'
+//    }
+//    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
+//
+//    androidTestCompile('com.android.support.test:rules:0.2'){
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    androidTestCompile 'org.mockito:mockito-core:1.10.19'
 //    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
 //    androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.0') {
-        exclude group: 'com.squareup', module: 'javawriter'
-    }
-    androidTestCompile 'com.android.support.test:testing-support-lib:0.1'
-
-    testCompile 'junit:junit:4.12'
-    testCompile('com.squareup.assertj:assertj-android:1.0.0') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    testCompile('org.robolectric:robolectric:3.0-rc2') {
-        exclude group: 'commons-logging', module: 'commons-logging'
-        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
-    }
+//    testCompile 'junit:junit:4.12'
+//    testCompile('com.squareup.assertj:assertj-android:1.0.0') {
+//        exclude group: 'com.android.support', module: 'support-annotations'
+//    }
+//    testCompile('org.robolectric:robolectric:3.0-rc2') {
+//        exclude group: 'commons-logging', module: 'commons-logging'
+//        exclude group: 'org.apache.httpcomponents', module: 'httpclient'
+//    }
 
     // not official build
-//    androidTestApt "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+//    androidTestApt "com.google.dagger:dagger-compiler:2.0"
 }

@@ -36,17 +36,16 @@ public class GameActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         eventBus.register(this);
-        // create web service
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-        // stop web service
+        webService.stop(GameActivity.class.toString());
     }
 
     public void onEvent(XboxProfile profile) {
-        profileNameTextView.setText(profile.getGamertag() + profile.getGamerscore() + profile.getGamerPictureUrl());
+        profileNameTextView.setText(profile.getGamertag());
     }
 }

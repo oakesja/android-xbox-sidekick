@@ -2,6 +2,11 @@ package com.example.joakes.xbox_sidekick;
 
 import android.app.Application;
 
+import com.example.joakes.xbox_sidekick.modules.AndroidModule;
+import com.example.joakes.xbox_sidekick.modules.BusModule;
+import com.example.joakes.xbox_sidekick.modules.IComponent;
+import com.example.joakes.xbox_sidekick.modules.RequestQueueModule;
+
 import javax.inject.Singleton;
 
 import dagger.Component;
@@ -17,7 +22,7 @@ public class BaseApplication extends Application {
     public interface ApplicationComponent extends IComponent {
     }
 
-    private ApplicationComponent component = null;
+    private IComponent component = null;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -30,11 +35,11 @@ public class BaseApplication extends Application {
         }
     }
 
-    public void setComponent(ApplicationComponent component) {
+    public void setComponent(IComponent component) {
         this.component = component;
     }
 
-    public ApplicationComponent component() {
+    public IComponent component() {
         return component;
     }
 }

@@ -1,6 +1,8 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.modules;
 
 import android.content.Context;
+
+import com.example.joakes.xbox_sidekick.BaseApplication;
 
 import javax.inject.Singleton;
 
