@@ -22,6 +22,9 @@ android {
     packagingOptions {
         exclude 'META-INF/services/javax.annotation.processing.Processor'
         exclude 'LICENSE.txt'
+        exclude 'LICENSE'
+        exclude 'NOTICE'
+        exclude 'asm-license.txt'
     }
 }
 
@@ -32,6 +35,7 @@ dependencies {
     compile 'com.mcxiaoke.volley:library:1.0.15'  //not the official build
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'de.greenrobot:eventbus:2.4.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     // not official build
     compile "com.google.dagger:dagger:2.0"
@@ -53,5 +57,8 @@ dependencies {
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
+    androidTestCompile('com.squareup.assertj:assertj-android:1.0.0') {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    }
     androidTestApt "com.google.dagger:dagger-compiler:2.0"
 }

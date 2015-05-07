@@ -1,6 +1,11 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.content.Context;
+import android.widget.ImageView;
+
 import com.android.volley.RequestQueue;
+import com.example.joakes.xbox_sidekick.modules.ForApplication;
+import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -14,15 +19,25 @@ public class WebService {
     ProfileRequest profileRequest;
     @Inject
     RequestQueue requestQueue;
+    @Inject
+    @ForApplication
+    Context context;
 
     @Inject
-    public WebService(){}
+    public WebService() {
+    }
 
     public void getProfile() {
         profileRequest.makeRequest();
     }
 
-    public void stop(String tag){
+    public void stop(String tag) {
         requestQueue.cancelAll(tag);
+    }
+
+    public void loadImageFromUrl(ImageView imageView, String url) {
+        Picasso.with(context)
+                .load(url)
+                .into(imageView);
     }
 }

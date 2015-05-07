@@ -1,7 +1,9 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
@@ -21,6 +23,12 @@ public class GameActivity extends AppCompatActivity {
 
     @InjectView(R.id.profile_name_textview)
     TextView profileNameTextView;
+    @InjectView(R.id.gamerscore_textview)
+    TextView gamerscoreTextView;
+    @InjectView(R.id.gamer_picture)
+    ImageView gamerPicture;
+    @InjectView(R.id.gamerscore_imageview)
+    ImageView gamerscoreImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,5 +55,8 @@ public class GameActivity extends AppCompatActivity {
 
     public void onEvent(XboxProfile profile) {
         profileNameTextView.setText(profile.getGamertag());
+        gamerscoreTextView.setText("" + profile.getGamerscore());
+        webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
+        gamerscoreImageView.setVisibility(ImageView.VISIBLE);
     }
 }

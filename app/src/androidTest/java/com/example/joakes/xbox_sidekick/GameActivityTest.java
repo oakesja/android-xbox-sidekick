@@ -2,6 +2,7 @@ package com.example.joakes.xbox_sidekick;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -11,6 +12,8 @@ import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import com.example.joakes.xbox_sidekick.modules.BusModule;
 import com.example.joakes.xbox_sidekick.modules.IComponent;
 import com.example.joakes.xbox_sidekick.modules.MockWebserviceModule;
+
+import junit.framework.Assert;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -29,6 +32,9 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
+import static org.assertj.android.api.Assertions.assertThat;
+
+
 @RunWith(AndroidJUnit4.class)
 public class GameActivityTest {
     @Inject
@@ -38,6 +44,7 @@ public class GameActivityTest {
 
     private XboxProfile profile;
     private EventBusHelper eventBusHelper;
+    private GameActivity gameActivity;
 
     @Singleton
     @Component(modules = {BusModule.class, MockWebserviceModule.class})
@@ -46,7 +53,7 @@ public class GameActivityTest {
     }
 
     @Rule
-    public ActivityTestRule<GameActivity> activityRule = new ActivityTestRule<GameActivity>(
+    public ActivityTestRule<GameActivity> activityRule = new ActivityTestRule<>(
             GameActivity.class,
             false,
             false
@@ -70,13 +77,33 @@ public class GameActivityTest {
         );
 
         eventBusHelper = new EventBusHelper(activityRule, eventBus);
+        Mockito.doNothing().when(webService).getProfile();
+        activityRule.launchActivity(new Intent());
+        gameActivity = activityRule.getActivity();
     }
 
     @Test
-    public void gamerTag() throws Throwable {
-        Mockito.doNothing().when(webService).getProfile();
-        activityRule.launchActivity(new Intent());
+    public void gamerTagDisplayed() {
         eventBusHelper.post(profile);
-        onView(withId(R.id.profile_name_textview)).check(matches(withText(profile.getGamertag())));
+        assertThat(gameActivity.profileNameTextView).containsText(profile.getGamertag());
+    }
+
+    @Test
+    public void gamerscoreDisplayed() {
+        eventBusHelper.post(profile);
+        assertThat(gameActivity.gamerscoreTextView).containsText("" + profile.getGamerscore());
+    }
+
+    @Test
+    public void gamerPictureDisplayed() {
+        eventBusHelper.post(profile);
+        Mockito.verify(webService).loadImageFromUrl(gameActivity.gamerPicture, profile.getGamerPictureUrl());
+    }
+
+    @Test
+    public void gamerscoreDrawableVisiblie(){
+        assertThat(gameActivity.gamerscoreImageView).isInvisible();
+        eventBusHelper.post(profile);
+        assertThat(gameActivity.gamerscoreImageView).isVisible();
     }
 }
