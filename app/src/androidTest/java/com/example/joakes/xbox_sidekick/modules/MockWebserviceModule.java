@@ -1,6 +1,5 @@
 package com.example.joakes.xbox_sidekick.modules;
 
-import com.android.volley.RequestQueue;
 import com.example.joakes.xbox_sidekick.WebService;
 
 import org.mockito.Mockito;

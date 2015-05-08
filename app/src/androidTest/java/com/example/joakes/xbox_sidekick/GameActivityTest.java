@@ -2,7 +2,6 @@ package com.example.joakes.xbox_sidekick;
 
 import android.app.Instrumentation;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -14,8 +13,6 @@ import com.example.joakes.xbox_sidekick.modules.EventBusHelperModule;
 import com.example.joakes.xbox_sidekick.modules.IComponent;
 import com.example.joakes.xbox_sidekick.modules.MockWebserviceModule;
 
-import junit.framework.Assert;
-
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -26,12 +23,6 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import dagger.Component;
-import de.greenrobot.event.EventBus;
-
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 import static org.assertj.android.api.Assertions.assertThat;
 
@@ -50,6 +41,7 @@ public class GameActivityTest {
     @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
     public interface TestComponent extends IComponent {
         void inject(GameActivityTest gameActivityTest);
+
         void inject(EventBusHelper eventBusHelper);
     }
 
@@ -103,7 +95,7 @@ public class GameActivityTest {
     }
 
     @Test
-    public void gamerscoreDrawableVisiblie(){
+    public void gamerscoreDrawableVisiblie() {
         assertThat(gameActivity.gamerscoreImageView).isInvisible();
         eventBus.post(profile);
         assertThat(gameActivity.gamerscoreImageView).isVisible();
