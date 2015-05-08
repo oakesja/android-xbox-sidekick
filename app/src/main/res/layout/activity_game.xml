@@ -52,7 +52,7 @@
                 android:layout_gravity="center_vertical"
                 android:src="@mipmap/ic_gamerscore"
                 android:contentDescription="@string/gamerscore_content_description"
-                android:visibility="invisible"/>
+                android:visibility="invisible" />
 
             <TextView
                 android:id="@+id/gamerscore_textview"
@@ -66,4 +66,10 @@
 
     </RelativeLayout>
 
+    <ListView
+        android:id="@+id/games_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/gamer_picture">
+    </ListView>
 </RelativeLayout>

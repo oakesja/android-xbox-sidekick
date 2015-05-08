@@ -95,9 +95,9 @@ public class GameActivityTest {
     }
 
     @Test
-    public void gamerscoreDrawableVisiblie() {
+    public void gamerscoreDrawableDisplayed() {
         assertThat(gameActivity.gamerscoreImageView).isInvisible();
         eventBus.post(profile);
-        assertThat(gameActivity.gamerscoreImageView).isVisible();
+        assertThat(gameActivity.gamerscoreImageView).isInvisible();
     }
 }

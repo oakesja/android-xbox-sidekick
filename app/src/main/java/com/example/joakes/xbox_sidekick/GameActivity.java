@@ -4,6 +4,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
@@ -29,6 +30,8 @@ public class GameActivity extends AppCompatActivity {
     ImageView gamerPicture;
     @InjectView(R.id.gamerscore_imageview)
     ImageView gamerscoreImageView;
+    @InjectView(R.id.games_listview)
+    ListView gamesListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
