@@ -10,6 +10,7 @@ import android.support.test.runner.AndroidJUnit4;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import com.example.joakes.xbox_sidekick.modules.BusModule;
+import com.example.joakes.xbox_sidekick.modules.EventBusHelperModule;
 import com.example.joakes.xbox_sidekick.modules.IComponent;
 import com.example.joakes.xbox_sidekick.modules.MockWebserviceModule;
 
@@ -38,18 +39,18 @@ import static org.assertj.android.api.Assertions.assertThat;
 @RunWith(AndroidJUnit4.class)
 public class GameActivityTest {
     @Inject
-    EventBus eventBus;
+    EventBusHelper eventBus;
     @Inject
     WebService webService;
 
     private XboxProfile profile;
-    private EventBusHelper eventBusHelper;
     private GameActivity gameActivity;
 
     @Singleton
-    @Component(modules = {BusModule.class, MockWebserviceModule.class})
+    @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
     public interface TestComponent extends IComponent {
         void inject(GameActivityTest gameActivityTest);
+        void inject(EventBusHelper eventBusHelper);
     }
 
     @Rule
@@ -66,9 +67,11 @@ public class GameActivityTest {
         TestComponent component = DaggerGameActivityTest_TestComponent.builder()
                 .busModule(new BusModule())
                 .mockWebserviceModule(new MockWebserviceModule())
+                .eventBusHelperModule(new EventBusHelperModule(activityRule))
                 .build();
         app.setComponent(component);
         component.inject(this);
+        component.inject(eventBus);
 
         profile = new XboxProfile(
                 "PoiZonOakes",
@@ -76,7 +79,6 @@ public class GameActivityTest {
                 "http:\\/\\/images-eds.xboxlive.com\\/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIAbCDABRYREOfuoy2FOUr6jBmIGqp2iomsTK.Cz7APn6dX_VO8g7EjO9bVtm1wsWd&format=png"
         );
 
-        eventBusHelper = new EventBusHelper(activityRule, eventBus);
         Mockito.doNothing().when(webService).getProfile();
         activityRule.launchActivity(new Intent());
         gameActivity = activityRule.getActivity();
@@ -84,26 +86,26 @@ public class GameActivityTest {
 
     @Test
     public void gamerTagDisplayed() {
-        eventBusHelper.post(profile);
+        eventBus.post(profile);
         assertThat(gameActivity.profileNameTextView).containsText(profile.getGamertag());
     }
 
     @Test
     public void gamerscoreDisplayed() {
-        eventBusHelper.post(profile);
+        eventBus.post(profile);
         assertThat(gameActivity.gamerscoreTextView).containsText("" + profile.getGamerscore());
     }
 
     @Test
     public void gamerPictureDisplayed() {
-        eventBusHelper.post(profile);
+        eventBus.post(profile);
         Mockito.verify(webService).loadImageFromUrl(gameActivity.gamerPicture, profile.getGamerPictureUrl());
     }
 
     @Test
     public void gamerscoreDrawableVisiblie(){
         assertThat(gameActivity.gamerscoreImageView).isInvisible();
-        eventBusHelper.post(profile);
+        eventBus.post(profile);
         assertThat(gameActivity.gamerscoreImageView).isVisible();
     }
 }

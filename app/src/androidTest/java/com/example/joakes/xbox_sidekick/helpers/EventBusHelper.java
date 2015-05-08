@@ -2,18 +2,22 @@ package com.example.joakes.xbox_sidekick.helpers;
 
 import android.support.test.rule.ActivityTestRule;
 
+import javax.inject.Inject;
+
+import dagger.Provides;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by joakes on 5/6/15.
  */
 public class EventBusHelper {
-    public ActivityTestRule mRule;
-    public EventBus mBus;
+    @Inject
+    EventBus eventBus;
 
-    public EventBusHelper(ActivityTestRule rule, EventBus bus) {
+    public ActivityTestRule mRule;
+
+    public EventBusHelper(ActivityTestRule rule) {
         mRule = rule;
-        mBus = bus;
     }
 
     public void post(final Object o) {
@@ -21,7 +25,7 @@ public class EventBusHelper {
             mRule.runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    mBus.post(o);
+                    eventBus.post(o);
                 }
             });
         } catch (Throwable throwable) {
