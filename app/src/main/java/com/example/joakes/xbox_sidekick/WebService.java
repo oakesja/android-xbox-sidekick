@@ -18,6 +18,8 @@ public class WebService {
     @Inject
     ProfileRequest profileRequest;
     @Inject
+    GameListRequest gameListRequest;
+    @Inject
     RequestQueue requestQueue;
     @Inject
     @ForApplication
@@ -29,6 +31,10 @@ public class WebService {
 
     public void getProfile() {
         profileRequest.makeRequest();
+    }
+
+    public void getGameList() {
+        gameListRequest.makeRequest();
     }
 
     public void stop(String tag) {

@@ -1,9 +1,12 @@
 package com.example.joakes.xbox_sidekick;
 
+import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import javax.inject.Inject;
 
 /**
  * Created by joakes on 4/28/15.
@@ -11,24 +14,38 @@ import org.json.JSONObject;
 
 //TODO add test and log errors
 public class JsonAdapter {
-    public static XboxProfile toProfile(JSONObject json) {
-        String gamertag = getFieldAsString(json, "Gamertag");
-        int gamerScore = getFieldAsInt(json, "Gamerscore");
-        String gamerPictureUrl = getFieldAsString(json, "GameDisplayPicRaw");
-        return new XboxProfile(gamertag, gamerScore, gamerPictureUrl);
+    @Inject
+    public JsonAdapter() {}
+
+    public XboxProfile toProfile(JSONObject json) {
+        return new XboxProfile(
+                getFieldAsString(json, "Gamertag"),
+                getFieldAsInt(json, "Gamerscore"),
+                getFieldAsString(json, "GameDisplayPicRaw"));
     }
 
-    private static String getFieldAsString(JSONObject json, String fieldName) {
-        try {
-            return (String) json.get(fieldName);
-        } catch (JSONException|ClassCastException e) {
-            return null;
-        }
+    public XboxGame toXboxGame(JSONObject json){
+        return new XboxGame(
+                1,
+                getFieldAsString(json, "name"),
+                getFieldAsInt(json, "earnedAchievements"),
+                -1,
+                getFieldAsInt(json, "currentGamerscore"),
+                getFieldAsInt(json, "maxGamerscore"),
+                XboxGame.XBOX_ONE);
     }
 
-    private static int getFieldAsInt(JSONObject json, String fieldName) {
+    private String getFieldAsString(JSONObject json, String fieldName) {
+        return (String) getField(json, fieldName);
+    }
+
+    private int getFieldAsInt(JSONObject json, String fieldName) {
+        return (int) getField(json, fieldName);
+    }
+
+    private Object getField(JSONObject json, String fieldName) {
         try {
-            return (int) json.get(fieldName);
+            return json.get(fieldName);
         } catch (JSONException|ClassCastException e) {
             return -1;
         }

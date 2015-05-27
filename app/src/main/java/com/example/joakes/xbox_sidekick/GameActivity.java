@@ -1,13 +1,16 @@
 package com.example.joakes.xbox_sidekick;
 
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -30,8 +33,10 @@ public class GameActivity extends AppCompatActivity {
     ImageView gamerPicture;
     @InjectView(R.id.gamerscore_imageview)
     ImageView gamerscoreImageView;
-    @InjectView(R.id.games_listview)
-    ListView gamesListView;
+    @InjectView(R.id.games_list)
+    RecyclerView gamesList;
+
+    private XboxGameAdapter mAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +46,13 @@ public class GameActivity extends AppCompatActivity {
 
         ((BaseApplication) getApplication()).component().inject(this);
         webService.getProfile();
+        webService.getGameList();
+
+        gamesList.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        gamesList.setLayoutManager(layoutManager);
+        mAdapter = new XboxGameAdapter(this);
+        gamesList.setAdapter(mAdapter);
     }
 
     @Override
@@ -61,5 +73,9 @@ public class GameActivity extends AppCompatActivity {
         gamerscoreTextView.setText("" + profile.getGamerscore());
         webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
         gamerscoreImageView.setVisibility(ImageView.VISIBLE);
+    }
+
+    public void onEvent(ArrayList<XboxGame> games) {
+        mAdapter.addGames(games);
     }
 }

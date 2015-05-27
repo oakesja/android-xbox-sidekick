@@ -13,9 +13,9 @@ import java.util.Map;
  * Created by joakes on 4/28/15.
  */
 public class XboxApiRequest extends JsonObjectRequest {
-
     public XboxApiRequest(String url,
-                          Response.Listener<JSONObject> listener, Response.ErrorListener errorListener) {
+                          Response.Listener<JSONObject> listener,
+                          Response.ErrorListener errorListener) {
         super(Method.GET, url, listener, errorListener);
     }
 
