@@ -69,13 +69,22 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onEvent(XboxProfile profile) {
-        profileNameTextView.setText(profile.getGamertag());
-        gamerscoreTextView.setText("" + profile.getGamerscore());
         webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
-        gamerscoreImageView.setVisibility(ImageView.VISIBLE);
+        profileNameTextView.setText(profile.getGamertag());
+        setGamerScore(profile.getGamerscore());
     }
 
     public void onEvent(ArrayList<XboxGame> games) {
         mAdapter.addGames(games);
+    }
+
+    private void setGamerScore(int gamerScore){
+        if(gamerScore == -1) {
+            gamerscoreTextView.setVisibility(ImageView.INVISIBLE);
+            gamerscoreImageView.setVisibility(ImageView.INVISIBLE);
+        } else {
+            gamerscoreTextView.setText("" + gamerScore);
+            gamerscoreImageView.setVisibility(ImageView.VISIBLE);
+        }
     }
 }

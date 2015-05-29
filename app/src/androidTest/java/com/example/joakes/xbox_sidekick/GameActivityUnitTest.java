@@ -32,6 +32,10 @@ import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
+
+import static org.hamcrest.Matchers.allOf;
+
 
 import static org.assertj.android.api.Assertions.assertThat;
 
@@ -89,29 +93,37 @@ public class GameActivityUnitTest {
     }
 
     @Test
-    public void gamerTagDisplayed() {
+    public void profileGamerTagDisplayed() {
         eventBus.post(profile);
         assertThat(gameActivity.profileNameTextView).containsText(profile.getGamertag());
     }
 
     @Test
-    public void gamerscoreDisplayed() {
+    public void profielGamerscoreDisplayed() {
         eventBus.post(profile);
         assertThat(gameActivity.gamerscoreTextView).containsText("" + profile.getGamerscore());
     }
 
     @Test
-    public void gamerPictureDisplayed() {
+    public void profileGamerPictureDisplayed() {
         eventBus.post(profile);
         Mockito.verify(webService).loadImageFromUrl(gameActivity.gamerPicture, profile.getGamerPictureUrl());
         onView(withId(R.id.gamer_picture)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void gamerscoreDrawableDisplayed() {
+    public void profileGamerscoreDrawableDisplayed() {
         assertThat(gameActivity.gamerscoreImageView).isInvisible();
         eventBus.post(profile);
         assertThat(gameActivity.gamerscoreImageView).isVisible();
+    }
+
+    @Test
+    public void profileNoGamerScore(){
+        profile.setGamerscore(-1);
+        eventBus.post(profile);
+        assertThat(gameActivity.gamerscoreImageView).isInvisible();
+        assertThat(gameActivity.gamerscoreTextView).isInvisible();
     }
 
     @Test
