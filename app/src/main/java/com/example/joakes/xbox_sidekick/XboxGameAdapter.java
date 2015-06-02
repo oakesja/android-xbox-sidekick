@@ -5,11 +5,15 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -24,10 +28,12 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         @InjectView(R.id.game_name_textview)
         TextView gameNameTextView;
-        @InjectView(R.id.game_achievements_textview)
-        TextView achivementsTextView;
-        @InjectView(R.id.game_score_textview)
-        TextView scoreTextView;
+        @InjectView(R.id.game_achievements_image_textview)
+        ImageTextView acheivementsImageTextView;
+        @InjectView(R.id.game_score_image_textview)
+        ImageTextView scoreImageTextView;
+        @InjectView(R.id.game_imageview)
+        ImageView gameImageView;
 
         public ViewHolder(View view) {
             super(view);
@@ -49,11 +55,12 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.gameNameTextView.setText(gameAt(position).getName());
-        String achievements = "" + gameAt(position).getEarnedAchievements() + "/" + gameAt(position).getTotalAchivements();
-        holder.achivementsTextView.setText(achievements);
-        String score = "" + gameAt(position).getEarnedGamerscore() + "/" + gameAt(position).getTotalGamerscore();
-        holder.scoreTextView.setText(score);
+        XboxGame game = gameAt(position);
+        holder.gameNameTextView.setText(game.getName());
+        String achievements = String.format("%d/%d", game.getEarnedAchievements(), game.getTotalAchivements());
+        holder.acheivementsImageTextView.setImageAndTextIfValid(achievements, R.drawable.ic_trophy);
+        String score = String.format("%d/%d", game.getEarnedGamerscore(), game.getTotalGamerscore());
+        holder.scoreImageTextView.setImageAndTextIfValid(score, R.drawable.ic_gamerscore);
     }
 
     @Override

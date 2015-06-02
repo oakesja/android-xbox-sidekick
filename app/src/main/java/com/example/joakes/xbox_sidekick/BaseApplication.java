@@ -11,8 +11,6 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-
-
 /**
  * Created by joakes on 4/29/15.
  */

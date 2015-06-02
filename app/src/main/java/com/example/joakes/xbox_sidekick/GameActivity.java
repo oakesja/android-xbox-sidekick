@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
 
@@ -18,7 +19,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
-
 public class GameActivity extends AppCompatActivity {
     @Inject
     EventBus eventBus;
@@ -27,12 +27,10 @@ public class GameActivity extends AppCompatActivity {
 
     @InjectView(R.id.profile_name_textview)
     TextView profileNameTextView;
-    @InjectView(R.id.gamerscore_textview)
-    TextView gamerscoreTextView;
+    @InjectView(R.id.gamerscore_image_textview)
+    ImageTextView gamerscoreImageTextView;
     @InjectView(R.id.gamer_picture)
     ImageView gamerPicture;
-    @InjectView(R.id.gamerscore_imageview)
-    ImageView gamerscoreImageView;
     @InjectView(R.id.games_list)
     RecyclerView gamesList;
 
@@ -71,20 +69,10 @@ public class GameActivity extends AppCompatActivity {
     public void onEvent(XboxProfile profile) {
         webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
         profileNameTextView.setText(profile.getGamertag());
-        setGamerScore(profile.getGamerscore());
+        gamerscoreImageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
     }
 
     public void onEvent(ArrayList<XboxGame> games) {
         mAdapter.addGames(games);
-    }
-
-    private void setGamerScore(int gamerScore){
-        if(gamerScore == -1) {
-            gamerscoreTextView.setVisibility(ImageView.INVISIBLE);
-            gamerscoreImageView.setVisibility(ImageView.INVISIBLE);
-        } else {
-            gamerscoreTextView.setText("" + gamerScore);
-            gamerscoreImageView.setVisibility(ImageView.VISIBLE);
-        }
     }
 }
