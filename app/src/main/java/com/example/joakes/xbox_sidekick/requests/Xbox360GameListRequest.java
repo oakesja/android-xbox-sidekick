@@ -1,10 +1,11 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.requests;
 
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.joakes.xbox_sidekick.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import org.json.JSONArray;
@@ -20,7 +21,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joakes on 5/26/15.
  */
-public class GameListRequest {
+public class Xbox360GameListRequest {
     @Inject
     EventBus eventBus;
     @Inject
@@ -29,11 +30,11 @@ public class GameListRequest {
     JsonAdapter jsonAdapter;
 
     @Inject
-    public GameListRequest() {}
+    public Xbox360GameListRequest() {}
 
     // TODO better error handling and logging
     public void makeRequest() {
-        String url = "https://xboxapi.com/v2/2533274912330216/xboxonegames";
+        String url = "https://xboxapi.com/v2/2533274912330216/xbox360games";
         XboxApiRequest request = new XboxApiRequest(
                 url,
                 new Response.Listener<JSONObject>() {
@@ -43,7 +44,7 @@ public class GameListRequest {
                         try {
                             JSONArray jsonArray = response.getJSONArray("titles");
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                XboxGame game = jsonAdapter.toXboxGame(jsonArray.getJSONObject(i));
+                                XboxGame game = jsonAdapter.toXbox360Game(jsonArray.getJSONObject(i));
                                 games.add(game);
                             }
                         } catch (JSONException e) {

@@ -34,7 +34,6 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.assertj.android.api.Assertions.assertThat;
 
-
 @RunWith(AndroidJUnit4.class)
 public class GameActivityUnitTest {
     @Inject

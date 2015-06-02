@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.requests;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Response;

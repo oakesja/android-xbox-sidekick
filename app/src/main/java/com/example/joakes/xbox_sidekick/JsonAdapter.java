@@ -24,7 +24,7 @@ public class JsonAdapter {
                 getFieldAsString(json, "GameDisplayPicRaw"));
     }
 
-    public XboxGame toXboxGame(JSONObject json){
+    public XboxGame toXboxOneGame(JSONObject json){
         return new XboxGame(
                 1,
                 getFieldAsString(json, "name"),
@@ -33,6 +33,17 @@ public class JsonAdapter {
                 getFieldAsInt(json, "currentGamerscore"),
                 getFieldAsInt(json, "maxGamerscore"),
                 XboxGame.XBOX_ONE);
+    }
+
+    public XboxGame toXbox360Game(JSONObject json){
+        return new XboxGame(
+                1,
+                getFieldAsString(json, "name"),
+                getFieldAsInt(json, "currentAchievements"),
+                getFieldAsInt(json, "totalAchievements"),
+                getFieldAsInt(json, "currentGamerscore"),
+                getFieldAsInt(json, "totalGamerscore"),
+                XboxGame.XBOX_360);
     }
 
     private String getFieldAsString(JSONObject json, String fieldName) {

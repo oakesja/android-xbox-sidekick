@@ -1,10 +1,11 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.requests;
 
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.joakes.xbox_sidekick.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
 import org.json.JSONObject;

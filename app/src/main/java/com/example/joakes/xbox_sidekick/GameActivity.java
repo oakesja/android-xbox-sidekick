@@ -92,7 +92,6 @@ public class GameActivity extends AppCompatActivity {
         gamerscoreImageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
     }
 
-
     public void onEvent(ArrayList<XboxGame> games) {
         mAdapter.addGames(games);
     }

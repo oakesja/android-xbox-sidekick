@@ -5,6 +5,9 @@ import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
 import com.example.joakes.xbox_sidekick.modules.ForApplication;
+import com.example.joakes.xbox_sidekick.requests.ProfileRequest;
+import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequest;
+import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequest;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -18,7 +21,9 @@ public class WebService {
     @Inject
     ProfileRequest profileRequest;
     @Inject
-    GameListRequest gameListRequest;
+    XboxOneGameListRequest xboxOneGameListRequest;
+    @Inject
+    Xbox360GameListRequest xbox360GameListRequest;
     @Inject
     RequestQueue requestQueue;
     @Inject
@@ -34,7 +39,8 @@ public class WebService {
     }
 
     public void getGameList() {
-        gameListRequest.makeRequest();
+        xboxOneGameListRequest.makeRequest();
+        xbox360GameListRequest.makeRequest();
     }
 
     public void stop(String tag) {
