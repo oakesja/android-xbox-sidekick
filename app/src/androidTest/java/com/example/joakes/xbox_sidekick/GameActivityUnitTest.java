@@ -84,6 +84,7 @@ public class GameActivityUnitTest {
         xboxGame = new XboxGame(1, "game", 10, 100, 100, 1000, XboxGame.XBOX_360);
 
         Mockito.doNothing().when(webService).getProfile();
+        Mockito.doNothing().when(webService).getGameList();
         activityRule.launchActivity(new Intent());
         gameActivity = activityRule.getActivity();
     }

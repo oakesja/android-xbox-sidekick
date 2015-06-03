@@ -1,9 +1,11 @@
 package com.example.joakes.xbox_sidekick;
 
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import com.robotium.solo.Solo;
 
 import junit.framework.Assert;
@@ -38,7 +40,7 @@ public class GameActivityTest extends ActivityInstrumentationTestCase2<GameActiv
 
     public void testGamesVisible() {
         assertTextView((TextView) solo.getView(R.id.game_name_textview)).hasAnyText();
-        assertTextView((TextView) solo.getView(R.id.gamerscore_image_textview)).hasAnyText();
+        assertTextView((ImageTextView) solo.getView(R.id.gamerscore_image_textview)).hasAnyText();
         assertTextView((TextView) solo.getView(R.id.game_achievements_image_textview)).hasAnyText();
     }
 }
