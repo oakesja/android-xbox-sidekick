@@ -93,6 +93,7 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onEvent(ArrayList<XboxGame> games) {
+        games = new GameListFilter(games).filter();
         mAdapter.addGames(games);
     }
 }

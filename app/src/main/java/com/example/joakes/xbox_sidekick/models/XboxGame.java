@@ -15,6 +15,9 @@ public class XboxGame {
     private int totalGamerscore;
     private int type;
 
+    public XboxGame() {
+    }
+
     public XboxGame(long titleId, String name, int earnedAchievements, int totalAchivements, int earnedGamerscore, int totalGamerscore, int type) {
         this.titleId = titleId;
         this.name = name;
@@ -79,5 +82,66 @@ public class XboxGame {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+
+    public static class XboxGameBuilder {
+        private long titleId;
+        private String name;
+        private int earnedAchievements;
+        private int totalAchivements;
+        private int earnedGamerscore;
+        private int totalGamerscore;
+        private int type;
+
+        private XboxGameBuilder() {
+        }
+
+        public XboxGameBuilder withTitleId(long titleId) {
+            this.titleId = titleId;
+            return this;
+        }
+
+        public XboxGameBuilder withName(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public XboxGameBuilder withEarnedAchievements(int earnedAchievements) {
+            this.earnedAchievements = earnedAchievements;
+            return this;
+        }
+
+        public XboxGameBuilder withTotalAchivements(int totalAchivements) {
+            this.totalAchivements = totalAchivements;
+            return this;
+        }
+
+        public XboxGameBuilder withEarnedGamerscore(int earnedGamerscore) {
+            this.earnedGamerscore = earnedGamerscore;
+            return this;
+        }
+
+        public XboxGameBuilder withTotalGamerscore(int totalGamerscore) {
+            this.totalGamerscore = totalGamerscore;
+            return this;
+        }
+
+        public XboxGameBuilder withType(int type) {
+            this.type = type;
+            return this;
+        }
+
+        public XboxGame build() {
+            XboxGame xboxGame = new XboxGame();
+            xboxGame.setTitleId(titleId);
+            xboxGame.setName(name);
+            xboxGame.setEarnedAchievements(earnedAchievements);
+            xboxGame.setTotalAchivements(totalAchivements);
+            xboxGame.setEarnedGamerscore(earnedGamerscore);
+            xboxGame.setTotalGamerscore(totalGamerscore);
+            xboxGame.setType(type);
+            return xboxGame;
+        }
     }
 }

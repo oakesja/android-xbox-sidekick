@@ -19,6 +19,7 @@ before_script:
 
 script:
   - ./gradlew test connectedCheck --info
+  - ./gradlew test --continue
 
 after_success:
   - ls
