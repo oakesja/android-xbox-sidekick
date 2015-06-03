@@ -12,8 +12,8 @@ import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
+import java.util.Collections;
+import java.util.Comparator;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -29,7 +29,7 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
         @InjectView(R.id.game_name_textview)
         TextView gameNameTextView;
         @InjectView(R.id.game_achievements_image_textview)
-        ImageTextView acheivementsImageTextView;
+        ImageTextView achievementsImageTextView;
         @InjectView(R.id.game_score_image_textview)
         ImageTextView scoreImageTextView;
         @InjectView(R.id.game_imageview)
@@ -57,10 +57,19 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         XboxGame game = gameAt(position);
         holder.gameNameTextView.setText(game.getName());
-        String achievements = String.format("%d/%d", game.getEarnedAchievements(), game.getTotalAchivements());
-        holder.acheivementsImageTextView.setImageAndTextIfValid(achievements, R.drawable.ic_trophy);
-        String score = String.format("%d/%d", game.getEarnedGamerscore(), game.getTotalGamerscore());
-        holder.scoreImageTextView.setImageAndTextIfValid(score, R.drawable.ic_gamerscore);
+        ensureNumbersForTextView(game.getEarnedAchievements(), game.getTotalAchivements(), holder.achievementsImageTextView, R.drawable.ic_trophy);
+        ensureNumbersForTextView(game.getEarnedGamerscore(), game.getTotalGamerscore(), holder.scoreImageTextView, R.drawable.ic_gamerscore);
+    }
+
+    private void ensureNumbersForTextView(int first, int second, ImageTextView textview, int drawable) {
+        if (first < 0) {
+            textview.setVisibility(View.INVISIBLE);
+        } else if (second < 0) {
+            textview.setImageAndTextIfValid(first, drawable);
+        } else {
+            String s = String.format("%d/%d", first, second);
+            textview.setImageAndTextIfValid(s, drawable);
+        }
     }
 
     @Override
@@ -70,6 +79,17 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
 
     public void addGames(ArrayList<XboxGame> games) {
         mGames.addAll(games);
+        Collections.sort(mGames, new Comparator<XboxGame>() {
+            @Override
+            public int compare(XboxGame game1, XboxGame game2) {
+                if (game1.getType() == game2.getType()) {
+                    return 0;
+                } else if (game1.getType() < game2.getType()) {
+                    return 1;
+                }
+                return -1;
+            }
+        });
         this.notifyDataSetChanged();
     }
 

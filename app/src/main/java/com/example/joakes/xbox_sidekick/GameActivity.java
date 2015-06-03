@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -88,8 +89,16 @@ public class GameActivity extends AppCompatActivity {
 
     public void onEvent(XboxProfile profile) {
         webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
-        profileNameTextView.setText(profile.getGamertag());
+        ensureStringForTextView(profileNameTextView, profile.getGamertag());
         gamerscoreImageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
+    }
+
+    private void ensureStringForTextView(TextView textView, String string) {
+        if (string != null && !string.isEmpty()) {
+            textView.setText(string);
+        } else {
+            textView.setVisibility(View.INVISIBLE);
+        }
     }
 
     public void onEvent(ArrayList<XboxGame> games) {

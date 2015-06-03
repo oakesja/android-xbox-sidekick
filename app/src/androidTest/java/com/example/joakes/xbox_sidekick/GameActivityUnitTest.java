@@ -34,6 +34,8 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.assertj.android.api.Assertions.assertThat;
 
+import static org.hamcrest.Matchers.not;
+
 @RunWith(AndroidJUnit4.class)
 public class GameActivityUnitTest {
     @Inject
@@ -87,9 +89,23 @@ public class GameActivityUnitTest {
     }
 
     @Test
-    public void profileGamerTagDisplayed() {
+    public void profileNameDisplayed() {
         eventBus.post(profile);
         assertThat(gameActivity.profileNameTextView).containsText(profile.getGamertag());
+    }
+
+    @Test
+    public void nullProfileName() {
+        profile.setGamertag(null);
+        eventBus.post(profile);
+        assertThat(gameActivity.profileNameTextView).isInvisible();
+    }
+
+    @Test
+    public void emptyProfileName() {
+        profile.setGamertag(null);
+        eventBus.post(profile);
+        assertThat(gameActivity.profileNameTextView).isInvisible();
     }
 
     @Test
@@ -99,17 +115,17 @@ public class GameActivityUnitTest {
     }
 
     @Test
+    public void invalidGamerscoreDisplayed(){
+        profile.setGamerscore(-1);
+        eventBus.post(profile);
+        assertThat(gameActivity.gamerscoreImageTextView).isInvisible();
+    }
+
+    @Test
     public void profileGamerPictureDisplayed() {
         eventBus.post(profile);
         Mockito.verify(webService).loadImageFromUrl(gameActivity.gamerPicture, profile.getGamerPictureUrl());
         onView(withId(R.id.gamer_picture)).check(matches(isDisplayed()));
-    }
-
-    @Test
-    public void profileNoGamerScore() {
-        profile.setGamerscore(-1);
-        eventBus.post(profile);
-        assertThat(gameActivity.gamerscoreImageTextView).isInvisible();
     }
 
     @Test
@@ -126,10 +142,33 @@ public class GameActivityUnitTest {
     }
 
     @Test
+    public void gameAchievementsMissingEarned() {
+        xboxGame.setEarnedAchievements(-1);
+        setupGames();
+        onView(withId(R.id.game_achievements_image_textview)).check(matches(not(isDisplayed())));
+    }
+
+    @Test
+    public void gameAchievementsMissingTotal() {
+        xboxGame.setTotalAchivements(-1);
+        setupGames();
+        String text = "" + xboxGame.getEarnedAchievements();
+        onView(withId(R.id.game_achievements_image_textview)).check(matches(withText(text)));
+    }
+
+    @Test
     public void gamerscoreDisplayed() {
         setupGames();
         String expected = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
         onView(withId(R.id.game_score_image_textview)).check(matches(withText(expected)));
+    }
+
+    @Test
+    public void gamerscoreMissingTotal() {
+        xboxGame.setTotalGamerscore(-1);
+        setupGames();
+        String text = "" + xboxGame.getEarnedGamerscore();
+        onView(withId(R.id.game_score_image_textview)).check(matches(withText(text)));
     }
 
     private void setupGames() {

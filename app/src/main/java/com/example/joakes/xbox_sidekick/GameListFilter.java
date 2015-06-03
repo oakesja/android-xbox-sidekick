@@ -35,6 +35,6 @@ public class GameListFilter {
     }
 
     private boolean invalidName(XboxGame game) {
-        return game.getName() == null || game.getName().equals("");
+        return game.getName() == null || game.getName().isEmpty();
     }
 }
