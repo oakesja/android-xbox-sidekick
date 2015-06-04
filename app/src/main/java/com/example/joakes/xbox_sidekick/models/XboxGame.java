@@ -1,9 +1,12 @@
 package com.example.joakes.xbox_sidekick.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by joakes on 5/11/15.
  */
-public class XboxGame {
+public class XboxGame implements Parcelable {
     public static final int XBOX_360 = 360;
     public static final int XBOX_ONE = 720;
 
@@ -27,6 +30,44 @@ public class XboxGame {
         this.totalGamerscore = totalGamerscore;
         this.type = type;
     }
+
+    private XboxGame(Parcel in) {
+        titleId = in.readLong();
+        name = in.readString();
+        earnedAchievements = in.readInt();
+        totalAchivements = in.readInt();
+        earnedGamerscore = in.readInt();
+        totalGamerscore = in.readInt();
+        type = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(titleId);
+        dest.writeString(name);
+        dest.writeInt(earnedAchievements);
+        dest.writeInt(totalAchivements);
+        dest.writeInt(earnedGamerscore);
+        dest.writeInt(totalGamerscore);
+        dest.writeInt(type);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<XboxGame> CREATOR = new Creator<XboxGame>() {
+        @Override
+        public XboxGame createFromParcel(Parcel in) {
+            return new XboxGame(in);
+        }
+
+        @Override
+        public XboxGame[] newArray(int size) {
+            return new XboxGame[size];
+        }
+    };
 
     public long getTitleId() {
         return titleId;
@@ -82,66 +123,5 @@ public class XboxGame {
 
     public void setType(int type) {
         this.type = type;
-    }
-
-
-    public static class XboxGameBuilder {
-        private long titleId;
-        private String name;
-        private int earnedAchievements;
-        private int totalAchivements;
-        private int earnedGamerscore;
-        private int totalGamerscore;
-        private int type;
-
-        private XboxGameBuilder() {
-        }
-
-        public XboxGameBuilder withTitleId(long titleId) {
-            this.titleId = titleId;
-            return this;
-        }
-
-        public XboxGameBuilder withName(String name) {
-            this.name = name;
-            return this;
-        }
-
-        public XboxGameBuilder withEarnedAchievements(int earnedAchievements) {
-            this.earnedAchievements = earnedAchievements;
-            return this;
-        }
-
-        public XboxGameBuilder withTotalAchivements(int totalAchivements) {
-            this.totalAchivements = totalAchivements;
-            return this;
-        }
-
-        public XboxGameBuilder withEarnedGamerscore(int earnedGamerscore) {
-            this.earnedGamerscore = earnedGamerscore;
-            return this;
-        }
-
-        public XboxGameBuilder withTotalGamerscore(int totalGamerscore) {
-            this.totalGamerscore = totalGamerscore;
-            return this;
-        }
-
-        public XboxGameBuilder withType(int type) {
-            this.type = type;
-            return this;
-        }
-
-        public XboxGame build() {
-            XboxGame xboxGame = new XboxGame();
-            xboxGame.setTitleId(titleId);
-            xboxGame.setName(name);
-            xboxGame.setEarnedAchievements(earnedAchievements);
-            xboxGame.setTotalAchivements(totalAchivements);
-            xboxGame.setEarnedGamerscore(earnedGamerscore);
-            xboxGame.setTotalGamerscore(totalGamerscore);
-            xboxGame.setType(type);
-            return xboxGame;
-        }
     }
 }

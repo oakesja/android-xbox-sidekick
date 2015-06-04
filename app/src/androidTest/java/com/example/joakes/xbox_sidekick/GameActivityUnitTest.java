@@ -80,8 +80,7 @@ public class GameActivityUnitTest {
                 36243,
                 "http:\\/\\/images-eds.xboxlive.com\\/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIAbCDABRYREOfuoy2FOUr6jBmIGqp2iomsTK.Cz7APn6dX_VO8g7EjO9bVtm1wsWd&format=png"
         );
-
-        xboxGame = new XboxGame(1, "game", 10, 100, 100, 1000, XboxGame.XBOX_360);
+        xboxGame = GameSetup.createGame();
 
         Mockito.doNothing().when(webService).getProfile();
         Mockito.doNothing().when(webService).getGameList();
@@ -116,7 +115,7 @@ public class GameActivityUnitTest {
     }
 
     @Test
-    public void invalidGamerscoreDisplayed(){
+    public void invalidGamerscoreDisplayed() {
         profile.setGamerscore(-1);
         eventBus.post(profile);
         assertThat(gameActivity.gamerscoreImageTextView).isInvisible();

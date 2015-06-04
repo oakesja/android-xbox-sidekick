@@ -1,8 +1,7 @@
 package com.example.joakes.xbox_sidekick;
 
 import android.test.ActivityInstrumentationTestCase2;
-import android.util.Log;
-import android.widget.ImageView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
@@ -10,8 +9,8 @@ import com.robotium.solo.Solo;
 
 import junit.framework.Assert;
 
-import static org.assertj.android.api.Assertions.assertThat;
 import static com.example.joakes.xbox_sidekick.helpers.TextViewAssert.assertTextView;
+import static org.assertj.android.api.Assertions.assertThat;
 
 /**
  * Created by joakes on 5/17/15.
@@ -40,7 +39,13 @@ public class GameActivityTest extends ActivityInstrumentationTestCase2<GameActiv
 
     public void testGamesVisible() {
         assertTextView((TextView) solo.getView(R.id.game_name_textview)).hasAnyText();
-        assertTextView((ImageTextView) solo.getView(R.id.gamerscore_image_textview)).hasAnyText();
+        Assert.assertNotSame("", ((ImageTextView) solo.getView(R.id.gamerscore_image_textview)).getText());
         assertTextView((TextView) solo.getView(R.id.game_achievements_image_textview)).hasAnyText();
+    }
+
+    public void testClickingOnGame(){
+        View v = solo.getView(R.id.game_name_textview, 0);
+        solo.clickOnView(v);
+        solo.assertCurrentActivity("Should go to achievements activity", AchievementsActivity.class);
     }
 }

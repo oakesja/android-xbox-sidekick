@@ -57,19 +57,8 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
     public void onBindViewHolder(ViewHolder holder, int position) {
         XboxGame game = gameAt(position);
         holder.gameNameTextView.setText(game.getName());
-        ensureNumbersForTextView(game.getEarnedAchievements(), game.getTotalAchivements(), holder.achievementsImageTextView, R.drawable.ic_trophy);
-        ensureNumbersForTextView(game.getEarnedGamerscore(), game.getTotalGamerscore(), holder.scoreImageTextView, R.drawable.ic_gamerscore);
-    }
-
-    private void ensureNumbersForTextView(int first, int second, ImageTextView textview, int drawable) {
-        if (first < 0) {
-            textview.setVisibility(View.INVISIBLE);
-        } else if (second < 0) {
-            textview.setImageAndTextIfValid(first, drawable);
-        } else {
-            String s = String.format("%d/%d", first, second);
-            textview.setImageAndTextIfValid(s, drawable);
-        }
+        holder.achievementsImageTextView.setImageAndTextIfValid(game.getEarnedAchievements(), game.getTotalAchivements(), R.drawable.ic_trophy);
+        holder.scoreImageTextView.setImageAndTextIfValid(game.getEarnedGamerscore(), game.getTotalGamerscore(), R.drawable.ic_gamerscore);
     }
 
     @Override
@@ -93,7 +82,7 @@ public class XboxGameAdapter extends RecyclerView.Adapter<XboxGameAdapter.ViewHo
         this.notifyDataSetChanged();
     }
 
-    private XboxGame gameAt(int position) {
+    public XboxGame gameAt(int position) {
         return mGames.get(position);
     }
 }
