@@ -5,7 +5,9 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.example.joakes.xbox_sidekick.BaseApplication;
 import com.example.joakes.xbox_sidekick.JsonAdapter;
+import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import org.json.JSONArray;
@@ -21,7 +23,7 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joakes on 5/26/15.
  */
-public class Xbox360GameListRequest {
+public class AchievementRequest {
     @Inject
     EventBus eventBus;
     @Inject
@@ -29,34 +31,40 @@ public class Xbox360GameListRequest {
     @Inject
     JsonAdapter jsonAdapter;
 
+    private XboxGame mGame;
+
     @Inject
-    public Xbox360GameListRequest() {}
+    public AchievementRequest(XboxGame game) {
+        mGame = game;
+        BaseApplication.component().inject(this);
+    }
 
     // TODO better error handling and logging
     public void makeRequest() {
-        String url = "https://xboxapi.com/v2/2533274912330216/xbox360games";
-        XboxApiJsonRequest request = new XboxApiJsonRequest(
+        //TODO escape the title id to be safe
+        final String url = "https://xboxapi.com/v2/2533274912330216/achievements/" + mGame.getTitleId();
+        final XboxApiStringRequest request = new XboxApiStringRequest(
                 url,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<String>() {
                     @Override
-                    public void onResponse(JSONObject response) {
-                        ArrayList<XboxGame> games = new ArrayList<>();
+                    public void onResponse(String response) {
+                        ArrayList<Achievement> achievements = new ArrayList<>();
                         try {
-                            JSONArray jsonArray = response.getJSONArray("titles");
+                            JSONArray jsonArray = new JSONArray(response);
                             for (int i = 0; i < jsonArray.length(); i++) {
-                                XboxGame game = jsonAdapter.toXbox360Game(jsonArray.getJSONObject(i));
-                                games.add(game);
+                                Achievement game = jsonAdapter.toAchievement(jsonArray.getJSONObject(i));
+                                achievements.add(game);
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        eventBus.post(games);
+                        eventBus.post(achievements);
                     }
                 },
                 new Response.ErrorListener() {
-
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        Log.e(getClass().getName(), url);
                         Log.e(getClass().getName(), error.getMessage());
                     }
                 }

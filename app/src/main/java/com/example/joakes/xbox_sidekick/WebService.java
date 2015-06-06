@@ -4,7 +4,9 @@ import android.content.Context;
 import android.widget.ImageView;
 
 import com.android.volley.RequestQueue;
+import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.modules.ForApplication;
+import com.example.joakes.xbox_sidekick.requests.AchievementRequest;
 import com.example.joakes.xbox_sidekick.requests.ProfileRequest;
 import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequest;
 import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequest;
@@ -51,5 +53,9 @@ public class WebService {
         Picasso.with(context)
                 .load(url)
                 .into(imageView);
+    }
+
+    public void getAchievementsFor(XboxGame game) {
+        new AchievementRequest(game).makeRequest();
     }
 }

@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick;
 
+import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
@@ -15,7 +16,8 @@ import javax.inject.Inject;
 //TODO add test and log errors
 public class JsonAdapter {
     @Inject
-    public JsonAdapter() {}
+    public JsonAdapter() {
+    }
 
     public XboxProfile toProfile(JSONObject json) {
         return new XboxProfile(
@@ -24,9 +26,9 @@ public class JsonAdapter {
                 getFieldAsString(json, "GameDisplayPicRaw"));
     }
 
-    public XboxGame toXboxOneGame(JSONObject json){
+    public XboxGame toXboxOneGame(JSONObject json) {
         return new XboxGame(
-                1,
+                getFieldAsInt(json, "titleId"),
                 getFieldAsString(json, "name"),
                 getFieldAsInt(json, "earnedAchievements"),
                 -1,
@@ -35,15 +37,26 @@ public class JsonAdapter {
                 XboxGame.XBOX_ONE);
     }
 
-    public XboxGame toXbox360Game(JSONObject json){
+    public XboxGame toXbox360Game(JSONObject json) {
         return new XboxGame(
-                1,
+                getFieldAsInt(json, "titleId"),
                 getFieldAsString(json, "name"),
                 getFieldAsInt(json, "currentAchievements"),
                 getFieldAsInt(json, "totalAchievements"),
                 getFieldAsInt(json, "currentGamerscore"),
                 getFieldAsInt(json, "totalGamerscore"),
                 XboxGame.XBOX_360);
+    }
+
+    public Achievement toAchievement(JSONObject json) {
+        return new Achievement(
+                getFieldAsInt(json, "id"),
+                getFieldAsString(json, "name"),
+                getFieldAsBoolean(json, "isSecret"),
+                getFieldAsString(json, "description"),
+                getFieldAsString(json, "lockedDescription"),
+                -1,
+                null);
     }
 
     private String getFieldAsString(JSONObject json, String fieldName) {
@@ -54,10 +67,14 @@ public class JsonAdapter {
         return (int) getField(json, fieldName);
     }
 
+    private boolean getFieldAsBoolean(JSONObject json, String fieldName) {
+        return (boolean) getField(json, fieldName);
+    }
+
     private Object getField(JSONObject json, String fieldName) {
         try {
             return json.get(fieldName);
-        } catch (JSONException|ClassCastException e) {
+        } catch (JSONException | ClassCastException e) {
             return -1;
         }
     }

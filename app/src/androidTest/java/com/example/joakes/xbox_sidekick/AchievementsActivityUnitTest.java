@@ -7,8 +7,9 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
+import com.example.joakes.xbox_sidekick.helpers.TestSetup;
+import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import com.example.joakes.xbox_sidekick.modules.BusModule;
 import com.example.joakes.xbox_sidekick.modules.EventBusHelperModule;
 import com.example.joakes.xbox_sidekick.modules.IComponent;
@@ -18,7 +19,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
@@ -27,13 +27,14 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+import static org.assertj.android.api.Assertions.assertThat;
+
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.assertj.android.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.not;
+
 
 @RunWith(AndroidJUnit4.class)
 public class AchievementsActivityUnitTest {
@@ -44,21 +45,10 @@ public class AchievementsActivityUnitTest {
 
     private AchievementsActivity activity;
     private XboxGame xboxGame;
-
-    @Singleton
-    @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
-    public interface TestComponent extends IComponent {
-        void inject(AchievementsActivityUnitTest activityUnitTest);
-
-        void inject(EventBusHelper eventBusHelper);
-    }
+    private Achievement achievement;
 
     @Rule
-    public ActivityTestRule<AchievementsActivity> activityRule = new ActivityTestRule<>(
-            AchievementsActivity.class,
-            false,
-            false
-    );
+    public ActivityTestRule<AchievementsActivity> activityRule = new ActivityTestRule<>(AchievementsActivity.class, false, false);
 
     @Before
     public void setUp() {
@@ -66,8 +56,32 @@ public class AchievementsActivityUnitTest {
         setupActivity();
     }
 
+    @Test
+    public void gameNameDisplayed() {
+        assertThat(activity.gameNameTextView).containsText(xboxGame.getName());
+    }
+
+    @Test
+    public void gameAchievementsDisplayed() {
+        String text = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
+        assertThat(activity.gameAchievementsImageTextview).containsText(text);
+    }
+
+    @Test
+    public void gameScoreDisplayed() {
+        String text = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
+        assertThat(activity.gamerscoreImageTextview).containsText(text);
+    }
+
+    @Test
+    public void achievementNameDisplayed(){
+        setupAchievements();
+        onView(withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
+    }
+
     private void setupActivity() {
-        xboxGame = GameSetup.createGame();
+        xboxGame = TestSetup.createGame();
+        achievement = TestSetup.createAchievement();
         Intent intent = new Intent();
         intent.putExtra(AchievementsActivity.GAME, xboxGame);
         activityRule.launchActivity(intent);
@@ -87,20 +101,17 @@ public class AchievementsActivityUnitTest {
         component.inject(eventBus);
     }
 
-    @Test
-    public void gameNameDisplayed() {
-        assertThat(activity.gameNameTextView).containsText(xboxGame.getName());
+    private void setupAchievements() {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        achievements.add(achievement);
+        eventBus.post(achievements);
     }
 
-    @Test
-    public void gameAchievementsDisplayed() {
-        String text = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
-        assertThat(activity.gameAchievementsImageTextview).containsText(text);
-    }
+    @Singleton
+    @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
+    public interface TestComponent extends IComponent {
+        void inject(EventBusHelper eventBusHelper);
 
-    @Test
-    public void gameScoreDisplayed() {
-        String text = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
-        assertThat(activity.gamerscoreImageTextview).containsText(text);
+        void inject(AchievementsActivityUnitTest activityUnitTest);
     }
 }

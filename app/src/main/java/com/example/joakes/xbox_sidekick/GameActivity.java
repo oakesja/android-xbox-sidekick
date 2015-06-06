@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.recycler_view_adapters.XboxGameAdapter;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
@@ -99,14 +100,14 @@ public class GameActivity extends AppCompatActivity
 
     @Override
     public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-        View v = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
-        if (v != null) {
-            int position = recyclerView.indexOfChild(v);
-            XboxGame game = mAdapter.gameAt(position);
-            Intent intent = new Intent(GameActivity.this, AchievementsActivity.class);
-            intent.putExtra(AchievementsActivity.GAME, game);
-            startActivity(intent);
-        }
+//        View v = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
+//        if (v != null) {
+//            int position = recyclerView.indexOfChild(v);
+//            XboxGame game = mAdapter.gameAt(position);
+//            Intent intent = new Intent(GameActivity.this, AchievementsActivity.class);
+//            intent.putExtra(AchievementsActivity.GAME, game);
+//            startActivity(intent);
+//        }
         return false;
     }
 
@@ -124,6 +125,6 @@ public class GameActivity extends AppCompatActivity
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-        webService.stop(GameActivity.class.toString());
+        webService.stop(getClass().toString());
     }
 }

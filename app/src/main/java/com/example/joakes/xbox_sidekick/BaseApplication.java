@@ -20,7 +20,7 @@ public class BaseApplication extends Application {
     public interface ApplicationComponent extends IComponent {
     }
 
-    private IComponent component = null;
+    private static IComponent component = null;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -34,10 +34,10 @@ public class BaseApplication extends Application {
     }
 
     public void setComponent(IComponent component) {
-        this.component = component;
+        BaseApplication.component = component;
     }
 
-    public IComponent component() {
+    public static IComponent component() {
         return component;
     }
 }

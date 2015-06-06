@@ -7,6 +7,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
+import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import com.example.joakes.xbox_sidekick.modules.BusModule;
@@ -47,45 +48,13 @@ public class GameActivityUnitTest {
     private GameActivity gameActivity;
     private XboxGame xboxGame;
 
-    @Singleton
-    @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
-    public interface TestComponent extends IComponent {
-        void inject(GameActivityUnitTest gameActivityTest);
-
-        void inject(EventBusHelper eventBusHelper);
-    }
-
     @Rule
-    public ActivityTestRule<GameActivity> activityRule = new ActivityTestRule<>(
-            GameActivity.class,
-            false,
-            false
-    );
+    public ActivityTestRule<GameActivity> activityRule = new ActivityTestRule<>(GameActivity.class, false, false);
 
     @Before
     public void setUp() {
-        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
-        BaseApplication app = (BaseApplication) instrumentation.getTargetContext().getApplicationContext();
-        TestComponent component = DaggerGameActivityUnitTest_TestComponent.builder()
-                .busModule(new BusModule())
-                .mockWebserviceModule(new MockWebserviceModule())
-                .eventBusHelperModule(new EventBusHelperModule(activityRule))
-                .build();
-        app.setComponent(component);
-        component.inject(this);
-        component.inject(eventBus);
-
-        profile = new XboxProfile(
-                "PoiZonOakes",
-                36243,
-                "http:\\/\\/images-eds.xboxlive.com\\/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIAbCDABRYREOfuoy2FOUr6jBmIGqp2iomsTK.Cz7APn6dX_VO8g7EjO9bVtm1wsWd&format=png"
-        );
-        xboxGame = GameSetup.createGame();
-
-        Mockito.doNothing().when(webService).getProfile();
-        Mockito.doNothing().when(webService).getGameList();
-        activityRule.launchActivity(new Intent());
-        gameActivity = activityRule.getActivity();
+        setUpDagger();
+        setUpActivity();
     }
 
     @Test
@@ -171,9 +140,39 @@ public class GameActivityUnitTest {
         onView(withId(R.id.game_score_image_textview)).check(matches(withText(text)));
     }
 
+    private void setUpActivity() {
+        profile = TestSetup.createProfile();
+        xboxGame = TestSetup.createGame();
+        Mockito.doNothing().when(webService).getProfile();
+        Mockito.doNothing().when(webService).getGameList();
+        activityRule.launchActivity(new Intent());
+        gameActivity = activityRule.getActivity();
+    }
+
+    private void setUpDagger() {
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        BaseApplication app = (BaseApplication) instrumentation.getTargetContext().getApplicationContext();
+        TestComponent component = DaggerGameActivityUnitTest_TestComponent.builder()
+                .busModule(new BusModule())
+                .mockWebserviceModule(new MockWebserviceModule())
+                .eventBusHelperModule(new EventBusHelperModule(activityRule))
+                .build();
+        app.setComponent(component);
+        component.inject(this);
+        component.inject(eventBus);
+    }
+
     private void setupGames() {
         ArrayList<XboxGame> games = new ArrayList<>();
         games.add(xboxGame);
         eventBus.post(games);
+    }
+
+    @Singleton
+    @Component(modules = {BusModule.class, MockWebserviceModule.class, EventBusHelperModule.class})
+    public interface TestComponent extends IComponent {
+        void inject(GameActivityUnitTest gameActivityTest);
+
+        void inject(EventBusHelper eventBusHelper);
     }
 }

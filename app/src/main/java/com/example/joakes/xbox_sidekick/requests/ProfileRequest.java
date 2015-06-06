@@ -31,7 +31,7 @@ public class ProfileRequest {
     // TODO abstract out into class
     public void makeRequest() {
         String url = "https://xboxapi.com/v2/2533274912330216/profile";
-        XboxApiRequest request = new XboxApiRequest(
+        XboxApiJsonRequest request = new XboxApiJsonRequest(
                 url,
                 new Response.Listener<JSONObject>() {
                     @Override

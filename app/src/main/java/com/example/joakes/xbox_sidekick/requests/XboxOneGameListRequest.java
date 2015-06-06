@@ -35,7 +35,7 @@ public class XboxOneGameListRequest {
     // TODO better error handling and logging
     public void makeRequest() {
         String url = "https://xboxapi.com/v2/2533274912330216/xboxonegames";
-        XboxApiRequest request = new XboxApiRequest(
+        XboxApiJsonRequest request = new XboxApiJsonRequest(
                 url,
                 new Response.Listener<JSONObject>() {
                     @Override
