@@ -3,59 +3,44 @@ package com.example.joakes.xbox_sidekick;
 import android.content.Context;
 import android.widget.ImageView;
 
-import com.android.volley.RequestQueue;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.modules.ForApplication;
 import com.example.joakes.xbox_sidekick.requests.AchievementRequest;
-import com.example.joakes.xbox_sidekick.requests.ProfileRequest;
-import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequest;
-import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequest;
+import com.example.joakes.xbox_sidekick.requests.ProfileRequester;
+import com.example.joakes.xbox_sidekick.requests.WebRequestQueue;
+import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequester;
+import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequester;
 import com.squareup.picasso.Picasso;
-
-import javax.inject.Inject;
-import javax.inject.Singleton;
 
 /**
  * Created by joakes on 4/28/15.
  */
-@Singleton
 public class WebService {
-    @Inject
-    ProfileRequest profileRequest;
-    @Inject
-    XboxOneGameListRequest xboxOneGameListRequest;
-    @Inject
-    Xbox360GameListRequest xbox360GameListRequest;
-    @Inject
-    RequestQueue requestQueue;
-    @Inject
-    @ForApplication
-    Context context;
+    private Context mContext;
 
-    @Inject
-    public WebService() {
+    public WebService(Context context) {
+        mContext = context;
     }
 
-    public void getProfile() {
-        profileRequest.makeRequest();
+    public void getProfile(String requestTag) {
+        new ProfileRequester(mContext, requestTag).makeRequest();
     }
 
-    public void getGameList() {
-        xboxOneGameListRequest.makeRequest();
-        xbox360GameListRequest.makeRequest();
+    public void getGameList(String requestTag) {
+        new XboxOneGameListRequester(mContext, requestTag).makeRequest();
+        new Xbox360GameListRequester(mContext, requestTag).makeRequest();
     }
 
     public void stop(String tag) {
-        requestQueue.cancelAll(tag);
+        WebRequestQueue.getInstance(mContext).cancelAll(tag);
     }
 
     public void loadImageFromUrl(ImageView imageView, String url) {
-        Picasso.with(context)
+        Picasso.with(mContext)
                 .load(url)
                 .into(imageView);
     }
 
-    public void getAchievementsFor(XboxGame game) {
-        new AchievementRequest(game).makeRequest();
+    public void getAchievementsFor(XboxGame game, String requestTag) {
+        new AchievementRequest(mContext, requestTag, game).makeRequest();
     }
 }

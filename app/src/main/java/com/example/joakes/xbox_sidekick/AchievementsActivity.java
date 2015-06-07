@@ -13,18 +13,12 @@ import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 
 public class AchievementsActivity extends AppCompatActivity {
-    @Inject
-    EventBus eventBus;
-    @Inject
-    WebService webService;
     @InjectView(R.id.game_name_textview)
     TextView gameNameTextView;
     @InjectView(R.id.game_achievements_image_textview)
@@ -35,7 +29,10 @@ public class AchievementsActivity extends AppCompatActivity {
     RecyclerView achievementList;
 
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
+    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
     private AchievementAdapter mAdapter;
+    private EventBus eventBus;
+    private WebService mWebService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,14 +40,15 @@ public class AchievementsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_achievements);
         ((BaseApplication) getApplication()).component().inject(this);
         ButterKnife.inject(this);
-        
+        eventBus = EventBus.getDefault();
+
         XboxGame game = getIntent().getParcelableExtra(GAME);
         gameNameTextView.setText(game.getName());
         gameAchievementsImageTextview.setImageAndTextIfValid(game.getEarnedAchievements(), game.getTotalAchivements(), R.drawable.ic_trophy);
         gamerscoreImageTextview.setImageAndTextIfValid(game.getEarnedGamerscore(), game.getTotalGamerscore(), R.drawable.ic_gamerscore);
         setupRecyclerView();
-
-        webService.getAchievementsFor(game);
+        mWebService = new WebService(this);
+        mWebService.getAchievementsFor(game, REQUEST_TAG);
     }
 
     private void setupRecyclerView() {
@@ -76,6 +74,6 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-        webService.stop(getClass().toString());
+        mWebService.stop(getClass().toString());
     }
 }

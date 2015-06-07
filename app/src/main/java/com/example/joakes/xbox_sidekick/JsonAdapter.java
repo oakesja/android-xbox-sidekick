@@ -15,9 +15,6 @@ import javax.inject.Inject;
 
 //TODO add test and log errors
 public class JsonAdapter {
-    @Inject
-    public JsonAdapter() {
-    }
 
     public XboxProfile toProfile(JSONObject json) {
         return new XboxProfile(

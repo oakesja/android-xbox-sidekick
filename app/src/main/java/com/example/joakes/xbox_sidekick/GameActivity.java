@@ -1,6 +1,5 @@
 package com.example.joakes.xbox_sidekick;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -18,25 +17,21 @@ import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
 
-import javax.inject.Inject;
-
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class GameActivity extends AppCompatActivity
         implements RecyclerView.OnItemTouchListener {
-    @Inject
-    EventBus eventBus;
-    @Inject
-    WebService webService;
     @InjectView(R.id.games_list)
     RecyclerView gamesList;
-
-    private XboxGameAdapter mAdapter;
     public ImageView gamerPicture;
     public ImageTextView gamerscoreImageTextView;
     public TextView profileNameTextView;
+    private static String REQUEST_TAG = "GAME_ACTIVITY";
+    private XboxGameAdapter mAdapter;
+    private EventBus mEventBus;
+    private WebService mWebService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +44,12 @@ public class GameActivity extends AppCompatActivity
 
     private void setupActivity() {
         setContentView(R.layout.activity_game);
+
+        // try to move to a super class
         ButterKnife.inject(this);
         ((BaseApplication) getApplication()).component().inject(this);
+        mEventBus = EventBus.getDefault();
+        mWebService = new WebService(this);
     }
 
     private void setupRecyclerView() {
@@ -63,8 +62,8 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void makeRequests() {
-        webService.getProfile();
-        webService.getGameList();
+        mWebService.getProfile(REQUEST_TAG);
+        mWebService.getGameList(REQUEST_TAG);
     }
 
     private void setRecyclerViewHeader() {
@@ -80,7 +79,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     public void onEvent(XboxProfile profile) {
-        webService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
+        mWebService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
         ensureStringForTextView(profileNameTextView, profile.getGamertag());
         gamerscoreImageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
     }
@@ -118,13 +117,13 @@ public class GameActivity extends AppCompatActivity
     @Override
     protected void onStart() {
         super.onStart();
-        eventBus.register(this);
+        mEventBus.register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        eventBus.unregister(this);
-        webService.stop(getClass().toString());
+        mEventBus.unregister(this);
+        mWebService.stop(REQUEST_TAG);
     }
 }
