@@ -4,9 +4,11 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.example.joakes.xbox_sidekick.JsonAdapter;
+import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.requests.utils.JSONArrayRequester;
+import com.example.joakes.xbox_sidekick.requests.utils.XboxApiHeaders;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,9 +20,9 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joakes on 5/26/15.
  */
-public class AchievementRequest extends JSONArrayRequester {
+public class AchievementRequester extends JSONArrayRequester {
 
-    public AchievementRequest(Context context, String tag, XboxGame game) {
+    public AchievementRequester(Context context, String tag, XboxGame game) {
         super(context, getUrl(game), tag, XboxApiHeaders.getHeaders());
     }
 

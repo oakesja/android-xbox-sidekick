@@ -45,11 +45,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
 
-    // not official build
-    compile "com.google.dagger:dagger:2.0"
-    apt "com.google.dagger:dagger-compiler:2.0"
-    provided 'org.glassfish:javax.annotation:10.0-b28'
-
     androidTestCompile('com.android.support.test:runner:0.2') {
         exclude group: 'com.android.support', module: 'support-annotations'
     }

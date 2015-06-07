@@ -4,8 +4,10 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.example.joakes.xbox_sidekick.JsonAdapter;
+import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.requests.utils.JSONObjectRequester;
+import com.example.joakes.xbox_sidekick.requests.utils.XboxApiHeaders;
 
 import org.json.JSONArray;
 import org.json.JSONException;

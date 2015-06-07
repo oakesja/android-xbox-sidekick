@@ -1,30 +1,30 @@
-package com.example.joakes.xbox_sidekick.requests;
+package com.example.joakes.xbox_sidekick.requests.utils;
 
 import android.content.Context;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.util.Map;
 
 /**
  * Created by joakes on 6/7/15.
  */
-public abstract class JSONObjectRequester {
+public abstract class JSONArrayRequester {
     private String mUrl;
     private String mTag;
     private Context mContext;
     private Map<String, String> mHeaders;
 
-    public JSONObjectRequester(Context context, String url, String tag) {
+    public JSONArrayRequester(Context context, String url, String tag) {
         mContext = context;
         mUrl = url;
         mTag = tag;
     }
 
-    public JSONObjectRequester(Context context, String url, String tag, Map<String, String> headers) {
+    public JSONArrayRequester(Context context, String url, String tag, Map<String, String> headers) {
         mContext = context;
         mUrl = url;
         mTag = tag;
@@ -32,11 +32,11 @@ public abstract class JSONObjectRequester {
     }
 
     public void makeRequest() {
-        JSONObjectRequestWithHeaders request = new JSONObjectRequestWithHeaders(
+        JSONArrayRequestWithHeaders request = new JSONArrayRequestWithHeaders(
                 mUrl,
-                new Response.Listener<JSONObject>() {
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         handleSuccess(response);
                     }
                 },
@@ -51,7 +51,7 @@ public abstract class JSONObjectRequester {
         WebRequestQueue.getInstance(mContext).addToQueue(request, mTag);
     }
 
-    public abstract void handleSuccess(JSONObject response);
+    public abstract void handleSuccess(JSONArray response);
 
     public abstract void handleError(VolleyError error);
 }

@@ -8,7 +8,8 @@ import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.recycler_view_adapters.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
@@ -38,7 +39,6 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievements);
-        ((BaseApplication) getApplication()).component().inject(this);
         ButterKnife.inject(this);
         eventBus = EventBus.getDefault();
 

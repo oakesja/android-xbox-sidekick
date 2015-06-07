@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.requests.utils;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
@@ -6,8 +6,6 @@ import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import javax.inject.Inject;
 
 /**
  * Created by joakes on 4/28/15.

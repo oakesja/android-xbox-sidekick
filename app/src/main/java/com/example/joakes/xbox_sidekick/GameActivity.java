@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -12,7 +13,8 @@ import android.widget.TextView;
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
-import com.example.joakes.xbox_sidekick.recycler_view_adapters.XboxGameAdapter;
+import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
@@ -44,10 +46,7 @@ public class GameActivity extends AppCompatActivity
 
     private void setupActivity() {
         setContentView(R.layout.activity_game);
-
-        // try to move to a super class
         ButterKnife.inject(this);
-        ((BaseApplication) getApplication()).component().inject(this);
         mEventBus = EventBus.getDefault();
         mWebService = new WebService(this);
     }

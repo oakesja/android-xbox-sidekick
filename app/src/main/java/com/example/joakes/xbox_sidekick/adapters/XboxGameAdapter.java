@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.recycler_view_adapters;
+package com.example.joakes.xbox_sidekick.adapters;
 
 import android.content.Context;
 import android.content.Intent;
@@ -8,8 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.AchievementsActivity;
-import com.example.joakes.xbox_sidekick.GameActivity;
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.adapters.GameViewHolder;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import java.util.ArrayList;

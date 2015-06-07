@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.requests;
+package com.example.joakes.xbox_sidekick.requests.utils;
 
 import java.util.HashMap;
 import java.util.Map;

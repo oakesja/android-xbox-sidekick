@@ -1,12 +1,12 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.requests.utils;
 
 import android.content.Context;
 import android.widget.ImageView;
 
 import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.requests.AchievementRequest;
+import com.example.joakes.xbox_sidekick.requests.AchievementRequester;
 import com.example.joakes.xbox_sidekick.requests.ProfileRequester;
-import com.example.joakes.xbox_sidekick.requests.WebRequestQueue;
+import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequester;
 import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequester;
 import com.squareup.picasso.Picasso;
@@ -41,6 +41,6 @@ public class WebService {
     }
 
     public void getAchievementsFor(XboxGame game, String requestTag) {
-        new AchievementRequest(mContext, requestTag, game).makeRequest();
+        new AchievementRequester(mContext, requestTag, game).makeRequest();
     }
 }

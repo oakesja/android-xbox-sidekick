@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.recycler_view_adapters;
+package com.example.joakes.xbox_sidekick.adapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;

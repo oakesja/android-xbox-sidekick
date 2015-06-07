@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.requests;
+package com.example.joakes.xbox_sidekick.requests.utils;
 
 import android.content.Context;
 
@@ -26,6 +26,10 @@ public class WebRequestQueue {
             }
         }
         return webRequestQueue;
+    }
+
+    public static void setInstance(WebRequestQueue requestQueue) {
+        webRequestQueue = requestQueue;
     }
 
     public void addToQueue(Request request, String tag) {
