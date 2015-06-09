@@ -1,8 +1,11 @@
 package com.example.joakes.xbox_sidekick.requests.utils;
 
+import android.util.Log;
+
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +54,7 @@ public class JsonAdapter {
                 getFieldAsBoolean(json, "isSecret"),
                 getFieldAsString(json, "description"),
                 getFieldAsString(json, "lockedDescription"),
-                -1,
+                getAchievementValue(json),
                 getAchievementIcon(json));
     }
 
@@ -82,6 +85,17 @@ public class JsonAdapter {
             return getFieldAsString(object, "url");
         } catch (JSONException e) {
             return "";
+        }
+    }
+
+    private int getAchievementValue(JSONObject json) {
+        try {
+            JSONArray array = json.getJSONArray("rewards");
+            JSONObject object = array.getJSONObject(0);
+            return getFieldAsInt(object, "value");
+        } catch (JSONException e) {
+            Log.e(getClass().getName(), String.format("Could not get achievement value for %s : %s", json.toString(), e));
+            return -1;
         }
     }
 }

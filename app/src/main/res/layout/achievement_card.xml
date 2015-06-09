@@ -11,7 +11,7 @@
         card_view:cardElevation="5dp"
         card_view:cardPreventCornerOverlap="false"
         card_view:cardUseCompatPadding="true"
-        card_view:contentPadding="5dp">
+        card_view:contentPadding="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -36,6 +36,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/achievement_imageview"
                 android:layout_toRightOf="@id/achievement_imageview"
                 android:orientation="vertical">

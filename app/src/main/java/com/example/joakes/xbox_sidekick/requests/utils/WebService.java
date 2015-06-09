@@ -42,10 +42,10 @@ public class WebService {
     public void loadImageFromUrl(final ImageView imageView, String url) {
         Log.i(getClass().getName(), "loadImageFromUrl: " + url);
         url += "&h=200&w=200";
-//        Picasso p = Picasso.with(mContext);
-//        p.setIndicatorsEnabled(true);
-//        p.load(url).into(imageView);
-        ImageRequest imageRequest = new ImageRequest(url,
+        Picasso p = Picasso.with(mContext);
+        p.setIndicatorsEnabled(true);
+        p.load(url).into(imageView);
+       /* ImageRequest imageRequest = new ImageRequest(url,
                 new Response.Listener<Bitmap>() {
                     @Override
                     public void onResponse(Bitmap response) {
@@ -59,7 +59,7 @@ public class WebService {
                         Log.e("volley image request", error.toString());
                     }
                 });
-        WebRequestQueue.getInstance(mContext).addToQueue(imageRequest, "tag");
+        WebRequestQueue.getInstance(mContext).addToQueue(imageRequest, "tag");*/
     }
 
     public void getAchievementsFor(XboxGame game, String requestTag) {
