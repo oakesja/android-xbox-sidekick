@@ -1,5 +1,7 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.util.Log;
+
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import java.util.ArrayList;
@@ -16,6 +18,7 @@ public class GameListFilter {
     }
 
     public ArrayList<XboxGame> filter() {
+        Log.i("to be filtered", xboxGames.toString());
         Iterator<XboxGame> iterator = xboxGames.iterator();
         while (iterator.hasNext()) {
             removeIfInvalid(iterator);

@@ -92,6 +92,7 @@ public class GameActivity extends AppCompatActivity
     }
 
     public void onEvent(ArrayList<XboxGame> games) {
+        Log.i(REQUEST_TAG, "got game list" + games.toString());
         games = new GameListFilter(games).filter();
         mAdapter.addGames(games);
     }

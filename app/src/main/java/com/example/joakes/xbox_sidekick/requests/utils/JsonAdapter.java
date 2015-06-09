@@ -4,6 +4,7 @@ import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -51,7 +52,7 @@ public class JsonAdapter {
                 getFieldAsString(json, "description"),
                 getFieldAsString(json, "lockedDescription"),
                 -1,
-                null);
+                getAchievementIcon(json));
     }
 
     private String getFieldAsString(JSONObject json, String fieldName) {
@@ -71,6 +72,16 @@ public class JsonAdapter {
             return json.get(fieldName);
         } catch (JSONException | ClassCastException e) {
             return -1;
+        }
+    }
+
+    private String getAchievementIcon(JSONObject json) {
+        try {
+            JSONArray array = json.getJSONArray("mediaAssets");
+            JSONObject object = array.getJSONObject(0);
+            return getFieldAsString(object, "url");
+        } catch (JSONException e) {
+            return "";
         }
     }
 }

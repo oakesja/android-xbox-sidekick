@@ -55,9 +55,8 @@ public class AchievementsActivity extends AppCompatActivity {
         achievementList.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         achievementList.setLayoutManager(layoutManager);
-        mAdapter = new AchievementAdapter();
+        mAdapter = new AchievementAdapter(this);
         achievementList.setAdapter(mAdapter);
-//        achievementList.addOnItemTouchListener(this);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {

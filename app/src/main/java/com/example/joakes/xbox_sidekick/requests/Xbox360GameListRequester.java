@@ -44,6 +44,6 @@ public class Xbox360GameListRequester extends JSONObjectRequester {
 
     @Override
     public void handleError(VolleyError error) {
-        Log.e(getClass().getName(), error.getMessage());
+        Log.e(getClass().getName(), error.toString());
     }
 }

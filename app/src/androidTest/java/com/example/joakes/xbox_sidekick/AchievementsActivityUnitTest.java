@@ -19,10 +19,9 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
-import de.greenrobot.event.EventBus;
-
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.assertj.android.api.Assertions.assertThat;
@@ -75,6 +74,18 @@ public class AchievementsActivityUnitTest {
     public void achievementNameDisplayed() {
         setupAchievements();
         onView(withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
+    }
+
+    @Test
+    public void achievementDescriptionDisplayed() {
+        setupAchievements();
+        onView(withId(R.id.achievement_description_textview)).check(matches(withText(achievement.getDescription())));
+    }
+
+    @Test
+    public void achievementScoreDisplayed() {
+        setupAchievements();
+        onView(withId(R.id.achievement_score_image_textview)).check(matches(withText("" + achievement.getValue())));
     }
 
     private void setupAchievements() {

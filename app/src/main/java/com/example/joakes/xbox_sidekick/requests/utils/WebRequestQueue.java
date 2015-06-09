@@ -1,6 +1,7 @@
 package com.example.joakes.xbox_sidekick.requests.utils;
 
 import android.content.Context;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,6 +34,7 @@ public class WebRequestQueue {
     }
 
     public void addToQueue(Request request, String tag) {
+        Log.i(tag, "Adding reques to the queue for: " + request.getUrl());
         request.setTag(tag);
         volleyRequestQueue.add(request);
     }
