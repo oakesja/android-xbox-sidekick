@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
@@ -22,14 +22,15 @@ import de.greenrobot.event.EventBus;
 
 
 public class AchievementsActivity extends AppCompatActivity {
+    public static final String GAME = "com.example.joakes.xbox_sidekick.game";
+    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
+
     @InjectView(R.id.achievement_list)
     RecyclerView achievementList;
     public TextView gameNameTextView;
     public ImageTextView gameAchievementsImageTextview;
     public ImageTextView gamerscoreImageTextview;
     public CircularProgressBar gamerscoreProgressBar;
-    public static final String GAME = "com.example.joakes.xbox_sidekick.game";
-    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
     private AchievementAdapter mAdapter;
     private EventBus eventBus;
     private WebService mWebService;
@@ -64,6 +65,7 @@ public class AchievementsActivity extends AppCompatActivity {
         RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.game_info_view);
         header.attachTo(achievementList);
         setGameInfoViews();
+        new GameInfoPresenter(mGame).presentGameInfo(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
     }
 
     private void setGameInfoViews() {
@@ -71,10 +73,6 @@ public class AchievementsActivity extends AppCompatActivity {
         gameAchievementsImageTextview = (ImageTextView) findViewById(R.id.game_achievements_image_textview);
         gamerscoreImageTextview = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
         gamerscoreProgressBar = (CircularProgressBar) findViewById(R.id.gamerscore_progress_bar);
-        gameNameTextView.setText(mGame.getName());
-        gameAchievementsImageTextview.setImageAndTextIfValid(mGame.getEarnedAchievements(), mGame.getTotalAchivements(), R.drawable.ic_trophy);
-        gamerscoreImageTextview.setImageAndTextIfValid(mGame.getEarnedGamerscore(), mGame.getTotalGamerscore(), R.drawable.ic_gamerscore);
-        gamerscoreProgressBar.setProgress(50);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
