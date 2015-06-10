@@ -39,9 +39,9 @@ public class WebService {
         WebRequestQueue.getInstance(mContext).cancelAll(tag);
     }
 
-    public void loadImageFromUrl(final ImageView imageView, String url) {
-        Log.i(getClass().getName(), "loadImageFromUrl: " + url);
+    public void loadImageFromUrl(ImageView imageView, String url) {
         url += "&h=200&w=200";
+        Log.i(getClass().getName(), "loadImageFromUrl: " + url);
         Picasso p = Picasso.with(mContext);
         p.setIndicatorsEnabled(true);
         p.load(url).into(imageView);

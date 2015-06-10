@@ -11,6 +11,7 @@ import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
@@ -26,6 +27,7 @@ public class AchievementsActivity extends AppCompatActivity {
     public TextView gameNameTextView;
     public ImageTextView gameAchievementsImageTextview;
     public ImageTextView gamerscoreImageTextview;
+    public CircularProgressBar gamerscoreProgressBar;
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
     private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
     private AchievementAdapter mAdapter;
@@ -68,9 +70,11 @@ public class AchievementsActivity extends AppCompatActivity {
         gameNameTextView = (TextView) findViewById(R.id.game_name_textview);
         gameAchievementsImageTextview = (ImageTextView) findViewById(R.id.game_achievements_image_textview);
         gamerscoreImageTextview = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
+        gamerscoreProgressBar = (CircularProgressBar) findViewById(R.id.gamerscore_progress_bar);
         gameNameTextView.setText(mGame.getName());
         gameAchievementsImageTextview.setImageAndTextIfValid(mGame.getEarnedAchievements(), mGame.getTotalAchivements(), R.drawable.ic_trophy);
         gamerscoreImageTextview.setImageAndTextIfValid(mGame.getEarnedGamerscore(), mGame.getTotalGamerscore(), R.drawable.ic_gamerscore);
+        gamerscoreProgressBar.setProgress(50);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
