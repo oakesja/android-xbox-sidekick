@@ -4,13 +4,16 @@ import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
  * Created by joakes on 5/31/15.
  */
 public class ImageTextView extends TextView {
+
+    public ImageTextView(Context context) {
+        super(context);
+    }
 
     public ImageTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -28,7 +31,7 @@ public class ImageTextView extends TextView {
 
     public void setImageAndTextIfValid(int toText, int drawable) {
         if (toText == -1) {
-            setVisibility(View.INVISIBLE);
+            setVisibility(View.GONE);
         } else {
             setTextAndDrawable(drawable, "" + toText);
         }
@@ -36,7 +39,7 @@ public class ImageTextView extends TextView {
 
     public void setImageAndTextIfValid(int numerator, int denominator, int drawable) {
         if (numerator < 0) {
-            setVisibility(View.INVISIBLE);
+            setVisibility(View.GONE);
         } else if (denominator < 0) {
             setTextAndDrawable(drawable, "" + numerator);
         } else {
@@ -47,7 +50,7 @@ public class ImageTextView extends TextView {
 
     public void setImageAndTextIfValid(String text, int drawable) {
         if (text == null || text.equals("")) {
-            setVisibility(ImageView.INVISIBLE);
+            setVisibility(View.GONE);
         } else {
             setTextAndDrawable(drawable, text);
         }

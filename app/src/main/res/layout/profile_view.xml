@@ -29,17 +29,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:ellipsize="end"
-            android:lines="1"
+            android:singleLine="true"
             android:textStyle="bold" />
 
         <com.example.joakes.xbox_sidekick.views.ImageTextView
-            android:layout_below="@id/profile_name_textview"
             android:id="@+id/gamerscore_image_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/profile_name_textview"
             android:layout_gravity="center_vertical"
-            android:ellipsize="end"
-            android:lines="1" />
+            android:singleLine="true" />
     </RelativeLayout>
 </RelativeLayout>

@@ -21,7 +21,7 @@ public class ImageTextViewTest extends AndroidTestCase {
 
     public void testSetImageAndTextInvalidNumber() {
         imageTextView.setImageAndTextIfValid(-1, drawable);
-        assertThat(imageTextView).isInvisible();
+        assertThat(imageTextView).isGone();
     }
 
     public void testSetImageAndTextValidNumber() {
@@ -33,12 +33,12 @@ public class ImageTextViewTest extends AndroidTestCase {
 
     public void testSetImageAndTextNullString() {
         imageTextView.setImageAndTextIfValid(null, drawable);
-        assertThat(imageTextView).isInvisible();
+        assertThat(imageTextView).isGone();
     }
 
     public void testSetImageAndTextEmptyString() {
         imageTextView.setImageAndTextIfValid("", drawable);
-        assertThat(imageTextView).isInvisible();
+        assertThat(imageTextView).isGone();
     }
 
     public void testSetImageAndTextValidString() {
@@ -50,7 +50,7 @@ public class ImageTextViewTest extends AndroidTestCase {
 
     public void testSetImageAndTextIfInvalidNumerator(){
         imageTextView.setImageAndTextIfValid(-1, 1, drawable);
-        assertThat(imageTextView).isInvisible();
+        assertThat(imageTextView).isGone();
     }
 
     public void testSetImageAndTextIfInvalidDenominator(){

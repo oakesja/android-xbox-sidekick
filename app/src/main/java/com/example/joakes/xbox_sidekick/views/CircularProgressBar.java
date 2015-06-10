@@ -104,4 +104,8 @@ public class CircularProgressBar extends View {
         this.mTitle = title;
         invalidate();
     }
+
+    public int getProgress(){
+        return mProgress;
+    }
 }

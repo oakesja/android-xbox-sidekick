@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.models.XboxGame;
@@ -21,6 +22,12 @@ public class GameInfoPresenter {
         gameNameTextView.setText(mGame.getName());
         gameAchievementsImageTextview.setImageAndTextIfValid(mGame.getEarnedAchievements(), mGame.getTotalAchivements(), R.drawable.ic_trophy);
         gamerscoreImageTextview.setImageAndTextIfValid(mGame.getEarnedGamerscore(), mGame.getTotalGamerscore(), R.drawable.ic_gamerscore);
-        gamerscoreProgressBar.setProgress(50);
+
+        if(mGame.getEarnedGamerscore() < 0 || mGame.getTotalGamerscore() < 0){
+            gamerscoreProgressBar.setVisibility(View.GONE);
+        } else {
+            int progress = (int)(100f * mGame.getEarnedGamerscore() / mGame.getTotalGamerscore());
+            gamerscoreProgressBar.setProgress(progress);
+        }
     }
 }

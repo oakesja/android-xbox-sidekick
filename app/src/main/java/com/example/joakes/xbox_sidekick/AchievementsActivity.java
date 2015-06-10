@@ -20,7 +20,6 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
-
 public class AchievementsActivity extends AppCompatActivity {
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
     private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
