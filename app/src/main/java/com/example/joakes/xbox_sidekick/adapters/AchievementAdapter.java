@@ -2,14 +2,13 @@ package com.example.joakes.xbox_sidekick.adapters;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
 
 import java.util.ArrayList;
 
@@ -18,10 +17,8 @@ import java.util.ArrayList;
  */
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
     private ArrayList<Achievement> mAchievements;
-    private Context mContext;
 
-    public AchievementAdapter(Context context) {
-        mContext = context;
+    public AchievementAdapter() {
         mAchievements = new ArrayList<>();
     }
 
@@ -34,12 +31,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
 
     @Override
     public void onBindViewHolder(AchievementViewHolder holder, int position) {
-        Log.i(getClass().getName(), "onBindViewHolder for " + position);
         Achievement achievement = getAchievementAt(position);
-        holder.achievementNameTextview.setText(achievement.getName());
-        holder.achievementDescriptionTextview.setText(achievement.getDescription());
-        holder.achievementScoreImageTextview.setImageAndTextIfValid(achievement.getValue(), R.drawable.ic_gamerscore);
-        new WebService(mContext).loadImageFromUrl(holder.achievementImageview, achievement.getIconUrl());
+        new AchievementPresenter(achievement).present(holder);
     }
 
     @Override

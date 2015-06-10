@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.presenters;
 
 import android.test.AndroidTestCase;
 import android.widget.TextView;
@@ -9,8 +9,6 @@ import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import junit.framework.Assert;
-
-import org.junit.Test;
 
 import static org.assertj.android.api.Assertions.assertThat;
 
@@ -61,6 +59,6 @@ public class GameInfoPresenterTest extends AndroidTestCase {
     }
 
     private void presentGameInfo() {
-        new GameInfoPresenter(xboxGame).presentGameInfo(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
+        new GameInfoPresenter(xboxGame).present(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
     }
 }

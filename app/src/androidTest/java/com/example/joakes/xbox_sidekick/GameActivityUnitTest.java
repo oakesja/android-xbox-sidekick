@@ -46,6 +46,7 @@ public class GameActivityUnitTest {
         xboxGame = TestSetup.createGame();
         WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
         doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
+        WebRequestQueue.setInstance(webRequestQueue);
         activityRule.launchActivity(new Intent());
         gameActivity = activityRule.getActivity();
         eventBus = new EventBusHelper(activityRule);
@@ -81,7 +82,7 @@ public class GameActivityUnitTest {
     public void invalidGamerscoreDisplayed() {
         profile.setGamerscore(-1);
         eventBus.post(profile);
-        assertThat(gameActivity.gamerscoreImageTextView).isInvisible();
+        assertThat(gameActivity.gamerscoreImageTextView).isGone();
     }
 
     @Test

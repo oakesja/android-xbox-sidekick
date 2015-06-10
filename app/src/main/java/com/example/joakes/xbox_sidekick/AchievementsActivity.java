@@ -10,6 +10,7 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
@@ -56,7 +57,7 @@ public class AchievementsActivity extends AppCompatActivity {
         achievementList.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         achievementList.setLayoutManager(layoutManager);
-        mAdapter = new AchievementAdapter(this);
+        mAdapter = new AchievementAdapter();
         achievementList.setAdapter(mAdapter);
     }
 
@@ -64,7 +65,7 @@ public class AchievementsActivity extends AppCompatActivity {
         RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.game_info_view);
         header.attachTo(achievementList);
         setGameInfoViews();
-        new GameInfoPresenter(mGame).presentGameInfo(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
+        new GameInfoPresenter(mGame).present(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
     }
 
     private void setGameInfoViews() {

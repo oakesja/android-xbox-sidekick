@@ -48,6 +48,7 @@ public class AchievementsActivityUnitTest {
         activity = activityRule.getActivity();
         WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
         doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
+        WebRequestQueue.setInstance(webRequestQueue);
         eventBus = new EventBusHelper(activityRule);
     }
 

@@ -1,7 +1,8 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.views;
 
 import android.test.AndroidTestCase;
 
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import static org.assertj.android.api.Assertions.assertThat;
