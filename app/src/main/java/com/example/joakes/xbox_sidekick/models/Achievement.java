@@ -11,8 +11,9 @@ public class Achievement {
     private String lockedDescription;
     private int value;
     private String iconUrl;
+    private boolean isLocked;
 
-    public Achievement(long id, String name, boolean isSecret, String description, String lockedDescription, int value, String iconUrl) {
+    public Achievement(long id, String name, boolean isSecret, String description, String lockedDescription, int value, String iconUrl, boolean isLocked) {
         this.id = id;
         this.name = name;
         this.isSecret = isSecret;
@@ -20,6 +21,7 @@ public class Achievement {
         this.lockedDescription = lockedDescription;
         this.value = value;
         this.iconUrl = iconUrl;
+        this.isLocked = isLocked;
     }
 
     public long getId() {
@@ -76,5 +78,13 @@ public class Achievement {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public boolean isLocked() {
+        return isLocked;
+    }
+
+    public void setLocked(boolean isLocked) {
+        this.isLocked = isLocked;
     }
 }

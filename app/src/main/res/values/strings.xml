@@ -11,4 +11,6 @@
     <string name="gamerscore_content_description">Gamerscore icon</string>
     <string name="cover_art_content_description">Game cover art</string>
     <string name="achievement_content_description">Achievement image</string>
+    <string name="secret_achievement">Secret Achievement</string>
+    <string name="secret_achievement_description">This achievement is secret</string>
 </resources>

@@ -18,6 +18,6 @@ public class TestSetup {
     }
 
     public static Achievement createAchievement() {
-        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url");
+        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url", false);
     }
 }

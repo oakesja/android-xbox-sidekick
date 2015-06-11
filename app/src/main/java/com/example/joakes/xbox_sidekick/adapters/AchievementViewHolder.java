@@ -25,6 +25,8 @@ public class AchievementViewHolder extends RecyclerView.ViewHolder {
     public TextView achievementDescriptionTextview;
     @InjectView(R.id.achievement_unlocked_textview)
     public TextView achievementUnlockedTextview;
+    @InjectView(R.id.achievement_lock_imageview)
+    public ImageView lockImageView;
 
     public AchievementViewHolder(View itemView) {
         super(itemView);

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,10 @@ import java.util.ArrayList;
  */
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
     private ArrayList<Achievement> mAchievements;
+    private Context mContext;
 
-    public AchievementAdapter() {
+    public AchievementAdapter(Context context) {
+        mContext = context;
         mAchievements = new ArrayList<>();
     }
 
@@ -32,7 +35,8 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
     @Override
     public void onBindViewHolder(AchievementViewHolder holder, int position) {
         Achievement achievement = getAchievementAt(position);
-        new AchievementPresenter(achievement).present(holder);
+        WebService webService = new WebService(mContext);
+        new AchievementPresenter(achievement, webService).present(holder);
     }
 
     @Override

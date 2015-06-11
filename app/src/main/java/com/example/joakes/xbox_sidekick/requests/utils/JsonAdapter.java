@@ -5,7 +5,6 @@ import android.util.Log;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
-import com.google.gson.JsonObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +54,8 @@ public class JsonAdapter {
                 getFieldAsString(json, "description"),
                 getFieldAsString(json, "lockedDescription"),
                 getAchievementValue(json),
-                getAchievementIcon(json));
+                getAchievementIcon(json),
+                getIsLocked(json));
     }
 
     private String getFieldAsString(JSONObject json, String fieldName) {
@@ -97,5 +97,10 @@ public class JsonAdapter {
             Log.e(getClass().getName(), String.format("Could not get achievement value for %s : %s", json.toString(), e));
             return -1;
         }
+    }
+
+    private boolean getIsLocked(JSONObject json) {
+        String state = getFieldAsString(json, "progressState");
+        return !state.equals("Achieved");
     }
 }
