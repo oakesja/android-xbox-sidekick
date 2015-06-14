@@ -1,5 +1,8 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.test.AndroidTestCase;
+
+import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import org.junit.Before;
@@ -12,48 +15,43 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Created by joakes on 6/2/15.
  */
-public class GameListFilterTest {
+public class GameListFilterTest extends AndroidTestCase {
     private ArrayList<XboxGame> xboxGames;
     private ArrayList<XboxGame> emptyList;
 
-    @Before
+    @Override
     public void setUp() throws Exception {
-        XboxGame xboxGame = new XboxGame(1, "game", 10, 100, 100, 1000, XboxGame.XBOX_360);
+        XboxGame xboxGame = TestSetup.createGame();
         xboxGames = new ArrayList<>();
         xboxGames.add(xboxGame);
         emptyList = new ArrayList<>();
     }
 
-    @Test
     public void testFilterOutEmptyName() {
         xboxGames.get(0).setName("");
         ArrayList actual = new GameListFilter(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
-    @Test
     public void testFilterOutNullName() {
         xboxGames.get(0).setName(null);
         ArrayList actual = new GameListFilter(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
-    @Test
     public void testFilterOutMissingEarnedGamerscore() {
         xboxGames.get(0).setEarnedGamerscore(-1);
         ArrayList actual = new GameListFilter(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
-    @Test
     public void testFilterOutNoEarnedGamerscore() {
         xboxGames.get(0).setEarnedGamerscore(0);
         ArrayList actual = new GameListFilter(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
-    @Test
-    public void doNotFilterOutValidGames() {
+    public void testDoNotFilterOutValidGames() {
         ArrayList actual = new GameListFilter(xboxGames).filter();
         assertEquals(xboxGames, actual);
     }

@@ -124,4 +124,31 @@ public class XboxGame implements Parcelable {
     public void setType(int type) {
         this.type = type;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        XboxGame xboxGame = (XboxGame) o;
+        if (getTitleId() != xboxGame.getTitleId()) return false;
+        if (getEarnedAchievements() != xboxGame.getEarnedAchievements()) return false;
+        if (getTotalAchivements() != xboxGame.getTotalAchivements()) return false;
+        if (getEarnedGamerscore() != xboxGame.getEarnedGamerscore()) return false;
+        if (getTotalGamerscore() != xboxGame.getTotalGamerscore()) return false;
+        if (getType() != xboxGame.getType()) return false;
+        return getName().equals(xboxGame.getName());
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getTitleId() ^ (getTitleId() >>> 32));
+        result = 31 * result + getName().hashCode();
+        result = 31 * result + getEarnedAchievements();
+        result = 31 * result + getTotalAchivements();
+        result = 31 * result + getEarnedGamerscore();
+        result = 31 * result + getTotalGamerscore();
+        result = 31 * result + getType();
+        return result;
+    }
 }

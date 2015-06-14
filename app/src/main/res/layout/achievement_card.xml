@@ -24,9 +24,9 @@
                 android:layout_height="?android:attr/listPreferredItemHeight"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
+                android:layout_marginBottom="5dp"
                 android:contentDescription="@string/achievement_content_description"
-                android:scaleType="fitXY"
-                android:layout_marginBottom="5dp"/>
+                android:scaleType="fitXY" />
 
             <com.example.joakes.xbox_sidekick.views.ImageTextView
                 android:id="@+id/achievement_score_image_textview"
@@ -38,11 +38,12 @@
 
             <ImageView
                 android:id="@+id/achievement_lock_imageview"
-                android:layout_width="15dp"
-                android:layout_height="15dp"
+                android:layout_width="12dp"
+                android:layout_height="12dp"
                 android:layout_alignEnd="@id/achievement_imageview"
                 android:layout_alignRight="@id/achievement_imageview"
-                android:layout_below="@id/achievement_imageview" />
+                android:layout_below="@id/achievement_imageview"
+                android:layout_marginTop="3dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -59,13 +60,13 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:lines="1"
-                    android:textStyle="bold"/>
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/achievement_description_textview"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:lines="3"/>
+                    android:lines="3" />
 
                 <TextView
                     android:id="@+id/achievement_unlocked_textview"

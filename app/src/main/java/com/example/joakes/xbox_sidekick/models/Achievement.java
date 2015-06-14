@@ -87,4 +87,38 @@ public class Achievement {
     public void setLocked(boolean isLocked) {
         this.isLocked = isLocked;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Achievement that = (Achievement) o;
+
+        if (getId() != that.getId()) return false;
+        if (isSecret() != that.isSecret()) return false;
+        if (getValue() != that.getValue()) return false;
+        if (isLocked() != that.isLocked()) return false;
+        if (getName() != null ? !getName().equals(that.getName()) : that.getName() != null)
+            return false;
+        if (getDescription() != null ? !getDescription().equals(that.getDescription()) : that.getDescription() != null)
+            return false;
+        if (getLockedDescription() != null ? !getLockedDescription().equals(that.getLockedDescription()) : that.getLockedDescription() != null)
+            return false;
+        return !(getIconUrl() != null ? !getIconUrl().equals(that.getIconUrl()) : that.getIconUrl() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) (getId() ^ (getId() >>> 32));
+        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
+        result = 31 * result + (isSecret() ? 1 : 0);
+        result = 31 * result + (getDescription() != null ? getDescription().hashCode() : 0);
+        result = 31 * result + (getLockedDescription() != null ? getLockedDescription().hashCode() : 0);
+        result = 31 * result + getValue();
+        result = 31 * result + (getIconUrl() != null ? getIconUrl().hashCode() : 0);
+        result = 31 * result + (isLocked() ? 1 : 0);
+        return result;
+    }
 }

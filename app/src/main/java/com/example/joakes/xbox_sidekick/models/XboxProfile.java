@@ -37,4 +37,26 @@ public class XboxProfile {
     public void setGamerPictureUrl(String gamerPictureUrl) {
         this.gamerPictureUrl = gamerPictureUrl;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        XboxProfile profile = (XboxProfile) o;
+
+        if (getGamerscore() != profile.getGamerscore()) return false;
+        if (getGamertag() != null ? !getGamertag().equals(profile.getGamertag()) : profile.getGamertag() != null)
+            return false;
+        return !(getGamerPictureUrl() != null ? !getGamerPictureUrl().equals(profile.getGamerPictureUrl()) : profile.getGamerPictureUrl() != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getGamertag() != null ? getGamertag().hashCode() : 0;
+        result = 31 * result + getGamerscore();
+        result = 31 * result + (getGamerPictureUrl() != null ? getGamerPictureUrl().hashCode() : 0);
+        return result;
+    }
 }
