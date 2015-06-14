@@ -1,5 +1,7 @@
 package com.example.joakes.xbox_sidekick.models;
 
+import java.util.Date;
+
 /**
  * Created by joakes on 6/4/15.
  */
@@ -12,8 +14,9 @@ public class Achievement {
     private int value;
     private String iconUrl;
     private boolean isLocked;
+    private Date timeUnlocked;
 
-    public Achievement(long id, String name, boolean isSecret, String description, String lockedDescription, int value, String iconUrl, boolean isLocked) {
+    public Achievement(long id, String name, boolean isSecret, String description, String lockedDescription, int value, String iconUrl, boolean isLocked, Date timeUnlocked) {
         this.id = id;
         this.name = name;
         this.isSecret = isSecret;
@@ -22,6 +25,7 @@ public class Achievement {
         this.value = value;
         this.iconUrl = iconUrl;
         this.isLocked = isLocked;
+        this.timeUnlocked = timeUnlocked;
     }
 
     public long getId() {
@@ -88,6 +92,14 @@ public class Achievement {
         this.isLocked = isLocked;
     }
 
+    public Date getTimeUnlocked() {
+        return timeUnlocked;
+    }
+
+    public void setTimeUnlocked(Date timeUnlocked) {
+        this.timeUnlocked = timeUnlocked;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,7 +117,9 @@ public class Achievement {
             return false;
         if (getLockedDescription() != null ? !getLockedDescription().equals(that.getLockedDescription()) : that.getLockedDescription() != null)
             return false;
-        return !(getIconUrl() != null ? !getIconUrl().equals(that.getIconUrl()) : that.getIconUrl() != null);
+        if (getIconUrl() != null ? !getIconUrl().equals(that.getIconUrl()) : that.getIconUrl() != null)
+            return false;
+        return !(getTimeUnlocked() != null ? !getTimeUnlocked().equals(that.getTimeUnlocked()) : that.getTimeUnlocked() != null);
 
     }
 
@@ -119,6 +133,7 @@ public class Achievement {
         result = 31 * result + getValue();
         result = 31 * result + (getIconUrl() != null ? getIconUrl().hashCode() : 0);
         result = 31 * result + (isLocked() ? 1 : 0);
+        result = 31 * result + (getTimeUnlocked() != null ? getTimeUnlocked().hashCode() : 0);
         return result;
     }
 }

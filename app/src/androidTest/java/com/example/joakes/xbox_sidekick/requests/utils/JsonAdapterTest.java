@@ -10,6 +10,8 @@ import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Date;
+
 /**
  * Created by joakes on 6/14/15.
  */
@@ -54,7 +56,8 @@ public class JsonAdapterTest extends AndroidTestCase {
                 "Find Yennefer of Vengerberg.",
                 15,
                 "http://images-eds.xboxlive.com/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIAbCDABRYREOfuoy2FOUr6jBmIGqp2iomsTK.Cz7APn6dX_VO8g7EjO9bVtm1wsWd&format=png",
-                false);
+                false,
+                new Date(1432007682520L));
         Achievement actual = jsonAdapter.toAchievement(json);
         assertEquals(expected, actual);
     }
@@ -69,7 +72,8 @@ public class JsonAdapterTest extends AndroidTestCase {
                 "Defeat an enemy unit",
                 3,
                 "http://image.xboxlive.com/global/t.545407e5/ach/0/15",
-                false);
+                false,
+                new Date(1393738410000L));
         Achievement actual = jsonAdapter.toAchievement(json);
         assertEquals(expected, actual);
     }

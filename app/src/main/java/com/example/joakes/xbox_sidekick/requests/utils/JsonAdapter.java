@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick.requests.utils;
 
+import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
@@ -9,6 +10,12 @@ import com.example.joakes.xbox_sidekick.models.XboxProfile;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created by joakes on 4/28/15.
@@ -57,7 +64,8 @@ public class JsonAdapter {
                 getFieldAsString(json, "lockedDescription"),
                 getAchievementValue(json),
                 getAchievementIcon(json),
-                getIsLocked(json));
+                getIsLocked(json),
+                getAchievementDate(json));
     }
 
     private String getFieldAsString(JSONObject json, String fieldName) {
@@ -122,5 +130,41 @@ public class JsonAdapter {
     private boolean getIsLocked(JSONObject json) {
         String state = getFieldAsString(json, "progressState");
         return state.isEmpty() ? !getFieldAsBoolean(json, "unlocked") : !state.equals("Achieved");
+    }
+
+    private Date getAchievementDate(JSONObject json) {
+        Date date = getXboxOneAchievementDate(json);
+        return date == null ? getXbox360AchievementDate(json) : date;
+    }
+
+    private Date getXboxOneAchievementDate(JSONObject json) {
+        String dateString = "";
+        try {
+            JSONObject progression = json.getJSONObject("progression");
+            dateString = progression.getString("timeUnlocked");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
+            dateFormat.setTimeZone(TimeZone.getTimeZone("EDT")); // TODO hack
+            return dateFormat.parse(dateString);
+        } catch (JSONException e) {
+            Log.e(mTag, String.format(mErrorFormat, "timeUnlocked", json));
+        } catch (ParseException e) {
+            Log.e(mTag, String.format("Could not parse date string: %s", dateString));
+        }
+        return null;
+    }
+
+    @Nullable
+    private Date getXbox360AchievementDate(JSONObject json) {
+        String dateString = "";
+        try {
+            dateString = json.getString("timeUnlocked");
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return dateFormat.parse(dateString);
+        } catch (JSONException e) {
+            Log.e(mTag, String.format(mErrorFormat, "timeUnlocked", json));
+        } catch (ParseException e) {
+            Log.e(mTag, String.format("Could not parse date string: %s", dateString));
+        }
+        return null;
     }
 }
