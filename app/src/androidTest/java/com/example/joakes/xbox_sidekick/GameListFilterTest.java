@@ -33,12 +33,6 @@ public class GameListFilterTest extends AndroidTestCase {
         assertEquals(emptyList, actual);
     }
 
-    public void testFilterOutNullName() {
-        xboxGames.get(0).setName(null);
-        ArrayList actual = new GameListFilter(xboxGames).filter();
-        assertEquals(emptyList, actual);
-    }
-
     public void testFilterOutMissingEarnedGamerscore() {
         xboxGames.get(0).setEarnedGamerscore(-1);
         ArrayList actual = new GameListFilter(xboxGames).filter();
