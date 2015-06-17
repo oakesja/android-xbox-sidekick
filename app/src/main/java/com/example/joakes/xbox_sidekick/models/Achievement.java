@@ -1,11 +1,14 @@
 package com.example.joakes.xbox_sidekick.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.Date;
 
 /**
  * Created by joakes on 6/4/15.
  */
-public class Achievement {
+public class Achievement implements Parcelable {
     private long id;
     private String name;
     private boolean isSecret;
@@ -27,6 +30,27 @@ public class Achievement {
         this.isLocked = isLocked;
         this.timeUnlocked = timeUnlocked;
     }
+
+    protected Achievement(Parcel in) {
+        id = in.readLong();
+        name = in.readString();
+        description = in.readString();
+        lockedDescription = in.readString();
+        value = in.readInt();
+        iconUrl = in.readString();
+    }
+
+    public static final Creator<Achievement> CREATOR = new Creator<Achievement>() {
+        @Override
+        public Achievement createFromParcel(Parcel in) {
+            return new Achievement(in);
+        }
+
+        @Override
+        public Achievement[] newArray(int size) {
+            return new Achievement[size];
+        }
+    };
 
     public long getId() {
         return id;
@@ -135,5 +159,20 @@ public class Achievement {
         result = 31 * result + (isLocked() ? 1 : 0);
         result = 31 * result + (getTimeUnlocked() != null ? getTimeUnlocked().hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeLong(id);
+        parcel.writeString(name);
+        parcel.writeString(description);
+        parcel.writeString(lockedDescription);
+        parcel.writeInt(value);
+        parcel.writeString(iconUrl);
     }
 }

@@ -13,4 +13,5 @@
     <string name="achievement_content_description">Achievement image</string>
     <string name="secret_achievement">Secret Achievement</string>
     <string name="secret_achievement_description">This achievement is secret</string>
+    <string name="by_author_formatted">By %s</string>
 </resources>

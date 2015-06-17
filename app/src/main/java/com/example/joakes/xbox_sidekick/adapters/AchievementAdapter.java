@@ -1,11 +1,13 @@
 package com.example.joakes.xbox_sidekick.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.joakes.xbox_sidekick.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
@@ -34,9 +36,17 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
 
     @Override
     public void onBindViewHolder(AchievementViewHolder holder, int position) {
-        Achievement achievement = getAchievementAt(position);
+        final Achievement achievement = getAchievementAt(position);
         WebService webService = new WebService(mContext);
         new AchievementPresenter(achievement, webService).present(holder);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(mContext, AchievementHelpActivity.class);
+                intent.putExtra(AchievementHelpActivity.ACHIEVEMENT, achievement);
+                mContext.startActivity(intent);
+            }
+        });
     }
 
     @Override
