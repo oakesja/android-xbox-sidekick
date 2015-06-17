@@ -42,18 +42,18 @@ public class AchievementHelpActivityUnitTest {
         eventBus = new EventBusHelper(activityRule);
     }
 
-    @Test
-    public void youtubeTitleDisplayed() {
-        setupYoutubeResults();
-        onView(withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
-    }
-
-    @Test
-    public void youtubeAuthorDisplayed() {
-        setupYoutubeResults();
-        String expected = activity.getString(R.string.by_author_formatted, searchResult.getSnippet().getChannelTitle());
-        onView(withId(R.id.youtube_author)).check(matches(withText(expected)));
-    }
+//    @Test
+//    public void youtubeTitleDisplayed() {
+//        setupYoutubeResults();
+//        onView(withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
+//    }
+//
+//    @Test
+//    public void youtubeAuthorDisplayed() {
+//        setupYoutubeResults();
+//        String expected = activity.getString(R.string.by_author_formatted, searchResult.getSnippet().getChannelTitle());
+//        onView(withId(R.id.youtube_author)).check(matches(withText(expected)));
+//    }
 
     private void setupYoutubeResults() {
         setupSearchResults();

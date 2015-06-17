@@ -45,34 +45,22 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:22.1.1'
     compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev140-1.20.0'
+    // fix version issue between main and test
     compile 'com.google.code.findbugs:jsr305:2.0.1'
+    compile 'com.android.support:support-annotations:22.2.0'
 
-    androidTestCompile('com.android.support.test:runner:0.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test:rules:0.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.1') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.2') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
-//    androidTestCompile('com.android.support.test.espresso:espresso-intents:2.1') {
-//        exclude group: 'com.android.support', module: 'support-annotations'
-//    }
-    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+
+    // Espresso
+    androidTestCompile 'com.android.support.test:runner:0.2'
+    androidTestCompile 'com.android.support.test:rules:0.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.1'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2'
+    androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.1'
+    // Mockito
+//    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
-    androidTestCompile('com.squareup.assertj:assertj-android:1.0.0') {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    }
+
+    androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
-
-//    androidTestCompile 'com.squareup.assertj:assertj-android-recyclerview-v7:1.0.0'
-//    androidTestCompile 'com.squareup.assertj:assertj-android-cardview-v7:1.0.0'
-    androidTestApt "com.google.dagger:dagger-compiler:2.0"
-
-    testCompile 'junit:junit:4.12'
 }
