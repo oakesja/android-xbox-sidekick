@@ -45,10 +45,10 @@ public class AchievementsActivityUnitTest {
         Intent intent = new Intent();
         intent.putExtra(AchievementsActivity.GAME, xboxGame);
         activityRule.launchActivity(intent);
-        activity = activityRule.getActivity();
         WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
         doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
         WebRequestQueue.setInstance(webRequestQueue);
+        activity = activityRule.getActivity();
         eventBus = new EventBusHelper(activityRule);
     }
 
