@@ -42,11 +42,9 @@ public class GameActivityUnitTest {
 
     @Before
     public void setUp() {
+        mockWebRequests();
         profile = TestSetup.createProfile();
         xboxGame = TestSetup.createGame();
-        WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
-        doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
-        WebRequestQueue.setInstance(webRequestQueue);
         activityRule.launchActivity(new Intent());
         gameActivity = activityRule.getActivity();
         eventBus = new EventBusHelper(activityRule);
@@ -55,40 +53,40 @@ public class GameActivityUnitTest {
     @Test
     public void profileNameDisplayed() {
         eventBus.post(profile);
-        assertThat(gameActivity.profileNameTextView).containsText(profile.getGamertag());
+        assertThat(gameActivity.gamertagView).containsText(profile.getGamertag());
     }
 
     @Test
     public void nullProfileName() {
         profile.setGamertag(null);
         eventBus.post(profile);
-        assertThat(gameActivity.profileNameTextView).isInvisible();
+        assertThat(gameActivity.gamertagView).isInvisible();
     }
 
     @Test
     public void emptyProfileName() {
         profile.setGamertag(null);
         eventBus.post(profile);
-        assertThat(gameActivity.profileNameTextView).isInvisible();
+        assertThat(gameActivity.gamertagView).isInvisible();
     }
 
     @Test
     public void profileGamerscoreDisplayed() {
         eventBus.post(profile);
-        assertThat(gameActivity.gamerscoreImageTextView).containsText("" + profile.getGamerscore());
+        assertThat(gameActivity.userGamerscoreView).containsText("" + profile.getGamerscore());
     }
 
     @Test
     public void invalidGamerscoreDisplayed() {
         profile.setGamerscore(-1);
         eventBus.post(profile);
-        assertThat(gameActivity.gamerscoreImageTextView).isGone();
+        assertThat(gameActivity.userGamerscoreView).isGone();
     }
 
     @Test
     public void profileGamerPictureDisplayed() {
         eventBus.post(profile);
-//        Mockito.verify(webService).loadImageFromUrl(gameActivity.gamerPicture, profile.getGamerPictureUrl());
+//        Mockito.verify(webService).loadImageFromUrl(gameActivity.userPictureView, profile.getGamerPictureUrl());
         onView(withId(R.id.gamer_picture)).check(matches(isDisplayed()));
     }
 
@@ -139,5 +137,11 @@ public class GameActivityUnitTest {
         ArrayList<XboxGame> games = new ArrayList<>();
         games.add(xboxGame);
         eventBus.post(games);
+    }
+
+    private void mockWebRequests() {
+        WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
+        doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
+        WebRequestQueue.setInstance(webRequestQueue);
     }
 }

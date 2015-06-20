@@ -5,15 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
-import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
@@ -23,13 +22,12 @@ import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
-public class GameActivity extends AppCompatActivity
-        implements RecyclerView.OnItemTouchListener {
+public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.games_list)
-    RecyclerView gamesList;
-    public ImageView gamerPicture;
-    public ImageTextView gamerscoreImageTextView;
-    public TextView profileNameTextView;
+    RecyclerView gamesListView;
+    public ImageView userPictureView;
+    public ImageTextView userGamerscoreView;
+    public TextView gamertagView;
     private static String REQUEST_TAG = "GAME_ACTIVITY";
     private XboxGameAdapter mAdapter;
     private EventBus mEventBus;
@@ -39,9 +37,9 @@ public class GameActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
-        makeRequests();
         setupRecyclerView();
         setRecyclerViewHeader();
+        makeRequests();
     }
 
     private void setupActivity() {
@@ -52,12 +50,17 @@ public class GameActivity extends AppCompatActivity
     }
 
     private void setupRecyclerView() {
-        gamesList.setHasFixedSize(true);
+        gamesListView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        gamesList.setLayoutManager(layoutManager);
+        gamesListView.setLayoutManager(layoutManager);
         mAdapter = new XboxGameAdapter(this);
-        gamesList.setAdapter(mAdapter);
-        gamesList.addOnItemTouchListener(this);
+        gamesListView.setAdapter(mAdapter);
+    }
+
+    private void setRecyclerViewHeader() {
+        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.profile_view);
+        header.attachTo(gamesListView);
+        setProfileViews();
     }
 
     private void makeRequests() {
@@ -65,22 +68,16 @@ public class GameActivity extends AppCompatActivity
         mWebService.getGameList(REQUEST_TAG);
     }
 
-    private void setRecyclerViewHeader() {
-        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.profile_view);
-        header.attachTo(gamesList);
-        setProfileViews();
-    }
-
     private void setProfileViews() {
-        gamerPicture = (ImageView) findViewById(R.id.gamer_picture);
-        gamerscoreImageTextView = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
-        profileNameTextView = (TextView) findViewById(R.id.profile_name_textview);
+        userPictureView = (ImageView) findViewById(R.id.gamer_picture);
+        userGamerscoreView = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
+        gamertagView = (TextView) findViewById(R.id.profile_name_textview);
     }
 
     public void onEvent(XboxProfile profile) {
-        mWebService.loadImageFromUrl(gamerPicture, profile.getGamerPictureUrl());
-        ensureStringForTextView(profileNameTextView, profile.getGamertag());
-        gamerscoreImageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
+        mWebService.loadImageFromUrl(userPictureView, profile.getGamerPictureUrl());
+        ensureStringForTextView(gamertagView, profile.getGamertag());
+        userGamerscoreView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
     }
 
     private void ensureStringForTextView(TextView textView, String string) {
@@ -95,23 +92,6 @@ public class GameActivity extends AppCompatActivity
         Log.i(REQUEST_TAG, "got game list" + games.toString());
         games = new GameListFilter(games).filter();
         mAdapter.addGames(games);
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
-//        View v = recyclerView.findChildViewUnder(motionEvent.getX(), motionEvent.getY());
-//        if (v != null) {
-//            int position = recyclerView.indexOfChild(v);
-//            XboxGame game = mAdapter.gameAt(position);
-//            Intent intent = new Intent(GameActivity.this, AchievementsActivity.class);
-//            intent.putExtra(AchievementsActivity.GAME, game);
-//            startActivity(intent);
-//        }
-        return false;
-    }
-
-    @Override
-    public void onTouchEvent(RecyclerView recyclerView, MotionEvent motionEvent) {
     }
 
     @Override
