@@ -5,9 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.google.api.services.youtube.model.SearchResult;
@@ -32,19 +32,10 @@ public class AchievementHelpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_achievement_help);
-        ButterKnife.inject(this);
-        ((BaseApplication) getApplication()).component().inject(this);
-        eventBus = EventBus.getDefault();
-
-        mAdapter = new AchievementHelpAdapter(this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
-
+        setupActivity();
+        setupAdapter();
         Achievement achievement = getIntent().getParcelableExtra(ACHIEVEMENT);
-        String searchTerms = achievement.getName() + " achievement xbox";
+        String searchTerms = String.format("%s achievement xbox", achievement.getName());
         mWebService.searchForYoutubeVideos(searchTerms);
     }
 
@@ -63,4 +54,20 @@ public class AchievementHelpActivity extends AppCompatActivity {
         super.onStop();
         eventBus.unregister(this);
     }
+
+    private void setupActivity() {
+        setContentView(R.layout.activity_achievement_help);
+        ButterKnife.inject(this);
+        ((BaseApplication) getApplication()).component().inject(this);
+        eventBus = EventBus.getDefault();
+    }
+
+    private void setupAdapter() {
+        mAdapter = new AchievementHelpAdapter(this, mWebService);
+        mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.setHasFixedSize(true);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        mRecyclerView.setLayoutManager(layoutManager);
+    }
+
 }
