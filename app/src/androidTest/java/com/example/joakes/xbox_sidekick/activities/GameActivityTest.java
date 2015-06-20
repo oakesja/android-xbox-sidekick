@@ -1,10 +1,11 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;

@@ -1,10 +1,12 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.content.Intent;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.android.volley.Request;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
@@ -88,7 +90,7 @@ public class GameActivityUnitTest {
     public void profileGamerPictureDisplayed() {
         eventBus.post(profile);
 //        Mockito.verify(webService).loadImageFromUrl(gameActivity.userPictureView, profile.getGamerPictureUrl());
-        onView(withId(R.id.gamer_picture)).check(matches(isDisplayed()));
+        onView(ViewMatchers.withId(R.id.gamer_picture)).check(matches(isDisplayed()));
     }
 
     @Test

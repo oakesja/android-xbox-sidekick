@@ -1,13 +1,15 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.widget.ImageView;
 
-import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
+import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.dagger.IComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
@@ -23,7 +25,6 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
@@ -68,7 +69,7 @@ public class AchievementHelpActivityUnitTest {
 
     @Test
     public void youtubeTitleDisplayed() {
-        onView(withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
+        onView(ViewMatchers.withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
     }
 
     @Test

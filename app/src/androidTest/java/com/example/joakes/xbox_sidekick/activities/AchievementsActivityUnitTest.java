@@ -1,13 +1,15 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.app.Instrumentation;
 import android.content.Intent;
 import android.support.test.InstrumentationRegistry;
+import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.android.volley.Request;
-import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
+import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.dagger.IComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
@@ -80,7 +82,7 @@ public class AchievementsActivityUnitTest {
     @Test
     public void achievementNameDisplayed() {
         setupAchievements();
-        onView(withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
+        onView(ViewMatchers.withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
     }
 
     @Test

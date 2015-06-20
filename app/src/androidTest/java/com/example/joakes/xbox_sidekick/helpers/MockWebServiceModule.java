@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.helpers;
 
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
