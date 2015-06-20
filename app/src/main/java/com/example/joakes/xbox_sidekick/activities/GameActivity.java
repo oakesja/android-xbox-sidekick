@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.example.joakes.xbox_sidekick.GameListFilter;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;

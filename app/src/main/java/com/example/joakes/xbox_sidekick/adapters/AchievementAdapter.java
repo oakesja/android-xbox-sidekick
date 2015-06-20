@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.joakes.xbox_sidekick.AchievementHelpActivity;
+import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;

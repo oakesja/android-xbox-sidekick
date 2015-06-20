@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.dagger;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

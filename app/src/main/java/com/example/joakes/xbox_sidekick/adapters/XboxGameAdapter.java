@@ -7,9 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.joakes.xbox_sidekick.AchievementsActivity;
+import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.GameViewHolder;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 
 import java.util.ArrayList;

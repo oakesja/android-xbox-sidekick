@@ -5,6 +5,7 @@ import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.android.volley.Request;
+import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.XboxGame;

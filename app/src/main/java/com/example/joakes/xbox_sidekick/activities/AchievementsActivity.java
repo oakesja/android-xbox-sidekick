@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +7,8 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;

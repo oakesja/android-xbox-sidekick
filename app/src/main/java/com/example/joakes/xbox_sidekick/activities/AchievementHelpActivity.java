@@ -1,10 +1,12 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
