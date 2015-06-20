@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick.adapters;
 
+import android.app.FragmentManager;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.YoutubeIntentGateway;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.google.api.services.youtube.model.SearchResult;
 
@@ -20,8 +22,10 @@ public class AchievementHelpAdapter extends RecyclerView.Adapter<AchievementHelp
     private ArrayList<SearchResult> mResults;
     private Context mContext;
     private WebService mWebService;
+    private FragmentManager mFragmentManager;
 
-    public AchievementHelpAdapter(Context context, WebService webService) {
+    public AchievementHelpAdapter(Context context, FragmentManager fragmentManager, WebService webService) {
+        mFragmentManager = fragmentManager;
         mResults = new ArrayList<>();
         mContext = context;
         mWebService = webService;
@@ -36,10 +40,16 @@ public class AchievementHelpAdapter extends RecyclerView.Adapter<AchievementHelp
 
     @Override
     public void onBindViewHolder(AchievementHelpViewHolder holder, int position) {
-        SearchResult result = getResult(position);
+        final SearchResult result = getResult(position);
         holder.youtubeTitle.setText(result.getSnippet().getTitle());
         holder.youtubeAuthor.setText(mContext.getString(R.string.by_author_formatted, result.getSnippet().getChannelTitle()));
         mWebService.loadImageFromUrl(holder.youtubeIcon, result.getSnippet().getThumbnails().getDefault().getUrl());
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoutubeIntentGateway.ensurePlayVideo(mContext, mFragmentManager, result.getId().getVideoId());
+            }
+        });
     }
 
     @Override

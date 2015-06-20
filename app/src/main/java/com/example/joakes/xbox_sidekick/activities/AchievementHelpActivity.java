@@ -63,7 +63,7 @@ public class AchievementHelpActivity extends AppCompatActivity {
     }
 
     private void setupAdapter() {
-        mAdapter = new AchievementHelpAdapter(this, mWebService);
+        mAdapter = new AchievementHelpAdapter(this, getFragmentManager(), mWebService);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
