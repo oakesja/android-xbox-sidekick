@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.example.joakes.xbox_sidekick.YoutubeVideoTask;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.requests.AchievementRequester;
 import com.example.joakes.xbox_sidekick.requests.ProfileRequester;
@@ -67,5 +68,9 @@ public class WebService {
 
     public void getAchievementsFor(XboxGame game, String requestTag) {
         new AchievementRequester(mContext, requestTag, game).makeRequest();
+    }
+
+    public void searchForYoutubeVideos(String searchTerms){
+        new YoutubeVideoTask(searchTerms).execute();
     }
 }

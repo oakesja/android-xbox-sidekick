@@ -1,27 +1,29 @@
 package com.example.joakes.xbox_sidekick;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.google.api.services.youtube.model.SearchResult;
 
-import java.util.ArrayList;
 import java.util.List;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class AchievementHelpActivity extends AppCompatActivity {
-    public static final String ACHIEVEMENT = "com.example.joakes.xbox_sidekick.achievement";
     @InjectView(R.id.achievement_help_list)
     RecyclerView mRecyclerView;
+    @Inject
+    WebService mWebService;
+    public static final String ACHIEVEMENT = "com.example.joakes.xbox_sidekick.achievement";
     private EventBus eventBus;
     private AchievementHelpAdapter mAdapter;
 
@@ -30,6 +32,7 @@ public class AchievementHelpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_achievement_help);
         ButterKnife.inject(this);
+        ((BaseApplication) getApplication()).component().inject(this);
         eventBus = EventBus.getDefault();
 
         mAdapter = new AchievementHelpAdapter(this);
@@ -39,7 +42,8 @@ public class AchievementHelpActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
 
         Achievement achievement = getIntent().getParcelableExtra(ACHIEVEMENT);
-        new YoutubeVideoTask(achievement.getName() + " achievement xbox").execute();
+        String searchTerms = achievement.getName() + " achievement xbox";
+        mWebService.searchForYoutubeVideos(searchTerms);
     }
 
     public void onEvent(List<SearchResult> results) {
@@ -56,24 +60,5 @@ public class AchievementHelpActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-    }
-
-    private class YoutubeVideoTask extends AsyncTask<Void, Void, List<SearchResult>> {
-        private String mSearchTerms;
-
-        public YoutubeVideoTask(String searchTerms){
-            mSearchTerms = searchTerms;
-        }
-
-        @Override
-        protected List<SearchResult> doInBackground(Void... voids) {
-            return new YoutubeGateway().searchForVideos(mSearchTerms);
-        }
-
-        @Override
-        protected void onPostExecute(List<SearchResult> searchResults) {
-            super.onPostExecute(searchResults);
-            EventBus.getDefault().post(searchResults);
-        }
     }
 }

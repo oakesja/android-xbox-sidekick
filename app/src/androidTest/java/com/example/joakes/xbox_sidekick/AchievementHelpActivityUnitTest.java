@@ -1,12 +1,15 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Achievement;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.google.api.services.youtube.model.SearchResult;
 import com.google.api.services.youtube.model.SearchResultSnippet;
 
@@ -14,8 +17,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -29,11 +37,24 @@ public class AchievementHelpActivityUnitTest {
     private EventBusHelper eventBus;
     private SearchResult searchResult;
 
+    @Singleton
+    @Component(modules = {MockWebServiceModule.class})
+    public interface TestComponent extends IComponent {
+    }
+
     @Rule
     public ActivityTestRule<AchievementHelpActivity> activityRule = new ActivityTestRule<>(AchievementHelpActivity.class, false, false);
 
     @Before
     public void setUp() {
+        WebService webService = Mockito.mock(WebService.class);
+        Mockito.doNothing().when(webService).searchForYoutubeVideos(Mockito.anyString());
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        BaseApplication app = (BaseApplication) instrumentation.getTargetContext().getApplicationContext();
+        TestComponent component = DaggerAchievementHelpActivityUnitTest_TestComponent.builder()
+                .mockWebServiceModule(new MockWebServiceModule(webService))
+                .build();
+        app.setComponent(component);
         achievement = TestSetup.createAchievement();
         Intent intent = new Intent();
         intent.putExtra(AchievementHelpActivity.ACHIEVEMENT, achievement);
@@ -42,18 +63,18 @@ public class AchievementHelpActivityUnitTest {
         eventBus = new EventBusHelper(activityRule);
     }
 
-//    @Test
-//    public void youtubeTitleDisplayed() {
-//        setupYoutubeResults();
-//        onView(withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
-//    }
-//
-//    @Test
-//    public void youtubeAuthorDisplayed() {
-//        setupYoutubeResults();
-//        String expected = activity.getString(R.string.by_author_formatted, searchResult.getSnippet().getChannelTitle());
-//        onView(withId(R.id.youtube_author)).check(matches(withText(expected)));
-//    }
+    @Test
+    public void youtubeTitleDisplayed() {
+        setupYoutubeResults();
+        onView(withId(R.id.youtube_title)).check(matches(withText(searchResult.getSnippet().getTitle())));
+    }
+
+    @Test
+    public void youtubeAuthorDisplayed() {
+        setupYoutubeResults();
+        String expected = activity.getString(R.string.by_author_formatted, searchResult.getSnippet().getChannelTitle());
+        onView(withId(R.id.youtube_author)).check(matches(withText(expected)));
+    }
 
     private void setupYoutubeResults() {
         setupSearchResults();

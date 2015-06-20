@@ -37,8 +37,8 @@ public class AchievementHelpAdapter extends RecyclerView.Adapter<AchievementHelp
         SearchResult result = getResult(position);
         holder.youtubeTitle.setText(result.getSnippet().getTitle());
         holder.youtubeAuthor.setText(mContext.getString(R.string.by_author_formatted, result.getSnippet().getChannelTitle()));
-        WebService webService = new WebService(mContext);
-        webService.loadImageFromUrl(holder.youtubeIcon, result.getSnippet().getThumbnails().getDefault().getUrl());
+//        WebService webService = new WebService(mContext);
+//        webService.loadImageFromUrl(holder.youtubeIcon, result.getSnippet().getThumbnails().getDefault().getUrl());
     }
 
     @Override

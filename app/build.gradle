@@ -48,7 +48,10 @@ dependencies {
     // fix version issue between main and test
     compile 'com.google.code.findbugs:jsr305:2.0.1'
     compile 'com.android.support:support-annotations:22.2.0'
-
+    // dagger
+    compile "com.google.dagger:dagger:2.0"
+    apt "com.google.dagger:dagger-compiler:2.0"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
 
     // Espresso
     androidTestCompile 'com.android.support.test:runner:0.2'
@@ -56,10 +59,13 @@ dependencies {
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-intents:2.2'
     // Mockito
-//    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
 
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
+
+    //dagger
+    androidTestCompile "com.google.dexmaker:dexmaker:1.2"
+    androidTestApt "com.google.dagger:dagger-compiler:2.0"
 }

@@ -17,23 +17,25 @@ import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import java.util.ArrayList;
 
+import javax.inject.Inject;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class AchievementsActivity extends AppCompatActivity {
-    public static final String GAME = "com.example.joakes.xbox_sidekick.game";
-    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
-
     @InjectView(R.id.achievement_list)
     RecyclerView achievementList;
+    @Inject
+    WebService mWebService;
+    public static final String GAME = "com.example.joakes.xbox_sidekick.game";
     public TextView gameNameTextView;
     public ImageTextView gameAchievementsImageTextview;
     public ImageTextView gamerscoreImageTextview;
     public CircularProgressBar gamerscoreProgressBar;
+    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
     private AchievementAdapter mAdapter;
     private EventBus eventBus;
-    private WebService mWebService;
     private XboxGame mGame;
 
     @Override
@@ -48,6 +50,7 @@ public class AchievementsActivity extends AppCompatActivity {
     private void setupActivity() {
         setContentView(R.layout.activity_achievements);
         ButterKnife.inject(this);
+        ((BaseApplication) getApplication()).component().inject(this);
         mGame = getIntent().getParcelableExtra(GAME);
         eventBus = EventBus.getDefault();
         mWebService = new WebService(this);

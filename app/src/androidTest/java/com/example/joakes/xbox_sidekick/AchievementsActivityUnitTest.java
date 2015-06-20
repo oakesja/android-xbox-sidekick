@@ -1,6 +1,8 @@
 package com.example.joakes.xbox_sidekick;
 
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 
@@ -10,6 +12,7 @@ import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -18,6 +21,10 @@ import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+
+import javax.inject.Singleton;
+
+import dagger.Component;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -35,21 +42,19 @@ public class AchievementsActivityUnitTest {
     private Achievement achievement;
     private EventBusHelper eventBus;
 
+    @Singleton
+    @Component(modules = {MockWebServiceModule.class})
+    public interface TestComponent extends IComponent {
+    }
+
     @Rule
     public ActivityTestRule<AchievementsActivity> activityRule = new ActivityTestRule<>(AchievementsActivity.class, false, false);
 
     @Before
     public void setUp() {
-        xboxGame = TestSetup.createGame();
-        achievement = TestSetup.createAchievement();
-        Intent intent = new Intent();
-        intent.putExtra(AchievementsActivity.GAME, xboxGame);
-        activityRule.launchActivity(intent);
-        WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
-        doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
-        WebRequestQueue.setInstance(webRequestQueue);
-        activity = activityRule.getActivity();
-        eventBus = new EventBusHelper(activityRule);
+        setupDagger();
+        stubWebRequests();
+        setupActivity();
     }
 
     @Test
@@ -85,6 +90,31 @@ public class AchievementsActivityUnitTest {
     public void achievementScoreDisplayed() {
         setupAchievements();
         onView(withId(R.id.achievement_score_image_textview)).check(matches(withText("" + achievement.getValue())));
+    }
+
+    private void setupDagger() {
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        BaseApplication app = (BaseApplication) instrumentation.getTargetContext().getApplicationContext();
+        TestComponent component = DaggerAchievementsActivityUnitTest_TestComponent.builder()
+                .mockWebServiceModule(new MockWebServiceModule(Mockito.mock(WebService.class)))
+                .build();
+        app.setComponent(component);
+    }
+
+    private void stubWebRequests() {
+        WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
+        doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
+        WebRequestQueue.setInstance(webRequestQueue);
+    }
+
+    private void setupActivity() {
+        xboxGame = TestSetup.createGame();
+        achievement = TestSetup.createAchievement();
+        eventBus = new EventBusHelper(activityRule);
+        Intent intent = new Intent();
+        intent.putExtra(AchievementsActivity.GAME, xboxGame);
+        activityRule.launchActivity(intent);
+        activity = activityRule.getActivity();
     }
 
     private void setupAchievements() {
