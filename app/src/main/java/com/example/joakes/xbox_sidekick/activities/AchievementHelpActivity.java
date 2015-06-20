@@ -4,12 +4,17 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.views.AspectRatioImageView;
+import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import com.google.api.services.youtube.model.SearchResult;
 
 import java.util.List;
@@ -28,15 +33,17 @@ public class AchievementHelpActivity extends AppCompatActivity {
     public static final String ACHIEVEMENT = "com.example.joakes.xbox_sidekick.achievement";
     private EventBus eventBus;
     private AchievementHelpAdapter mAdapter;
+    private Achievement mAchievement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
         setupAdapter();
-        Achievement achievement = getIntent().getParcelableExtra(ACHIEVEMENT);
-        String searchTerms = String.format("%s achievement xbox", achievement.getName());
+        mAchievement = getIntent().getParcelableExtra(ACHIEVEMENT);
+        String searchTerms = String.format("%s achievement xbox", mAchievement.getName());
         mWebService.searchForYoutubeVideos(searchTerms);
+        setAdapterHeader();
     }
 
     public void onEvent(List<SearchResult> results) {
@@ -70,4 +77,25 @@ public class AchievementHelpActivity extends AppCompatActivity {
         mRecyclerView.setLayoutManager(layoutManager);
     }
 
+    private void setAdapterHeader() {
+        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.achievement_info_view);
+        header.attachTo(mRecyclerView);
+        setProfileViews();
+    }
+
+    private void setProfileViews() {
+        ImageTextView achievementValue = (ImageTextView) findViewById(R.id.achievement_value);
+        TextView achievementName = (TextView) findViewById(R.id.achievement_name);
+        TextView achievementDescription = (TextView) findViewById(R.id.achievement_description);
+        AspectRatioImageView achievementIcon = (AspectRatioImageView) findViewById(R.id.achievement_icon);
+        achievementValue.setImageAndTextIfValid(mAchievement.getValue(), R.drawable.ic_gamerscore);
+        achievementName.setText(mAchievement.getName());
+        // TODO test and abstract out
+        if(mAchievement.isLocked()){
+            achievementDescription.setText(mAchievement.getLockedDescription());
+        } else {
+            achievementDescription.setText(mAchievement.getDescription());
+        }
+        mWebService.loadImageFromUrl(achievementIcon, mAchievement.getIconUrl());
+    }
 }
