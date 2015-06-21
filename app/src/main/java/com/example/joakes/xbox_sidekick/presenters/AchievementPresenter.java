@@ -14,6 +14,7 @@ import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 /**
  * Created by joakes on 6/9/15.
  */
+// TODO move all of this to AchievementPresenter2 minus the views
 public class AchievementPresenter {
     private Achievement mAchievement;
     private WebService mWebService;

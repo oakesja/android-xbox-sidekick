@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,8 +12,8 @@ import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.GameListFilter;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Profile;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
@@ -79,7 +78,7 @@ public class GameActivity extends AppCompatActivity {
         profileName = (TextView) findViewById(R.id.profile_name);
     }
 
-    public void onEvent(XboxProfile profile) {
+    public void onEvent(Profile profile) {
         webService.loadImageFromUrl(profilePicture, profile.getGamerPictureUrl());
         ensureStringForTextView(profileName, profile.getGamertag());
         profileGamerscore.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
@@ -93,7 +92,7 @@ public class GameActivity extends AppCompatActivity {
         }
     }
 
-    public void onEvent(ArrayList<XboxGame> games) {
+    public void onEvent(ArrayList<Game> games) {
         games = new GameListFilter(games).filter();
         adapter.addGames(games);
     }

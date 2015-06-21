@@ -1,18 +1,13 @@
 package com.example.joakes.xbox_sidekick.requests.utils;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.widget.ImageView;
 
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.example.joakes.xbox_sidekick.YoutubeVideoTask;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.AchievementRequester;
 import com.example.joakes.xbox_sidekick.requests.ProfileRequester;
-import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequester;
 import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequester;
 import com.squareup.picasso.Picasso;
@@ -66,7 +61,7 @@ public class WebService {
         WebRequestQueue.getInstance(mContext).addToQueue(imageRequest, "tag");*/
     }
 
-    public void getAchievementsFor(XboxGame game, String requestTag) {
+    public void getAchievementsFor(Game game, String requestTag) {
         new AchievementRequester(mContext, requestTag, game).makeRequest();
     }
 

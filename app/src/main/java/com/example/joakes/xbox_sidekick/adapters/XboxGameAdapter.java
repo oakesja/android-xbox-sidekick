@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -19,7 +19,7 @@ import java.util.Comparator;
  * Created by joakes on 5/11/15.
  */
 public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
-    private ArrayList<XboxGame> mGames;
+    private ArrayList<Game> mGames;
     private Context mContext;
 
     public XboxGameAdapter(Context context) {
@@ -36,7 +36,7 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
     @Override
     public void onBindViewHolder(GameViewHolder holder, int position) {
-        final XboxGame game = gameAt(position);
+        final Game game = gameAt(position);
         holder.gameNameTextView.setText(game.getName());
         holder.achievementsImageTextView.setImageAndTextIfValid(game.getEarnedAchievements(), game.getTotalAchivements(), R.drawable.ic_trophy);
         holder.scoreImageTextView.setImageAndTextIfValid(game.getEarnedGamerscore(), game.getTotalGamerscore(), R.drawable.ic_gamerscore);
@@ -56,12 +56,12 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         return mGames.size();
     }
 
-    public void addGames(ArrayList<XboxGame> games) {
+    public void addGames(ArrayList<Game> games) {
         mGames.addAll(games);
         // TODO extract to game manager that takes care of filtering and sorting and add tests
-        Collections.sort(mGames, new Comparator<XboxGame>() {
+        Collections.sort(mGames, new Comparator<Game>() {
             @Override
-            public int compare(XboxGame game1, XboxGame game2) {
+            public int compare(Game game1, Game game2) {
                 if (game1.getType() == game2.getType()) {
                     return 0;
                 } else if (game1.getType() < game2.getType()) {
@@ -73,7 +73,7 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         notifyDataSetChanged();
     }
 
-    public XboxGame gameAt(int position) {
+    public Game gameAt(int position) {
         return mGames.get(position);
     }
 }

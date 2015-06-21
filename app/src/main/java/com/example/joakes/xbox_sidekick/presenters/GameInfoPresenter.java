@@ -4,7 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
@@ -12,9 +12,9 @@ import com.example.joakes.xbox_sidekick.views.ImageTextView;
  * Created by joakes on 6/9/15.
  */
 public class GameInfoPresenter {
-    private XboxGame mGame;
+    private Game mGame;
 
-    public GameInfoPresenter(XboxGame game){
+    public GameInfoPresenter(Game game){
         mGame = game;
     }
 

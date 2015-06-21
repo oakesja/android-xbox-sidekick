@@ -15,7 +15,7 @@ import com.example.joakes.xbox_sidekick.dagger.IComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
@@ -43,7 +43,7 @@ import static org.mockito.Mockito.mock;
 @RunWith(AndroidJUnit4.class)
 public class AchievementsActivityUnitTest {
     private AchievementsActivity activity;
-    private XboxGame xboxGame;
+    private Game xboxGame;
     private Achievement achievement;
     private EventBusHelper eventBus;
 

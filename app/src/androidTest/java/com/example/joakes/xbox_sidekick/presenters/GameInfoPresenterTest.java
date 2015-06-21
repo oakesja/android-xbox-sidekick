@@ -4,7 +4,7 @@ import android.test.AndroidTestCase;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
@@ -20,7 +20,7 @@ public class GameInfoPresenterTest extends AndroidTestCase {
     private ImageTextView gameAchievementsImageTextview;
     private ImageTextView gamerscoreImageTextview;
     private CircularProgressBar gamerscoreProgressBar;
-    private XboxGame xboxGame;
+    private Game xboxGame;
 
     @Override
     protected void setUp() throws Exception {

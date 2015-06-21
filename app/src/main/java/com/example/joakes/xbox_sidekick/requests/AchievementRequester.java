@@ -6,7 +6,7 @@ import android.util.Log;
 import com.android.volley.VolleyError;
 import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.utils.JSONArrayRequester;
 import com.example.joakes.xbox_sidekick.requests.utils.XboxApiHeaders;
 
@@ -22,11 +22,11 @@ import de.greenrobot.event.EventBus;
  */
 public class AchievementRequester extends JSONArrayRequester {
 
-    public AchievementRequester(Context context, String tag, XboxGame game) {
+    public AchievementRequester(Context context, String tag, Game game) {
         super(context, getUrl(game), tag, XboxApiHeaders.getHeaders());
     }
 
-    private static String getUrl(XboxGame game) {
+    private static String getUrl(Game game) {
         return "https://xboxapi.com/v2/2533274912330216/achievements/" + game.getTitleId();
     }
 

@@ -45,7 +45,6 @@ public class AchievementPresenter2Test extends AndroidTestCase {
         achievement.setLocked(true);
         achievement.setIsSecret(true);
         assertEquals(achievement.getLockedDescription(), createPresenter().descriptionIgnoreSecret());
-
     }
 
     private AchievementPresenter2 createPresenter() {

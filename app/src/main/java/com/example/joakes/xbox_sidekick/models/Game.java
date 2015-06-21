@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by joakes on 5/11/15.
  */
-public class XboxGame implements Parcelable {
+public class Game implements Parcelable {
     public static final int XBOX_360 = 360;
     public static final int XBOX_ONE = 720;
 
@@ -18,10 +18,10 @@ public class XboxGame implements Parcelable {
     private int totalGamerscore;
     private int type;
 
-    public XboxGame() {
+    public Game() {
     }
 
-    public XboxGame(long titleId, String name, int earnedAchievements, int totalAchivements, int earnedGamerscore, int totalGamerscore, int type) {
+    public Game(long titleId, String name, int earnedAchievements, int totalAchivements, int earnedGamerscore, int totalGamerscore, int type) {
         this.titleId = titleId;
         this.name = name;
         this.earnedAchievements = earnedAchievements;
@@ -31,7 +31,7 @@ public class XboxGame implements Parcelable {
         this.type = type;
     }
 
-    private XboxGame(Parcel in) {
+    private Game(Parcel in) {
         titleId = in.readLong();
         name = in.readString();
         earnedAchievements = in.readInt();
@@ -57,15 +57,15 @@ public class XboxGame implements Parcelable {
         return 0;
     }
 
-    public static final Creator<XboxGame> CREATOR = new Creator<XboxGame>() {
+    public static final Creator<Game> CREATOR = new Creator<Game>() {
         @Override
-        public XboxGame createFromParcel(Parcel in) {
-            return new XboxGame(in);
+        public Game createFromParcel(Parcel in) {
+            return new Game(in);
         }
 
         @Override
-        public XboxGame[] newArray(int size) {
-            return new XboxGame[size];
+        public Game[] newArray(int size) {
+            return new Game[size];
         }
     };
 
@@ -129,7 +129,7 @@ public class XboxGame implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        XboxGame xboxGame = (XboxGame) o;
+        Game xboxGame = (Game) o;
         if (getTitleId() != xboxGame.getTitleId()) return false;
         if (getEarnedAchievements() != xboxGame.getEarnedAchievements()) return false;
         if (getTotalAchivements() != xboxGame.getTotalAchivements()) return false;

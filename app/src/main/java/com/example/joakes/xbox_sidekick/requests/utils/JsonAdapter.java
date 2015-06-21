@@ -3,8 +3,8 @@ package com.example.joakes.xbox_sidekick.requests.utils;
 import android.util.Log;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Profile;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,33 +24,33 @@ public class JsonAdapter {
     private String tag = getClass().getName();
     private String errorFormat = "Could not parse %s from %s";
 
-    public XboxProfile toProfile(JSONObject json) {
-        return new XboxProfile(
+    public Profile toProfile(JSONObject json) {
+        return new Profile(
                 getFieldAsString(json, "Gamertag"),
                 getFieldAsInt(json, "Gamerscore"),
                 getFieldAsString(json, "GameDisplayPicRaw"));
     }
 
-    public XboxGame toXboxOneGame(JSONObject json) {
-        return new XboxGame(
+    public Game toXboxOneGame(JSONObject json) {
+        return new Game(
                 getFieldAsInt(json, "titleId"),
                 getFieldAsString(json, "name"),
                 getFieldAsInt(json, "earnedAchievements"),
                 -1,
                 getFieldAsInt(json, "currentGamerscore"),
                 getFieldAsInt(json, "maxGamerscore"),
-                XboxGame.XBOX_ONE);
+                Game.XBOX_ONE);
     }
 
-    public XboxGame toXbox360Game(JSONObject json) {
-        return new XboxGame(
+    public Game toXbox360Game(JSONObject json) {
+        return new Game(
                 getFieldAsInt(json, "titleId"),
                 getFieldAsString(json, "name"),
                 getFieldAsInt(json, "currentAchievements"),
                 getFieldAsInt(json, "totalAchievements"),
                 getFieldAsInt(json, "currentGamerscore"),
                 getFieldAsInt(json, "totalGamerscore"),
-                XboxGame.XBOX_360);
+                Game.XBOX_360);
     }
 
     public Achievement toAchievement(JSONObject json) {

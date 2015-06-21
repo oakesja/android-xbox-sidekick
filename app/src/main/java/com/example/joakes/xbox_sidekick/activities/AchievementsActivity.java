@@ -11,7 +11,7 @@ import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
@@ -38,7 +38,7 @@ public class AchievementsActivity extends AppCompatActivity {
     private final String REQUEST_TAG = getClass().getName();
     private AchievementAdapter adapter;
     private EventBus eventBus;
-    private XboxGame game;
+    private Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

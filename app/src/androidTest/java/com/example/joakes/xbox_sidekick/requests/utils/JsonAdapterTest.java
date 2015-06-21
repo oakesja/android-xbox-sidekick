@@ -4,8 +4,8 @@ import android.test.AndroidTestCase;
 
 import com.example.joakes.xbox_sidekick.helpers.JsonSetup;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Profile;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,23 +26,23 @@ public class JsonAdapterTest extends AndroidTestCase {
 
     public void testToXboxOneGame() throws JSONException {
         JSONObject json = new JSONObject(JsonSetup.xboxOneGameJson());
-        XboxGame expected = new XboxGame(1144039928L, "Halo: The Master Chief Collection", 114, -1, 1025, 6000, XboxGame.XBOX_ONE);
+        Game expected = new Game(1144039928L, "Halo: The Master Chief Collection", 114, -1, 1025, 6000, Game.XBOX_ONE);
         assertEquals(expected, jsonAdapter.toXboxOneGame(json));
     }
 
     public void testToXbox360() throws JSONException {
         JSONObject json = new JSONObject(JsonSetup.xbox360GameJson());
-        XboxGame expected = new XboxGame(1161889984L, "Dragon Age: Origins", 67, 76, 1440, 1750, XboxGame.XBOX_360);
+        Game expected = new Game(1161889984L, "Dragon Age: Origins", 67, 76, 1440, 1750, Game.XBOX_360);
         assertEquals(expected, jsonAdapter.toXbox360Game(json));
     }
 
     public void testToProfile() throws JSONException {
         JSONObject json = new JSONObject(JsonSetup.profileJson());
-        XboxProfile expected = new XboxProfile(
+        Profile expected = new Profile(
                 "PoizonOakes92",
                 37963,
                 "http://images-eds.xboxlive.com/image?url=z951ykn43p4FqWbbFvR2Ec.8vbDhj8G2Xe7JngaTToBrrCmIEEXHC9UNrdJ6P7KIAbCDABRYREOfuoy2FOUr6jBmIGqp2iomsTK.Cz7APn6dX_VO8g7EjO9bVtm1wsWd&format=png");
-        XboxProfile actual = jsonAdapter.toProfile(json);
+        Profile actual = jsonAdapter.toProfile(json);
         assertEquals(expected, actual);
     }
 

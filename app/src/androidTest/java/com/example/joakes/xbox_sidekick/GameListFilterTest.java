@@ -3,10 +3,7 @@ package com.example.joakes.xbox_sidekick;
 import android.test.AndroidTestCase;
 
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-
-import org.junit.Before;
-import org.junit.Test;
+import com.example.joakes.xbox_sidekick.models.Game;
 
 import java.util.ArrayList;
 
@@ -16,12 +13,12 @@ import static junit.framework.Assert.assertEquals;
  * Created by joakes on 6/2/15.
  */
 public class GameListFilterTest extends AndroidTestCase {
-    private ArrayList<XboxGame> xboxGames;
-    private ArrayList<XboxGame> emptyList;
+    private ArrayList<Game> xboxGames;
+    private ArrayList<Game> emptyList;
 
     @Override
     public void setUp() throws Exception {
-        XboxGame xboxGame = TestSetup.createGame();
+        Game xboxGame = TestSetup.createGame();
         xboxGames = new ArrayList<>();
         xboxGames.add(xboxGame);
         emptyList = new ArrayList<>();

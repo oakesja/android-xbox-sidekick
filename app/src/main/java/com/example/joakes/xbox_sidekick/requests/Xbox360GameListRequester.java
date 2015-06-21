@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.android.volley.VolleyError;
 import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.utils.JSONObjectRequester;
 import com.example.joakes.xbox_sidekick.requests.utils.XboxApiHeaders;
 
@@ -29,11 +29,11 @@ public class Xbox360GameListRequester extends JSONObjectRequester {
 
     @Override
     public void handleSuccess(JSONObject response) {
-        ArrayList<XboxGame> games = new ArrayList<>();
+        ArrayList<Game> games = new ArrayList<>();
         try {
             JSONArray jsonArray = response.getJSONArray("titles");
             for (int i = 0; i < jsonArray.length(); i++) {
-                XboxGame game = new JsonAdapter().toXbox360Game(jsonArray.getJSONObject(i));
+                Game game = new JsonAdapter().toXbox360Game(jsonArray.getJSONObject(i));
                 games.add(game);
             }
         } catch (JSONException e) {

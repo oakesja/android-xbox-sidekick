@@ -1,10 +1,9 @@
 package com.example.joakes.xbox_sidekick.helpers;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Profile;
 
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 /**
@@ -12,12 +11,12 @@ import java.util.GregorianCalendar;
  */
 public class TestSetup {
 
-    public static XboxGame createGame() {
-        return new XboxGame(1, "game", 10, 100, 100, 1000, XboxGame.XBOX_360);
+    public static Game createGame() {
+        return new Game(1, "game", 10, 100, 100, 1000, Game.XBOX_360);
     }
 
-    public static XboxProfile createProfile() {
-        return new XboxProfile("PoiZonOakes", 36243, "icon/url");
+    public static Profile createProfile() {
+        return new Profile("PoiZonOakes", 36243, "icon/url");
     }
 
     public static Achievement createAchievement() {

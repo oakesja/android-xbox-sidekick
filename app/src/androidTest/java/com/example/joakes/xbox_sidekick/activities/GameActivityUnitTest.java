@@ -9,8 +9,8 @@ import com.android.volley.Request;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
-import com.example.joakes.xbox_sidekick.models.XboxGame;
-import com.example.joakes.xbox_sidekick.models.XboxProfile;
+import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Profile;
 import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 
 import org.junit.Before;
@@ -34,9 +34,9 @@ import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class GameActivityUnitTest {
-    private XboxProfile profile;
+    private Profile profile;
     private GameActivity gameActivity;
-    private XboxGame xboxGame;
+    private Game xboxGame;
     private EventBusHelper eventBus;
 
     @Rule
@@ -136,7 +136,7 @@ public class GameActivityUnitTest {
     }
 
     private void setupGames() {
-        ArrayList<XboxGame> games = new ArrayList<>();
+        ArrayList<Game> games = new ArrayList<>();
         games.add(xboxGame);
         eventBus.post(games);
     }

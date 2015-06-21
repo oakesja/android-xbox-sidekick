@@ -3,12 +3,12 @@ package com.example.joakes.xbox_sidekick.models;
 /**
  * Created by joakes on 4/28/15.
  */
-public class XboxProfile {
+public class Profile {
     private String gamertag;
     private int gamerscore;
     private String gamerPictureUrl;
 
-    public XboxProfile(String gamertag, int gamerscore, String gamerPictureUrl) {
+    public Profile(String gamertag, int gamerscore, String gamerPictureUrl) {
         this.gamertag = gamertag;
         this.gamerscore = gamerscore;
         this.gamerPictureUrl = gamerPictureUrl;
@@ -43,7 +43,7 @@ public class XboxProfile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        XboxProfile profile = (XboxProfile) o;
+        Profile profile = (Profile) o;
 
         if (getGamerscore() != profile.getGamerscore()) return false;
         if (getGamertag() != null ? !getGamertag().equals(profile.getGamertag()) : profile.getGamertag() != null)

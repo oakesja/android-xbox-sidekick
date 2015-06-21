@@ -8,7 +8,6 @@ import com.example.joakes.xbox_sidekick.models.Achievement;
  */
 public class AchievementPresenter2 {
     private Achievement achievement;
-    private String tag = getClass().getName();
 
     public AchievementPresenter2(Achievement achievement) {
         this.achievement = achievement;
