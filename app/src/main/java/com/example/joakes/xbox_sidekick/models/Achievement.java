@@ -19,7 +19,9 @@ public class Achievement implements Parcelable {
     private boolean isLocked;
     private Date timeUnlocked;
 
-    public Achievement(long id, String name, boolean isSecret, String description, String lockedDescription, int value, String iconUrl, boolean isLocked, Date timeUnlocked) {
+    public Achievement(long id, String name, boolean isSecret, String description,
+                       String lockedDescription, int value, String iconUrl,
+                       boolean isLocked, Date timeUnlocked) {
         this.id = id;
         this.name = name;
         this.isSecret = isSecret;
