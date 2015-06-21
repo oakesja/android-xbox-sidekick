@@ -11,6 +11,7 @@ import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
+import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 import com.example.joakes.xbox_sidekick.views.AspectRatioImageView;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
@@ -45,22 +46,6 @@ public class AchievementHelpActivity extends AppCompatActivity {
         setAdapterHeader();
     }
 
-    public void onEvent(List<SearchResult> results) {
-        adapter.addSearchResults(results);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        eventBus.register(this);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        eventBus.unregister(this);
-    }
-
     private void setupActivity() {
         setContentView(R.layout.activity_achievement_help);
         ButterKnife.inject(this);
@@ -79,22 +64,37 @@ public class AchievementHelpActivity extends AppCompatActivity {
     private void setAdapterHeader() {
         RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.achievement_info);
         header.attachTo(recyclerView);
-        setProfileViews();
+        setHeaderViews();
     }
 
-    private void setProfileViews() {
+    private void setHeaderViews() {
+        AchievementPresenter2 presenter = new AchievementPresenter2(achievement);
         ImageTextView achievementValue = (ImageTextView) findViewById(R.id.achievement_value);
         TextView achievementName = (TextView) findViewById(R.id.achievement_name);
         TextView achievementDescription = (TextView) findViewById(R.id.achievement_description);
+        TextView achievementTime = (TextView) findViewById(R.id.achievement_unlocked);
         AspectRatioImageView achievementIcon = (AspectRatioImageView) findViewById(R.id.achievement_icon);
         achievementValue.setImageAndTextIfValid(achievement.getValue(), R.drawable.ic_gamerscore);
         achievementName.setText(achievement.getName());
-        // TODO test and abstract out
-        if(achievement.isLocked()){
-            achievementDescription.setText(achievement.getLockedDescription());
-        } else {
-            achievementDescription.setText(achievement.getDescription());
-        }
+        achievementDescription.setText(presenter.descriptionIgnoreSecret());
+        achievementTime.setText(presenter.unlockedTime());
         webService.loadImageFromUrl(achievementIcon, achievement.getIconUrl());
     }
+
+    public void onEvent(List<SearchResult> results) {
+        adapter.addSearchResults(results);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        eventBus.register(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        eventBus.unregister(this);
+    }
+
 }

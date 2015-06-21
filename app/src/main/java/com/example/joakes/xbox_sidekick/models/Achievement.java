@@ -41,6 +41,11 @@ public class Achievement implements Parcelable {
         lockedDescription = in.readString();
         value = in.readInt();
         iconUrl = in.readString();
+        isLocked = in.readInt() != 0;
+        isSecret = in.readInt() != 0;
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(in.readLong());
+        timeUnlocked = calendar;
     }
 
     public static final Creator<Achievement> CREATOR = new Creator<Achievement>() {
@@ -177,5 +182,10 @@ public class Achievement implements Parcelable {
         parcel.writeString(lockedDescription);
         parcel.writeInt(value);
         parcel.writeString(iconUrl);
+        parcel.writeInt((byte) (isLocked ? 1 : 0));
+        parcel.writeInt((byte) (isSecret ? 1 : 0));
+        if(timeUnlocked != null){
+            parcel.writeLong(timeUnlocked.getTimeInMillis());
+        }
     }
 }

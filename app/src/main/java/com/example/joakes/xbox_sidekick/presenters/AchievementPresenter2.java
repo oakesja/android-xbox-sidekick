@@ -20,4 +20,11 @@ public class AchievementPresenter2 {
         }
         return "Unlocked " + new DateConverter().toTimeAgo(achievement.getTimeUnlocked());
     }
+
+    public String descriptionIgnoreSecret() {
+        if(achievement.isLocked()){
+            return achievement.getLockedDescription();
+        }
+        return achievement.getDescription();
+    }
 }
