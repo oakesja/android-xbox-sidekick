@@ -82,23 +82,23 @@ public class AchievementsActivityUnitTest {
 
     @Test
     public void achievementName() {
-        onView(ViewMatchers.withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
+        onView(ViewMatchers.withId(R.id.achievement_name)).check(matches(withText(achievement.getName())));
     }
 
     @Test
     public void achievementDescription() {
-        onView(withId(R.id.achievement_description_textview)).check(matches(withText(achievement.getDescription())));
+        onView(withId(R.id.achievement_description)).check(matches(withText(achievement.getDescription())));
     }
 
     @Test
     public void achievementScore() {
-        onView(withId(R.id.achievement_score_image_textview)).check(matches(withText("" + achievement.getValue())));
+        onView(withId(R.id.achievement_score)).check(matches(withText("" + achievement.getValue())));
     }
     
     @Test
     public void achievementUnlockTime(){
         String text = "Unlocked on 10-16-2014";
-        onView(withId(R.id.achievement_unlocked_textview)).check(matches(withText(text)));
+        onView(withId(R.id.achievement_unlocked_time)).check(matches(withText(text)));
     }
 
     private void setupDagger() {

@@ -6,8 +6,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
-import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import com.robotium.solo.Solo;
 
@@ -39,18 +37,18 @@ public class GameActivityTest extends ActivityInstrumentationTestCase2<GameActiv
     public void testProfileVisible() {
         String profileName = "PoizonOakes92";
         Assert.assertTrue(solo.searchText(profileName));
-        assertTextView((TextView) solo.getView(R.id.gamerscore_image_textview)).hasAnyText();
+        assertTextView((TextView) solo.getView(R.id.game_score)).hasAnyText();
         assertThat(solo.getView(R.id.gamer_picture)).isVisible();
     }
 
     public void testGamesVisible() {
-        assertTextView((TextView) solo.getView(R.id.game_name_textview)).hasAnyText();
-        Assert.assertNotSame("", ((ImageTextView) solo.getView(R.id.gamerscore_image_textview)).getText());
-        assertTextView((TextView) solo.getView(R.id.game_achievements_image_textview)).hasAnyText();
+        assertTextView((TextView) solo.getView(R.id.game_name)).hasAnyText();
+        Assert.assertNotSame("", ((ImageTextView) solo.getView(R.id.game_score)).getText());
+        assertTextView((TextView) solo.getView(R.id.game_achievements)).hasAnyText();
     }
 
     public void testClickingOnGame(){
-        View v = solo.getView(R.id.game_name_textview, 0);
+        View v = solo.getView(R.id.game_name, 0);
         solo.clickOnView(v);
         solo.assertCurrentActivity("Should go to achievements activity", AchievementsActivity.class);
     }

@@ -30,7 +30,7 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.game_card, parent, false);
+                .inflate(R.layout.game, parent, false);
         return new GameViewHolder(v);
     }
 

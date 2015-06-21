@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
@@ -27,27 +26,27 @@ import de.greenrobot.event.EventBus;
 
 public class AchievementHelpActivity extends AppCompatActivity {
     @InjectView(R.id.achievement_help_list)
-    RecyclerView mRecyclerView;
+    RecyclerView recyclerView;
     @Inject
-    WebService mWebService;
+    WebService webService;
     public static final String ACHIEVEMENT = "com.example.joakes.xbox_sidekick.achievement";
     private EventBus eventBus;
-    private AchievementHelpAdapter mAdapter;
-    private Achievement mAchievement;
+    private AchievementHelpAdapter adapter;
+    private Achievement achievement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
         setupAdapter();
-        mAchievement = getIntent().getParcelableExtra(ACHIEVEMENT);
-        String searchTerms = String.format("%s achievement xbox", mAchievement.getName());
-        mWebService.searchForYoutubeVideos(searchTerms);
+        achievement = getIntent().getParcelableExtra(ACHIEVEMENT);
+        String searchTerms = String.format("%s achievement xbox", achievement.getName());
+        webService.searchForYoutubeVideos(searchTerms);
         setAdapterHeader();
     }
 
     public void onEvent(List<SearchResult> results) {
-        mAdapter.addSearchResults(results);
+        adapter.addSearchResults(results);
     }
 
     @Override
@@ -70,16 +69,16 @@ public class AchievementHelpActivity extends AppCompatActivity {
     }
 
     private void setupAdapter() {
-        mAdapter = new AchievementHelpAdapter(this, getFragmentManager(), mWebService);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setHasFixedSize(true);
+        adapter = new AchievementHelpAdapter(this, getFragmentManager(), webService);
+        recyclerView.setAdapter(adapter);
+        recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(layoutManager);
     }
 
     private void setAdapterHeader() {
-        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.achievement_info_view);
-        header.attachTo(mRecyclerView);
+        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.achievement_info);
+        header.attachTo(recyclerView);
         setProfileViews();
     }
 
@@ -88,14 +87,14 @@ public class AchievementHelpActivity extends AppCompatActivity {
         TextView achievementName = (TextView) findViewById(R.id.achievement_name);
         TextView achievementDescription = (TextView) findViewById(R.id.achievement_description);
         AspectRatioImageView achievementIcon = (AspectRatioImageView) findViewById(R.id.achievement_icon);
-        achievementValue.setImageAndTextIfValid(mAchievement.getValue(), R.drawable.ic_gamerscore);
-        achievementName.setText(mAchievement.getName());
+        achievementValue.setImageAndTextIfValid(achievement.getValue(), R.drawable.ic_gamerscore);
+        achievementName.setText(achievement.getName());
         // TODO test and abstract out
-        if(mAchievement.isLocked()){
-            achievementDescription.setText(mAchievement.getLockedDescription());
+        if(achievement.isLocked()){
+            achievementDescription.setText(achievement.getLockedDescription());
         } else {
-            achievementDescription.setText(mAchievement.getDescription());
+            achievementDescription.setText(achievement.getDescription());
         }
-        mWebService.loadImageFromUrl(achievementIcon, mAchievement.getIconUrl());
+        webService.loadImageFromUrl(achievementIcon, achievement.getIconUrl());
     }
 }

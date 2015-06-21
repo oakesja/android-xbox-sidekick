@@ -15,17 +15,17 @@ import butterknife.InjectView;
  * Created by joakes on 6/4/15.
  */
 public class AchievementViewHolder extends RecyclerView.ViewHolder {
-    @InjectView(R.id.achievement_imageview)
+    @InjectView(R.id.achievement_icon)
     public ImageView achievementImageview;
-    @InjectView(R.id.achievement_score_image_textview)
+    @InjectView(R.id.achievement_score)
     public ImageTextView achievementScoreImageTextview;
-    @InjectView(R.id.achievement_name_textview)
+    @InjectView(R.id.achievement_name)
     public TextView achievementNameTextview;
-    @InjectView(R.id.achievement_description_textview)
+    @InjectView(R.id.achievement_description)
     public TextView achievementDescriptionTextview;
-    @InjectView(R.id.achievement_unlocked_textview)
+    @InjectView(R.id.achievement_unlocked_time)
     public TextView achievementUnlockedTextview;
-    @InjectView(R.id.achievement_lock_imageview)
+    @InjectView(R.id.achievement_lock)
     public ImageView lockImageView;
 
     public AchievementViewHolder(View itemView) {

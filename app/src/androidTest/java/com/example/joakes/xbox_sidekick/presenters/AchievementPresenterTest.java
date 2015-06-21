@@ -28,7 +28,7 @@ public class AchievementPresenterTest extends AndroidTestCase {
     protected void setUp() throws Exception {
         super.setUp();
         achievement = TestSetup.createAchievement();
-        View v = LayoutInflater.from(getContext()).inflate(R.layout.achievement_card, null, false);
+        View v = LayoutInflater.from(getContext()).inflate(R.layout.achievement, null, false);
         holder = new AchievementViewHolder(v);
         webService = spy(WebService.class);
         doNothing().when(webService).loadImageFromUrl(holder.achievementImageview, achievement.getIconUrl());

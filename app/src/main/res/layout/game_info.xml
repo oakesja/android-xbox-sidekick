@@ -4,7 +4,7 @@
     android:layout_height="wrap_content">
 
     <com.example.joakes.xbox_sidekick.views.CircularProgressBar
-        android:id="@+id/gamerscore_progress_bar"
+        android:id="@+id/gamerscore_progress"
         android:layout_width="?android:listPreferredItemHeight"
         android:layout_height="?android:listPreferredItemHeight"
         android:layout_alignParentLeft="true"
@@ -17,24 +17,24 @@
         android:layout_centerVertical="true"
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
-        android:layout_toEndOf="@id/gamerscore_progress_bar"
-        android:layout_toRightOf="@id/gamerscore_progress_bar"
+        android:layout_toEndOf="@id/gamerscore_progress"
+        android:layout_toRightOf="@id/gamerscore_progress"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/game_name_textview"
+            android:id="@+id/game_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textStyle="bold" />
 
         <com.example.joakes.xbox_sidekick.views.ImageTextView
-            android:id="@+id/game_achievements_image_textview"
+            android:id="@+id/game_achievements"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
         <com.example.joakes.xbox_sidekick.views.ImageTextView
-            android:id="@+id/gamerscore_image_textview"
+            android:id="@+id/game_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

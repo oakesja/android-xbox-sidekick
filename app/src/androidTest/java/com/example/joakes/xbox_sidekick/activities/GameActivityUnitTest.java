@@ -7,7 +7,6 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.android.volley.Request;
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
@@ -56,61 +55,61 @@ public class GameActivityUnitTest {
     @Test
     public void profileNameDisplayed() {
         eventBus.post(profile);
-        assertThat(gameActivity.gamertagView).containsText(profile.getGamertag());
+        assertThat(gameActivity.profileName).containsText(profile.getGamertag());
     }
 
     @Test
     public void nullProfileName() {
         profile.setGamertag(null);
         eventBus.post(profile);
-        assertThat(gameActivity.gamertagView).isInvisible();
+        assertThat(gameActivity.profileName).isInvisible();
     }
 
     @Test
     public void emptyProfileName() {
         profile.setGamertag(null);
         eventBus.post(profile);
-        assertThat(gameActivity.gamertagView).isInvisible();
+        assertThat(gameActivity.profileName).isInvisible();
     }
 
     @Test
     public void profileGamerscoreDisplayed() {
         eventBus.post(profile);
-        assertThat(gameActivity.userGamerscoreView).containsText("" + profile.getGamerscore());
+        assertThat(gameActivity.profileGamerscore).containsText("" + profile.getGamerscore());
     }
 
     @Test
     public void invalidGamerscoreDisplayed() {
         profile.setGamerscore(-1);
         eventBus.post(profile);
-        assertThat(gameActivity.userGamerscoreView).isGone();
+        assertThat(gameActivity.profileGamerscore).isGone();
     }
 
     @Test
     public void profileGamerPictureDisplayed() {
         eventBus.post(profile);
-//        Mockito.verify(webService).loadImageFromUrl(gameActivity.userPictureView, profile.getGamerPictureUrl());
+//        Mockito.verify(webService).loadImageFromUrl(gameActivity.profilePicture, profile.getGamerPictureUrl());
         onView(ViewMatchers.withId(R.id.gamer_picture)).check(matches(isDisplayed()));
     }
 
     @Test
     public void gameNameDisplayed() {
         setupGames();
-        onView(withId(R.id.game_name_textview)).check(matches(withText(xboxGame.getName())));
+        onView(withId(R.id.game_name)).check(matches(withText(xboxGame.getName())));
     }
 
     @Test
     public void gameAchievementsDisplayed() {
         setupGames();
         String expected = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
-        onView(withId(R.id.game_achievements_image_textview)).check(matches(withText(expected)));
+        onView(withId(R.id.game_achievements)).check(matches(withText(expected)));
     }
 
     @Test
     public void gameAchievementsMissingEarned() {
         xboxGame.setEarnedAchievements(-1);
         setupGames();
-        onView(withId(R.id.game_achievements_image_textview)).check(matches(not(isDisplayed())));
+        onView(withId(R.id.game_achievements)).check(matches(not(isDisplayed())));
     }
 
     @Test
@@ -118,14 +117,14 @@ public class GameActivityUnitTest {
         xboxGame.setTotalAchivements(-1);
         setupGames();
         String text = "" + xboxGame.getEarnedAchievements();
-        onView(withId(R.id.game_achievements_image_textview)).check(matches(withText(text)));
+        onView(withId(R.id.game_achievements)).check(matches(withText(text)));
     }
 
     @Test
     public void gamerscoreDisplayed() {
         setupGames();
         String expected = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
-        onView(withId(R.id.game_score_image_textview)).check(matches(withText(expected)));
+        onView(withId(R.id.game_score)).check(matches(withText(expected)));
     }
 
     @Test
@@ -133,7 +132,7 @@ public class GameActivityUnitTest {
         xboxGame.setTotalGamerscore(-1);
         setupGames();
         String text = "" + xboxGame.getEarnedGamerscore();
-        onView(withId(R.id.game_score_image_textview)).check(matches(withText(text)));
+        onView(withId(R.id.game_score)).check(matches(withText(text)));
     }
 
     private void setupGames() {

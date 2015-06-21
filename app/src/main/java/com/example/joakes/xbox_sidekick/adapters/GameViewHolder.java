@@ -15,11 +15,11 @@ import butterknife.InjectView;
  * Created by joakes on 6/4/15.
  */
 public class GameViewHolder extends RecyclerView.ViewHolder {
-    @InjectView(R.id.game_name_textview)
+    @InjectView(R.id.game_name)
     TextView gameNameTextView;
-    @InjectView(R.id.game_achievements_image_textview)
+    @InjectView(R.id.game_achievements)
     ImageTextView achievementsImageTextView;
-    @InjectView(R.id.game_score_image_textview)
+    @InjectView(R.id.game_score)
     ImageTextView scoreImageTextView;
     @InjectView(R.id.game_imageview)
     ImageView gameImageView;

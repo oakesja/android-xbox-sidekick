@@ -25,7 +25,7 @@
         android:layout_toRightOf="@id/gamer_picture">
 
         <com.example.joakes.xbox_sidekick.views.ImageTextView
-            android:id="@+id/profile_name_textview"
+            android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -33,10 +33,10 @@
             android:textStyle="bold" />
 
         <com.example.joakes.xbox_sidekick.views.ImageTextView
-            android:id="@+id/gamerscore_image_textview"
+            android:id="@+id/profile_gamerscore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_name_textview"
+            android:layout_below="@id/profile_name"
             android:layout_gravity="center_vertical"
             android:singleLine="true" />
     </RelativeLayout>

@@ -35,6 +35,7 @@ public class AchievementsActivity extends AppCompatActivity {
     public ImageTextView gameAchievements;
     public ImageTextView gameScore;
     public CircularProgressBar gameProgress;
+    private final String REQUEST_TAG = getClass().getName();
     private AchievementAdapter adapter;
     private EventBus eventBus;
     private XboxGame game;
@@ -45,7 +46,7 @@ public class AchievementsActivity extends AppCompatActivity {
         setupActivity();
         setupRecyclerView();
         setRecyclerViewHeader();
-        webService.getAchievementsFor(game, getClass().getName());
+        webService.getAchievementsFor(game, REQUEST_TAG);
     }
 
     private void setupActivity() {
@@ -74,10 +75,10 @@ public class AchievementsActivity extends AppCompatActivity {
     }
 
     private void setGameInfoViews() {
-        gameName = (TextView) findViewById(R.id.game_name_textview);
-        gameAchievements = (ImageTextView) findViewById(R.id.game_achievements_image_textview);
-        gameScore = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
-        gameProgress = (CircularProgressBar) findViewById(R.id.gamerscore_progress_bar);
+        gameName = (TextView) findViewById(R.id.game_name);
+        gameAchievements = (ImageTextView) findViewById(R.id.game_achievements);
+        gameScore = (ImageTextView) findViewById(R.id.game_score);
+        gameProgress = (CircularProgressBar) findViewById(R.id.gamerscore_progress);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
@@ -94,6 +95,6 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-        webService.stop(getClass().toString());
+        webService.stop(REQUEST_TAG);
     }
 }
