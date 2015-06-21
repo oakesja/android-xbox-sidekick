@@ -51,7 +51,7 @@ public class DateConverterTest extends AndroidTestCase {
     public void testOver7DaysAgo(){
         calendar.setTimeInMillis(now - 86400000 * 8);
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-        String expected = formatter.format(calendar.getTime());
+        String expected = String.format("on %s", formatter.format(calendar.getTime()));
         assertEquals(expected, dateconverter.toTimeAgo(calendar));
     }
 

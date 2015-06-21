@@ -56,6 +56,6 @@ public class DateConverter {
 
     private String getDateString(GregorianCalendar date) {
         SimpleDateFormat formatter = new SimpleDateFormat("MM-dd-yyyy");
-        return formatter.format(date.getTime());
+        return String.format("on %s", formatter.format(date.getTime()));
     }
 }

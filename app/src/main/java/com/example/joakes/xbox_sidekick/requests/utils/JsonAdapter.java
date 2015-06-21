@@ -1,6 +1,5 @@
 package com.example.joakes.xbox_sidekick.requests.utils;
 
-import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.example.joakes.xbox_sidekick.models.Achievement;
@@ -14,17 +13,16 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
+import java.util.GregorianCalendar;
 import java.util.TimeZone;
 
 /**
  * Created by joakes on 4/28/15.
  */
 
-//TODO add test and log errors
 public class JsonAdapter {
-    private String mTag = getClass().getName();
-    private String mErrorFormat = "Could not parse %s from %s";
+    private String tag = getClass().getName();
+    private String errorFormat = "Could not parse %s from %s";
 
     public XboxProfile toProfile(JSONObject json) {
         return new XboxProfile(
@@ -72,7 +70,7 @@ public class JsonAdapter {
         try {
             return json.getString(fieldName);
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, fieldName, json));
+            Log.e(tag, String.format(errorFormat, fieldName, json));
             return "";
         }
     }
@@ -81,7 +79,7 @@ public class JsonAdapter {
         try {
             return json.getInt(fieldName);
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, fieldName, json));
+            Log.e(tag, String.format(errorFormat, fieldName, json));
             return -1;
         }
     }
@@ -90,7 +88,7 @@ public class JsonAdapter {
         try {
             return json.getBoolean(fieldName);
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, fieldName, json));
+            Log.e(tag, String.format(errorFormat, fieldName, json));
             return false;
         }
     }
@@ -106,7 +104,7 @@ public class JsonAdapter {
             JSONObject object = array.getJSONObject(0);
             return getFieldAsString(object, "url");
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, "xbox one achievement icon", json));
+            Log.e(tag, String.format(errorFormat, "xbox one achievement icon", json));
             return "";
         }
     }
@@ -122,7 +120,7 @@ public class JsonAdapter {
             JSONObject object = array.getJSONObject(0);
             return getFieldAsInt(object, "value");
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, "xbox one achievement value", json));
+            Log.e(tag, String.format(errorFormat, "xbox one achievement value", json));
             return -1;
         }
     }
@@ -132,39 +130,45 @@ public class JsonAdapter {
         return state.isEmpty() ? !getFieldAsBoolean(json, "unlocked") : !state.equals("Achieved");
     }
 
-    private Date getAchievementDate(JSONObject json) {
-        Date date = getXboxOneAchievementDate(json);
+    private GregorianCalendar getAchievementDate(JSONObject json) {
+        GregorianCalendar date = getXboxOneAchievementDate(json);
         return date == null ? getXbox360AchievementDate(json) : date;
     }
 
-    private Date getXboxOneAchievementDate(JSONObject json) {
+    private GregorianCalendar getXboxOneAchievementDate(JSONObject json) {
         String dateString = "";
         try {
             JSONObject progression = json.getJSONObject("progression");
             dateString = progression.getString("timeUnlocked");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSS'Z'");
             dateFormat.setTimeZone(TimeZone.getTimeZone("EDT")); // TODO hack
-            return dateFormat.parse(dateString);
+            return parseCalendar(dateString, dateFormat);
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, "timeUnlocked", json));
+            Log.e(tag, String.format(errorFormat, "timeUnlocked", json));
         } catch (ParseException e) {
-            Log.e(mTag, String.format("Could not parse date string: %s", dateString));
+            Log.e(tag, String.format("Could not parse date string: %s", dateString));
         }
         return null;
     }
 
-    @Nullable
-    private Date getXbox360AchievementDate(JSONObject json) {
+    private GregorianCalendar getXbox360AchievementDate(JSONObject json) {
         String dateString = "";
         try {
             dateString = json.getString("timeUnlocked");
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            return dateFormat.parse(dateString);
+            return parseCalendar(dateString, dateFormat);
         } catch (JSONException e) {
-            Log.e(mTag, String.format(mErrorFormat, "timeUnlocked", json));
+            Log.e(tag, String.format(errorFormat, "timeUnlocked", json));
         } catch (ParseException e) {
-            Log.e(mTag, String.format("Could not parse date string: %s", dateString));
+            Log.e(tag, String.format("Could not parse date string: %s", dateString));
         }
         return null;
+    }
+
+    private GregorianCalendar parseCalendar(String dateString, SimpleDateFormat dateFormat) throws ParseException {
+        Date date = dateFormat.parse(dateString);
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        return calendar;
     }
 }

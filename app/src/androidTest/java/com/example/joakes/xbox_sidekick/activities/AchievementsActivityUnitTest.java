@@ -53,7 +53,8 @@ public class AchievementsActivityUnitTest {
     }
 
     @Rule
-    public ActivityTestRule<AchievementsActivity> activityRule = new ActivityTestRule<>(AchievementsActivity.class, false, false);
+    public ActivityTestRule<AchievementsActivity> activityRule = 
+            new ActivityTestRule<>(AchievementsActivity.class, false, false);
 
     @Before
     public void setUp() {
@@ -63,38 +64,41 @@ public class AchievementsActivityUnitTest {
     }
 
     @Test
-    public void gameNameDisplayed() {
-        assertThat(activity.gameNameTextView).containsText(xboxGame.getName());
+    public void gameName() {
+        assertThat(activity.gameName).containsText(xboxGame.getName());
     }
 
     @Test
-    public void gameAchievementsDisplayed() {
+    public void gameAchievements() {
         String text = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
-        assertThat(activity.gameAchievementsImageTextview).containsText(text);
+        assertThat(activity.gameAchievements).containsText(text);
     }
 
     @Test
-    public void gameScoreDisplayed() {
+    public void gameScore() {
         String text = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
-        assertThat(activity.gamerscoreImageTextview).containsText(text);
+        assertThat(activity.gameScore).containsText(text);
     }
 
     @Test
-    public void achievementNameDisplayed() {
-        setupAchievements();
+    public void achievementName() {
         onView(ViewMatchers.withId(R.id.achievement_name_textview)).check(matches(withText(achievement.getName())));
     }
 
     @Test
-    public void achievementDescriptionDisplayed() {
-        setupAchievements();
+    public void achievementDescription() {
         onView(withId(R.id.achievement_description_textview)).check(matches(withText(achievement.getDescription())));
     }
 
     @Test
-    public void achievementScoreDisplayed() {
-        setupAchievements();
+    public void achievementScore() {
         onView(withId(R.id.achievement_score_image_textview)).check(matches(withText("" + achievement.getValue())));
+    }
+    
+    @Test
+    public void achievementUnlockTime(){
+        String text = "Unlocked on 10-16-2014";
+        onView(withId(R.id.achievement_unlocked_textview)).check(matches(withText(text)));
     }
 
     private void setupDagger() {
@@ -116,6 +120,11 @@ public class AchievementsActivityUnitTest {
         xboxGame = TestSetup.createGame();
         achievement = TestSetup.createAchievement();
         eventBus = new EventBusHelper(activityRule);
+        launchActivity();
+        setupAchievements();
+    }
+
+    private void launchActivity() {
         Intent intent = new Intent();
         intent.putExtra(AchievementsActivity.GAME, xboxGame);
         activityRule.launchActivity(intent);

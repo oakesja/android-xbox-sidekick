@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by joakes on 6/4/15.
@@ -17,11 +18,11 @@ public class Achievement implements Parcelable {
     private int value;
     private String iconUrl;
     private boolean isLocked;
-    private Date timeUnlocked;
+    private GregorianCalendar timeUnlocked;
 
     public Achievement(long id, String name, boolean isSecret, String description,
                        String lockedDescription, int value, String iconUrl,
-                       boolean isLocked, Date timeUnlocked) {
+                       boolean isLocked, GregorianCalendar timeUnlocked) {
         this.id = id;
         this.name = name;
         this.isSecret = isSecret;
@@ -118,11 +119,11 @@ public class Achievement implements Parcelable {
         this.isLocked = isLocked;
     }
 
-    public Date getTimeUnlocked() {
+    public GregorianCalendar getTimeUnlocked() {
         return timeUnlocked;
     }
 
-    public void setTimeUnlocked(Date timeUnlocked) {
+    public void setTimeUnlocked(GregorianCalendar timeUnlocked) {
         this.timeUnlocked = timeUnlocked;
     }
 

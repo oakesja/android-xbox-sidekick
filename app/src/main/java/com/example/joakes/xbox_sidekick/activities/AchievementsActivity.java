@@ -7,9 +7,9 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
 import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
-import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
@@ -29,16 +29,15 @@ public class AchievementsActivity extends AppCompatActivity {
     @InjectView(R.id.achievement_list)
     RecyclerView achievementList;
     @Inject
-    WebService mWebService;
+    WebService webService;
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
-    public TextView gameNameTextView;
-    public ImageTextView gameAchievementsImageTextview;
-    public ImageTextView gamerscoreImageTextview;
-    public CircularProgressBar gamerscoreProgressBar;
-    private static String REQUEST_TAG = "ACHIEVEMENT_ACTIVITY";
-    private AchievementAdapter mAdapter;
+    public TextView gameName;
+    public ImageTextView gameAchievements;
+    public ImageTextView gameScore;
+    public CircularProgressBar gameProgress;
+    private AchievementAdapter adapter;
     private EventBus eventBus;
-    private XboxGame mGame;
+    private XboxGame game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,42 +45,43 @@ public class AchievementsActivity extends AppCompatActivity {
         setupActivity();
         setupRecyclerView();
         setRecyclerViewHeader();
-        mWebService.getAchievementsFor(mGame, REQUEST_TAG);
+        webService.getAchievementsFor(game, getClass().getName());
     }
 
     private void setupActivity() {
         setContentView(R.layout.activity_achievements);
         ButterKnife.inject(this);
         ((BaseApplication) getApplication()).component().inject(this);
-        mGame = getIntent().getParcelableExtra(GAME);
+        game = getIntent().getParcelableExtra(GAME);
         eventBus = EventBus.getDefault();
-        mWebService = new WebService(this);
+        webService = new WebService(this);
     }
 
     private void setupRecyclerView() {
         achievementList.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         achievementList.setLayoutManager(layoutManager);
-        mAdapter = new AchievementAdapter(this);
-        achievementList.setAdapter(mAdapter);
+        adapter = new AchievementAdapter(this);
+        achievementList.setAdapter(adapter);
     }
 
     private void setRecyclerViewHeader() {
-        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.game_info_view);
+        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.game_info);
         header.attachTo(achievementList);
         setGameInfoViews();
-        new GameInfoPresenter(mGame).present(gameNameTextView, gameAchievementsImageTextview, gamerscoreImageTextview, gamerscoreProgressBar);
+        new GameInfoPresenter(game).present(gameName, gameAchievements,
+                gameScore, gameProgress);
     }
 
     private void setGameInfoViews() {
-        gameNameTextView = (TextView) findViewById(R.id.game_name_textview);
-        gameAchievementsImageTextview = (ImageTextView) findViewById(R.id.game_achievements_image_textview);
-        gamerscoreImageTextview = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
-        gamerscoreProgressBar = (CircularProgressBar) findViewById(R.id.gamerscore_progress_bar);
+        gameName = (TextView) findViewById(R.id.game_name_textview);
+        gameAchievements = (ImageTextView) findViewById(R.id.game_achievements_image_textview);
+        gameScore = (ImageTextView) findViewById(R.id.gamerscore_image_textview);
+        gameProgress = (CircularProgressBar) findViewById(R.id.gamerscore_progress_bar);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
-        mAdapter.addAchievements(achievements);
+        adapter.addAchievements(achievements);
     }
 
     @Override
@@ -94,6 +94,6 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onStop() {
         super.onStop();
         eventBus.unregister(this);
-        mWebService.stop(getClass().toString());
+        webService.stop(getClass().toString());
     }
 }

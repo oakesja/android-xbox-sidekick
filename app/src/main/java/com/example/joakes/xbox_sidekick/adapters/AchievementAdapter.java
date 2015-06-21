@@ -11,6 +11,7 @@ import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
+import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
 import java.util.ArrayList;
@@ -19,12 +20,12 @@ import java.util.ArrayList;
  * Created by joakes on 6/4/15.
  */
 public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHolder> {
-    private ArrayList<Achievement> mAchievements;
-    private Context mContext;
+    private ArrayList<Achievement> achievements;
+    private Context context;
 
     public AchievementAdapter(Context context) {
-        mContext = context;
-        mAchievements = new ArrayList<>();
+        this.context = context;
+        achievements = new ArrayList<>();
     }
 
     @Override
@@ -37,29 +38,31 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
     @Override
     public void onBindViewHolder(AchievementViewHolder holder, int position) {
         final Achievement achievement = getAchievementAt(position);
-        WebService webService = new WebService(mContext);
+        WebService webService = new WebService(context);
         new AchievementPresenter(achievement, webService).present(holder);
+        AchievementPresenter2 presenter = new AchievementPresenter2(achievement);
+        holder.achievementUnlockedTextview.setText(presenter.unlockedTime());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(mContext, AchievementHelpActivity.class);
+                Intent intent = new Intent(context, AchievementHelpActivity.class);
                 intent.putExtra(AchievementHelpActivity.ACHIEVEMENT, achievement);
-                mContext.startActivity(intent);
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mAchievements.size();
+        return achievements.size();
     }
 
     public void addAchievements(ArrayList<Achievement> achievements) {
-        mAchievements.addAll(achievements);
+        this.achievements.addAll(achievements);
         notifyDataSetChanged();
     }
 
     public Achievement getAchievementAt(int position) {
-        return mAchievements.get(position);
+        return achievements.get(position);
     }
 }

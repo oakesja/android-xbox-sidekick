@@ -5,6 +5,7 @@ import com.example.joakes.xbox_sidekick.models.XboxGame;
 import com.example.joakes.xbox_sidekick.models.XboxProfile;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 /**
  * Created by joakes on 6/3/15.
@@ -20,6 +21,8 @@ public class TestSetup {
     }
 
     public static Achievement createAchievement() {
-        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url", false, new Date());
+        GregorianCalendar date = new GregorianCalendar(2014, 9, 16);
+        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url",
+                false, date);
     }
 }
