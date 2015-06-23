@@ -25,7 +25,7 @@ public class GameInfoPresenterTest extends AndroidTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        xboxGame = TestSetup.createGame();
+        xboxGame = TestSetup.createXboxOneGame();
         gameNameTextView = new TextView(getContext());
         gameAchievementsImageTextview = new ImageTextView(getContext());
         gamerscoreImageTextview = new ImageTextView(getContext());

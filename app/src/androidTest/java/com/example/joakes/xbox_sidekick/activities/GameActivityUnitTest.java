@@ -1,17 +1,22 @@
 package com.example.joakes.xbox_sidekick.activities;
 
+import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.widget.ImageView;
 
-import com.android.volley.Request;
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
+import com.example.joakes.xbox_sidekick.dagger.IComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
+import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.models.Profile;
-import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
+import com.example.joakes.xbox_sidekick.requests.utils.WebService;
 
 import org.junit.Before;
 import org.junit.Rule;
@@ -21,129 +26,153 @@ import org.mockito.Mockito;
 
 import java.util.ArrayList;
 
+import javax.inject.Singleton;
+
+import dagger.Component;
+
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.click;
+import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
-import static org.assertj.android.api.Assertions.assertThat;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.allOf;
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class GameActivityUnitTest {
     private Profile profile;
-    private GameActivity gameActivity;
-    private Game xboxGame;
+    private GameActivity activity;
+    private Game xboxOneGame;
+    private Game xbox360Game;
     private EventBusHelper eventBus;
+    private WebService webService;
+
+    @Singleton
+    @Component(modules = {MockWebServiceModule.class})
+    public interface TestComponent extends IComponent {
+    }
 
     @Rule
     public ActivityTestRule<GameActivity> activityRule = new ActivityTestRule<>(GameActivity.class, false, false);
 
     @Before
     public void setUp() {
-        mockWebRequests();
+        mockWebService();
+        setupDagger();
+        setupActivity();
+    }
+
+    private void mockWebService() {
+        webService = mock(WebService.class);
+        doNothing().when(webService).getProfile(anyString());
+        doNothing().when(webService).getXbox360List(anyString());
+        doNothing().when(webService).getXboxOneList(anyString());
+        doNothing().when(webService).loadImageFromUrl(any(ImageView.class), anyString());
+    }
+
+    private void setupDagger() {
+        Instrumentation instrumentation = InstrumentationRegistry.getInstrumentation();
+        BaseApplication app = (BaseApplication) instrumentation.getTargetContext().getApplicationContext();
+        TestComponent component = DaggerGameActivityUnitTest_TestComponent.builder()
+                .mockWebServiceModule(new MockWebServiceModule(webService))
+                .build();
+        app.setComponent(component);
+    }
+
+    private void setupActivity() {
         profile = TestSetup.createProfile();
-        xboxGame = TestSetup.createGame();
-        activityRule.launchActivity(new Intent());
-        gameActivity = activityRule.getActivity();
+        xboxOneGame = TestSetup.createXboxOneGame();
+        xbox360Game = TestSetup.createXbox360Game();
         eventBus = new EventBusHelper(activityRule);
+        activityRule.launchActivity(new Intent());
+        activity = activityRule.getActivity();
     }
 
     @Test
-    public void profileNameDisplayed() {
-        eventBus.post(profile);
-        assertThat(gameActivity.profileName).containsText(profile.getGamertag());
+    public void profileName() {
+        setupProfile();
+        onView(withId(R.id.profile_name)).check(matches(withText(profile.getGamertag())));
     }
 
     @Test
-    public void nullProfileName() {
-        profile.setGamertag(null);
-        eventBus.post(profile);
-        assertThat(gameActivity.profileName).isInvisible();
+    public void profileGamerscore() {
+        setupProfile();
+        String text = "" + profile.getGamerscore();
+        onView(withId(R.id.profile_gamerscore)).check(matches(withText(text)));
     }
 
     @Test
-    public void emptyProfileName() {
-        profile.setGamertag(null);
-        eventBus.post(profile);
-        assertThat(gameActivity.profileName).isInvisible();
-    }
-
-    @Test
-    public void profileGamerscoreDisplayed() {
-        eventBus.post(profile);
-        assertThat(gameActivity.profileGamerscore).containsText("" + profile.getGamerscore());
-    }
-
-    @Test
-    public void invalidGamerscoreDisplayed() {
-        profile.setGamerscore(-1);
-        eventBus.post(profile);
-        assertThat(gameActivity.profileGamerscore).isGone();
-    }
-
-    @Test
-    public void profileGamerPictureDisplayed() {
-        eventBus.post(profile);
-//        Mockito.verify(webService).loadImageFromUrl(gameActivity.profilePicture, profile.getGamerPictureUrl());
+    public void profileGamerPicture() {
+        setupProfile();
+        Mockito.verify(webService).loadImageFromUrl(any(ImageView.class), eq(profile.getGamerPictureUrl()));
         onView(ViewMatchers.withId(R.id.gamer_picture)).check(matches(isDisplayed()));
     }
 
     @Test
-    public void gameNameDisplayed() {
-        setupGames();
-        onView(withId(R.id.game_name)).check(matches(withText(xboxGame.getName())));
+    public void headerTabs(){
+        String[] tabNames = activity.getResources().getStringArray(R.array.game_tabs);
+        for(String tabName: tabNames){
+            onView(withText(tabName)).check(matches(isDisplayed()));
+        }
+    }
+
+    private void setupProfile() {
+        eventBus.post(profile);
     }
 
     @Test
-    public void gameAchievementsDisplayed() {
+    public void gameName() {
         setupGames();
-        String expected = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
-        onView(withId(R.id.game_achievements)).check(matches(withText(expected)));
+        onView(allOf(withId(R.id.game_name), isDisplayed())).check(matches(withText(xboxOneGame.getName())));
     }
 
     @Test
-    public void gameAchievementsMissingEarned() {
-        xboxGame.setEarnedAchievements(-1);
+    public void gameAchievements() {
         setupGames();
-        onView(withId(R.id.game_achievements)).check(matches(not(isDisplayed())));
+        String expected = String.format("%d/%d", xboxOneGame.getEarnedAchievements(), xboxOneGame.getTotalAchivements());
+        onView(allOf(withId(R.id.game_achievements), isDisplayed())).check(matches(withText(expected)));
     }
 
     @Test
-    public void gameAchievementsMissingTotal() {
-        xboxGame.setTotalAchivements(-1);
+    public void gameScore() {
         setupGames();
-        String text = "" + xboxGame.getEarnedAchievements();
-        onView(withId(R.id.game_achievements)).check(matches(withText(text)));
+        String expected = String.format("%d/%d", xboxOneGame.getEarnedGamerscore(), xboxOneGame.getTotalGamerscore());
+        onView(allOf(withId(R.id.game_score), isDisplayed())).check(matches(withText(expected)));
     }
 
     @Test
-    public void gamerscoreDisplayed() {
+    public void swipeRightGoesTo360Games(){
         setupGames();
-        String expected = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
-        onView(withId(R.id.game_score)).check(matches(withText(expected)));
+        onView(withId(R.id.viewPager)).perform(swipeLeft());
+        assertOn360GameList();
     }
 
     @Test
-    public void gamerscoreMissingTotal() {
-        xboxGame.setTotalGamerscore(-1);
+    public void touchingXbox360TabGoesThere(){
         setupGames();
-        String text = "" + xboxGame.getEarnedGamerscore();
-        onView(withId(R.id.game_score)).check(matches(withText(text)));
+        String text = "Xbox 360";
+        onView(withText(text)).perform(click());
+        assertOn360GameList();
     }
 
     private void setupGames() {
-        ArrayList<Game> games = new ArrayList<>();
-        games.add(xboxGame);
-        eventBus.post(games);
+        sendGameListWith(xbox360Game);
+        sendGameListWith(xboxOneGame);
     }
 
-    private void mockWebRequests() {
-        WebRequestQueue webRequestQueue = mock(WebRequestQueue.class);
-        doNothing().when(webRequestQueue).addToQueue(Mockito.any(Request.class), anyString());
-        WebRequestQueue.setInstance(webRequestQueue);
+    private void assertOn360GameList() {
+        onView(allOf(withId(R.id.game_name), isDisplayed())).check(matches(withText(xbox360Game.getName())));
+    }
+
+    private void sendGameListWith(Game game) {
+        ArrayList<Game> games = new ArrayList<>();
+        games.add(game);
+        eventBus.post(games);
     }
 }

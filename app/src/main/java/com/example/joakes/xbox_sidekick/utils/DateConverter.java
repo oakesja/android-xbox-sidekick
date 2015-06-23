@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;

@@ -27,6 +27,11 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
         mContext = context;
     }
 
+    public XboxGameAdapter(Context context, ArrayList<Game> games) {
+        mGames = games;
+        mContext = context;
+    }
+
     @Override
     public GameViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())

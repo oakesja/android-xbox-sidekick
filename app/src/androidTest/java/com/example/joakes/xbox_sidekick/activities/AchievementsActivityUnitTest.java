@@ -117,7 +117,7 @@ public class AchievementsActivityUnitTest {
     }
 
     private void setupActivity() {
-        xboxGame = TestSetup.createGame();
+        xboxGame = TestSetup.createXboxOneGame();
         achievement = TestSetup.createAchievement();
         eventBus = new EventBusHelper(activityRule);
         launchActivity();

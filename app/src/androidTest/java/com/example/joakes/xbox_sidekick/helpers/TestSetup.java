@@ -11,8 +11,12 @@ import java.util.GregorianCalendar;
  */
 public class TestSetup {
 
-    public static Game createGame() {
-        return new Game(1, "game", 10, 100, 100, 1000, Game.XBOX_360);
+    public static Game createXboxOneGame() {
+        return new Game(1, "xbox one game", 10, 100, 100, 1000, Game.XBOX_ONE);
+    }
+
+    public static Game createXbox360Game() {
+        return new Game(2, "xbox 360 game", 1, 10, 10, 100, Game.XBOX_360);
     }
 
     public static Profile createProfile() {

@@ -18,7 +18,7 @@ public class GameListFilterTest extends AndroidTestCase {
 
     @Override
     public void setUp() throws Exception {
-        Game xboxGame = TestSetup.createGame();
+        Game xboxGame = TestSetup.createXboxOneGame();
         xboxGames = new ArrayList<>();
         xboxGames.add(xboxGame);
         emptyList = new ArrayList<>();

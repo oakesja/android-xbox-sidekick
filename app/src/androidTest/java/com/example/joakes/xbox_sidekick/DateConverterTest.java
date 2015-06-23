@@ -2,6 +2,9 @@ package com.example.joakes.xbox_sidekick;
 
 import android.test.AndroidTestCase;
 
+import com.example.joakes.xbox_sidekick.utils.CurrentTime;
+import com.example.joakes.xbox_sidekick.utils.DateConverter;
+
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 

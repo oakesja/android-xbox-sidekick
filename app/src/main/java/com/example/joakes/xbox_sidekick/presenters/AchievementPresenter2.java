@@ -1,6 +1,6 @@
 package com.example.joakes.xbox_sidekick.presenters;
 
-import com.example.joakes.xbox_sidekick.DateConverter;
+import com.example.joakes.xbox_sidekick.utils.DateConverter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 
 /**

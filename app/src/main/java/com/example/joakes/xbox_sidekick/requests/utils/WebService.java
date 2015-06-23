@@ -26,9 +26,12 @@ public class WebService {
         new ProfileRequester(mContext, requestTag).makeRequest();
     }
 
-    public void getGameList(String requestTag) {
-        new XboxOneGameListRequester(mContext, requestTag).makeRequest();
+    public void getXbox360List(String requestTag) {
         new Xbox360GameListRequester(mContext, requestTag).makeRequest();
+    }
+
+    public void getXboxOneList(String requestTag){
+        new XboxOneGameListRequester(mContext, requestTag).makeRequest();
     }
 
     public void stop(String tag) {
