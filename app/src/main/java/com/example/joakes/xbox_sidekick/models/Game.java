@@ -3,6 +3,8 @@ package com.example.joakes.xbox_sidekick.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.GregorianCalendar;
+
 /**
  * Created by joakes on 5/11/15.
  */
@@ -17,11 +19,13 @@ public class Game implements Parcelable {
     private int earnedGamerscore;
     private int totalGamerscore;
     private int type;
+    private GregorianCalendar lastPlayedTime;
 
     public Game() {
     }
 
-    public Game(long titleId, String name, int earnedAchievements, int totalAchivements, int earnedGamerscore, int totalGamerscore, int type) {
+    public Game(long titleId, String name, int earnedAchievements, int totalAchivements,
+                int earnedGamerscore, int totalGamerscore, GregorianCalendar lastPlayedTime, int type) {
         this.titleId = titleId;
         this.name = name;
         this.earnedAchievements = earnedAchievements;
@@ -29,6 +33,7 @@ public class Game implements Parcelable {
         this.earnedGamerscore = earnedGamerscore;
         this.totalGamerscore = totalGamerscore;
         this.type = type;
+        this.lastPlayedTime = lastPlayedTime;
     }
 
     private Game(Parcel in) {
@@ -39,6 +44,9 @@ public class Game implements Parcelable {
         earnedGamerscore = in.readInt();
         totalGamerscore = in.readInt();
         type = in.readInt();
+        GregorianCalendar calendar = new GregorianCalendar();
+        calendar.setTimeInMillis(in.readLong());
+        lastPlayedTime = calendar;
     }
 
     @Override
@@ -50,6 +58,9 @@ public class Game implements Parcelable {
         dest.writeInt(earnedGamerscore);
         dest.writeInt(totalGamerscore);
         dest.writeInt(type);
+        if(lastPlayedTime != null){
+            dest.writeLong(lastPlayedTime.getTimeInMillis());
+        }
     }
 
     @Override
@@ -129,26 +140,30 @@ public class Game implements Parcelable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Game xboxGame = (Game) o;
-        if (getTitleId() != xboxGame.getTitleId()) return false;
-        if (getEarnedAchievements() != xboxGame.getEarnedAchievements()) return false;
-        if (getTotalAchivements() != xboxGame.getTotalAchivements()) return false;
-        if (getEarnedGamerscore() != xboxGame.getEarnedGamerscore()) return false;
-        if (getTotalGamerscore() != xboxGame.getTotalGamerscore()) return false;
-        if (getType() != xboxGame.getType()) return false;
-        return getName().equals(xboxGame.getName());
+
+        Game game = (Game) o;
+
+        if (titleId != game.titleId) return false;
+        if (earnedAchievements != game.earnedAchievements) return false;
+        if (totalAchivements != game.totalAchivements) return false;
+        if (earnedGamerscore != game.earnedGamerscore) return false;
+        if (totalGamerscore != game.totalGamerscore) return false;
+        if (type != game.type) return false;
+        if (name != null ? !name.equals(game.name) : game.name != null) return false;
+        return !(lastPlayedTime != null ? !lastPlayedTime.equals(game.lastPlayedTime) : game.lastPlayedTime != null);
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (getTitleId() ^ (getTitleId() >>> 32));
-        result = 31 * result + getName().hashCode();
-        result = 31 * result + getEarnedAchievements();
-        result = 31 * result + getTotalAchivements();
-        result = 31 * result + getEarnedGamerscore();
-        result = 31 * result + getTotalGamerscore();
-        result = 31 * result + getType();
+        int result = (int) (titleId ^ (titleId >>> 32));
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + earnedAchievements;
+        result = 31 * result + totalAchivements;
+        result = 31 * result + earnedGamerscore;
+        result = 31 * result + totalGamerscore;
+        result = 31 * result + type;
+        result = 31 * result + (lastPlayedTime != null ? lastPlayedTime.hashCode() : 0);
         return result;
     }
 
@@ -162,6 +177,7 @@ public class Game implements Parcelable {
                 ", earnedGamerscore=" + earnedGamerscore +
                 ", totalGamerscore=" + totalGamerscore +
                 ", type=" + type +
+                ", lastPlayedTime=" + lastPlayedTime +
                 '}';
     }
 }
