@@ -132,8 +132,12 @@ public class Game implements Parcelable {
         return type;
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public GregorianCalendar getLastPlayedTime() {
+        return lastPlayedTime;
+    }
+
+    public void setLastPlayedTime(GregorianCalendar lastPlayedTime) {
+        this.lastPlayedTime = lastPlayedTime;
     }
 
     @Override

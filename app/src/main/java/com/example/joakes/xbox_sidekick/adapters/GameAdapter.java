@@ -30,7 +30,8 @@ public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
 
     public GameAdapter(Context context, ArrayList<Game> games) {
         GameListProcessor processor = new GameListProcessor(games);
-        mGames = processor.filter();
+        processor.filter();
+        mGames = processor.sortByLastPlayTime();
         mContext = context;
     }
 

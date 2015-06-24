@@ -5,25 +5,37 @@ import android.util.Log;
 import com.example.joakes.xbox_sidekick.models.Game;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 
 /**
  * Created by joakes on 6/2/15.
  */
 public class GameListProcessor {
-    private ArrayList<Game> xboxGames;
+    private ArrayList<Game> games;
     private final String TAG = getClass().getName();
 
     public GameListProcessor(ArrayList<Game> xboxGames) {
-        this.xboxGames = xboxGames;
+        this.games = xboxGames;
     }
 
     public ArrayList<Game> filter() {
-        Iterator<Game> iterator = xboxGames.iterator();
+        Iterator<Game> iterator = games.iterator();
         while (iterator.hasNext()) {
             removeIfInvalid(iterator);
         }
-        return xboxGames;
+        return games;
+    }
+
+    public ArrayList<Game> sortByLastPlayTime() {
+        Collections.sort(games, new Comparator<Game>() {
+            @Override
+            public int compare(Game lhs, Game rhs) {
+                return rhs.getLastPlayedTime().compareTo(lhs.getLastPlayedTime());
+            }
+        });
+        return games;
     }
 
     private void removeIfInvalid(Iterator<Game> iterator) {
