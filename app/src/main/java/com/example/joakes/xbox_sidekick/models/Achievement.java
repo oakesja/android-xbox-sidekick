@@ -187,4 +187,19 @@ public class Achievement implements Parcelable {
             parcel.writeLong(timeUnlocked.getTimeInMillis());
         }
     }
+
+    @Override
+    public String toString() {
+        return "Achievement{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", isSecret=" + isSecret +
+                ", description='" + description + '\'' +
+                ", lockedDescription='" + lockedDescription + '\'' +
+                ", value=" + value +
+                ", iconUrl='" + iconUrl + '\'' +
+                ", isLocked=" + isLocked +
+                ", timeUnlocked=" + timeUnlocked +
+                '}';
+    }
 }

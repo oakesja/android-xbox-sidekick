@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.requests.utils;
+package com.example.joakes.xbox_sidekick.requests;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,10 +6,7 @@ import android.widget.ImageView;
 
 import com.example.joakes.xbox_sidekick.YoutubeVideoTask;
 import com.example.joakes.xbox_sidekick.models.Game;
-import com.example.joakes.xbox_sidekick.requests.AchievementRequester;
-import com.example.joakes.xbox_sidekick.requests.ProfileRequester;
-import com.example.joakes.xbox_sidekick.requests.Xbox360GameListRequester;
-import com.example.joakes.xbox_sidekick.requests.XboxOneGameListRequester;
+import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 import com.squareup.picasso.Picasso;
 
 /**

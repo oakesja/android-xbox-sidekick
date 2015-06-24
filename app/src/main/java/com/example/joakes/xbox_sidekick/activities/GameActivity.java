@@ -9,7 +9,7 @@ import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.pager.GamePagerAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Profile;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import com.github.florent37.materialviewpager.MaterialViewPager;
 

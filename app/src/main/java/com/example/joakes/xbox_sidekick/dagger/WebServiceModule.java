@@ -2,7 +2,7 @@ package com.example.joakes.xbox_sidekick.dagger;
 
 import android.content.Context;
 
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 
 import dagger.Module;
 import dagger.Provides;

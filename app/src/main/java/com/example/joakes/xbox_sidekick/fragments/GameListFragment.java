@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.XboxGameAdapter;
+import com.example.joakes.xbox_sidekick.adapters.GameAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Game;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
@@ -35,7 +35,7 @@ public class GameListFragment extends Fragment {
     WebService webService;
     public static final String GAME_TYPE = "GAME_TYPE";
     private final String REQUEST_TAG = getClass().getName();
-    private XboxGameAdapter recylerAdapter;
+    private GameAdapter recylerAdapter;
     private RecyclerViewMaterialAdapter materialAdapter;
     private EventBus eventBus;
     private int type;
@@ -54,7 +54,7 @@ public class GameListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recylerAdapter = new XboxGameAdapter(getActivity());
+        recylerAdapter = new GameAdapter(getActivity());
         materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
         recyclerView.setAdapter(materialAdapter);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
@@ -64,7 +64,7 @@ public class GameListFragment extends Fragment {
         if(games.size() < 1 || games.get(0).getType() != type) {
             return;
         }
-        recylerAdapter = new XboxGameAdapter(getActivity(), games);
+        recylerAdapter = new GameAdapter(getActivity(), games);
         materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
         recyclerView.post(new Runnable() {
             @Override

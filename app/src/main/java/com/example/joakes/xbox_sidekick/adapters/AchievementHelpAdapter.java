@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.YoutubeIntentGateway;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.google.api.services.youtube.model.SearchResult;
 
 import java.util.ArrayList;

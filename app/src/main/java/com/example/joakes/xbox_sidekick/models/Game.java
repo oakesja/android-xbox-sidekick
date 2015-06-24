@@ -151,4 +151,17 @@ public class Game implements Parcelable {
         result = 31 * result + getType();
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Game{" +
+                "titleId=" + titleId +
+                ", name='" + name + '\'' +
+                ", earnedAchievements=" + earnedAchievements +
+                ", totalAchivements=" + totalAchivements +
+                ", earnedGamerscore=" + earnedGamerscore +
+                ", totalGamerscore=" + totalGamerscore +
+                ", type=" + type +
+                '}';
+    }
 }

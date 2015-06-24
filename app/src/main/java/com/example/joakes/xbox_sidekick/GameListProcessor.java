@@ -10,15 +10,15 @@ import java.util.Iterator;
 /**
  * Created by joakes on 6/2/15.
  */
-public class GameListFilter {
+public class GameListProcessor {
     private ArrayList<Game> xboxGames;
+    private final String TAG = getClass().getName();
 
-    public GameListFilter(ArrayList<Game> xboxGames) {
+    public GameListProcessor(ArrayList<Game> xboxGames) {
         this.xboxGames = xboxGames;
     }
 
     public ArrayList<Game> filter() {
-        Log.i("to be filtered", xboxGames.toString());
         Iterator<Game> iterator = xboxGames.iterator();
         while (iterator.hasNext()) {
             removeIfInvalid(iterator);
@@ -30,11 +30,12 @@ public class GameListFilter {
         Game game = iterator.next();
         if (invalidName(game) || invalidGamerscore(game)) {
             iterator.remove();
+            Log.i(TAG, "filtered out game " + game);
         }
     }
 
     private boolean invalidGamerscore(Game game) {
-        return game.getEarnedGamerscore() < 1;
+        return game.getTotalGamerscore() < 1;
     }
 
     private boolean invalidName(Game game) {

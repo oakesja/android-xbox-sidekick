@@ -16,7 +16,7 @@ import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.models.Profile;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 
 import org.junit.Before;
 import org.junit.Rule;

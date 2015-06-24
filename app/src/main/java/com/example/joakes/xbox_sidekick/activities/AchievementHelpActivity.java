@@ -12,7 +12,7 @@ import com.example.joakes.xbox_sidekick.adapters.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.example.joakes.xbox_sidekick.views.AspectRatioImageView;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import com.google.api.services.youtube.model.SearchResult;

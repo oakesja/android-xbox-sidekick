@@ -4,8 +4,9 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
+import com.example.joakes.xbox_sidekick.requests.adapters.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.Profile;
+import com.example.joakes.xbox_sidekick.requests.adapters.ProfileJsonAdapter;
 import com.example.joakes.xbox_sidekick.requests.utils.JSONObjectRequester;
 import com.example.joakes.xbox_sidekick.requests.utils.XboxApiHeaders;
 
@@ -25,7 +26,7 @@ public class ProfileRequester extends JSONObjectRequester {
 
     @Override
     public void handleSuccess(JSONObject response) {
-        Profile profile = new JsonAdapter().toProfile(response);
+        Profile profile = new ProfileJsonAdapter().toProfile(response);
         EventBus.getDefault().post(profile);
     }
 

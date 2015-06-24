@@ -4,7 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.android.volley.VolleyError;
-import com.example.joakes.xbox_sidekick.requests.utils.JsonAdapter;
+import com.example.joakes.xbox_sidekick.requests.adapters.AchievementJsonAdapter;
+import com.example.joakes.xbox_sidekick.requests.adapters.JsonAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.utils.JSONArrayRequester;
@@ -35,7 +36,7 @@ public class AchievementRequester extends JSONArrayRequester {
         ArrayList<Achievement> achievements = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
-                Achievement game = new JsonAdapter().toAchievement(response.getJSONObject(i));
+                Achievement game = new AchievementJsonAdapter().toAchievement(response.getJSONObject(i));
                 achievements.add(game);
             }
         } catch (JSONException e) {

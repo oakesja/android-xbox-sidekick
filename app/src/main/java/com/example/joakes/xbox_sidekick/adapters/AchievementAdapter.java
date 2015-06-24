@@ -12,7 +12,7 @@ import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
-import com.example.joakes.xbox_sidekick.requests.utils.WebService;
+import com.example.joakes.xbox_sidekick.requests.WebService;
 
 import java.util.ArrayList;
 

@@ -12,7 +12,7 @@ import static junit.framework.Assert.assertEquals;
 /**
  * Created by joakes on 6/2/15.
  */
-public class GameListFilterTest extends AndroidTestCase {
+public class GameListProcessorTest extends AndroidTestCase {
     private ArrayList<Game> xboxGames;
     private ArrayList<Game> emptyList;
 
@@ -26,24 +26,18 @@ public class GameListFilterTest extends AndroidTestCase {
 
     public void testFilterOutEmptyName() {
         xboxGames.get(0).setName("");
-        ArrayList actual = new GameListFilter(xboxGames).filter();
+        ArrayList actual = new GameListProcessor(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
-    public void testFilterOutMissingEarnedGamerscore() {
-        xboxGames.get(0).setEarnedGamerscore(-1);
-        ArrayList actual = new GameListFilter(xboxGames).filter();
-        assertEquals(emptyList, actual);
-    }
-
-    public void testFilterOutNoEarnedGamerscore() {
-        xboxGames.get(0).setEarnedGamerscore(0);
-        ArrayList actual = new GameListFilter(xboxGames).filter();
+    public void testFilterOutMissingTotalGamerscore() {
+        xboxGames.get(0).setTotalGamerscore(0);
+        ArrayList actual = new GameListProcessor(xboxGames).filter();
         assertEquals(emptyList, actual);
     }
 
     public void testDoNotFilterOutValidGames() {
-        ArrayList actual = new GameListFilter(xboxGames).filter();
+        ArrayList actual = new GameListProcessor(xboxGames).filter();
         assertEquals(xboxGames, actual);
     }
 }

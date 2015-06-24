@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.joakes.xbox_sidekick.GameListProcessor;
 import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Game;
@@ -18,17 +19,18 @@ import java.util.Comparator;
 /**
  * Created by joakes on 5/11/15.
  */
-public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
+public class GameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     private ArrayList<Game> mGames;
     private Context mContext;
 
-    public XboxGameAdapter(Context context) {
+    public GameAdapter(Context context) {
         mGames = new ArrayList<>();
         mContext = context;
     }
 
-    public XboxGameAdapter(Context context, ArrayList<Game> games) {
-        mGames = games;
+    public GameAdapter(Context context, ArrayList<Game> games) {
+        GameListProcessor processor = new GameListProcessor(games);
+        mGames = processor.filter();
         mContext = context;
     }
 
@@ -59,23 +61,6 @@ public class XboxGameAdapter extends RecyclerView.Adapter<GameViewHolder> {
     @Override
     public int getItemCount() {
         return mGames.size();
-    }
-
-    public void addGames(ArrayList<Game> games) {
-        mGames.addAll(games);
-        // TODO extract to game manager that takes care of filtering and sorting and add tests
-        Collections.sort(mGames, new Comparator<Game>() {
-            @Override
-            public int compare(Game game1, Game game2) {
-                if (game1.getType() == game2.getType()) {
-                    return 0;
-                } else if (game1.getType() < game2.getType()) {
-                    return 1;
-                }
-                return -1;
-            }
-        });
-        notifyDataSetChanged();
     }
 
     public Game gameAt(int position) {
