@@ -10,16 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.GameAdapter;
-import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.models.Game;
-import com.example.joakes.xbox_sidekick.requests.WebService;
+import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
 import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
 import java.util.ArrayList;
-
-import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -28,38 +24,25 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joakes on 6/23/15.
  */
-public class GameListFragment extends Fragment {
+public class AchievementListFragment extends Fragment {
     @InjectView(R.id.list)
     RecyclerView recyclerView;
-    @Inject
-    WebService webService;
-    public static final String GAME_TYPE = "GAME_TYPE";
-    private final String REQUEST_TAG = getClass().getName();
-    private GameAdapter recylerAdapter;
+    public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMNT_IS_LOCKED";
+    private AchievementAdapter recylerAdapter;
     private RecyclerViewMaterialAdapter materialAdapter;
     private EventBus eventBus;
-    private int type;
+    private boolean isLocked;
 
     @Override
     public void onStart() {
         super.onStart();
         setupFragment();
-        makeRequests();
     }
 
     private void setupFragment() {
         eventBus = EventBus.getDefault();
         eventBus.register(this);
-        ((BaseApplication) getActivity().getApplication()).component().inject(this);
-        type = getArguments().getInt(GAME_TYPE);
-    }
-
-    private void makeRequests(){
-        if(type == Game.XBOX_ONE){
-            webService.getXboxOneList(REQUEST_TAG);
-        } else {
-            webService.getXbox360List(REQUEST_TAG);
-        }
+        isLocked = getArguments().getBoolean(ACHIEVEMNT_IS_LOCKED);
     }
 
     @Override
@@ -76,17 +59,20 @@ public class GameListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recylerAdapter = new GameAdapter(getActivity());
+        recylerAdapter = new AchievementAdapter(getActivity());
         materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
         recyclerView.setAdapter(materialAdapter);
         MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
     }
 
-    public void onEvent(ArrayList<Game> games) {
-        if(games.size() < 1 || games.get(0).getType() != type) {
-            return;
+    public void onEvent(ArrayList<Achievement> achievements) {
+        ArrayList<Achievement> filteredAchievements = new ArrayList<>();
+        for (Achievement achievement: achievements) {
+            if(achievement.isLocked() == isLocked){
+                filteredAchievements.add(achievement);
+            }
         }
-        recylerAdapter = new GameAdapter(getActivity(), games);
+        recylerAdapter = new AchievementAdapter(getActivity(), filteredAchievements);
         materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
         recyclerView.post(new Runnable() {
             @Override

@@ -20,8 +20,8 @@ import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class GameActivity extends AppCompatActivity {
-    @InjectView(R.id.materialViewPager)
-    MaterialViewPager materialViewPager;
+    @InjectView(R.id.game_view_pager)
+    MaterialViewPager gameViewPager;
     @InjectView(R.id.profile_gamerscore)
     ImageTextView profileGamerscore;
     @InjectView(R.id.profile_name)
@@ -50,9 +50,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupViewPager() {
-        materialViewPager.getViewPager().setAdapter(new GamePagerAdapter(this));
-        materialViewPager.getViewPager().setOffscreenPageLimit(materialViewPager.getViewPager().getAdapter().getCount());
-        materialViewPager.getPagerTitleStrip().setViewPager(materialViewPager.getViewPager());
+        gameViewPager.getViewPager().setAdapter(new GamePagerAdapter(this));
+        gameViewPager.getViewPager().setOffscreenPageLimit(gameViewPager.getViewPager().getAdapter().getCount());
+        gameViewPager.getPagerTitleStrip().setViewPager(gameViewPager.getViewPager());
     }
 
     private void makeRequest() {

@@ -129,21 +129,24 @@ public class GameActivityUnitTest {
     @Test
     public void gameName() {
         setupGames();
-        onView(allOf(withId(R.id.game_name), isDisplayed())).check(matches(withText(xboxOneGame.getName())));
+        onView(allOf(withId(R.id.game_name), isDisplayed()))
+                .check(matches(withText(xboxOneGame.getName())));
     }
 
     @Test
     public void gameAchievements() {
         setupGames();
         String expected = String.format("%d/%d", xboxOneGame.getEarnedAchievements(), xboxOneGame.getTotalAchivements());
-        onView(allOf(withId(R.id.game_achievements), isDisplayed())).check(matches(withText(expected)));
+        onView(allOf(withId(R.id.game_achievements), isDisplayed()))
+                .check(matches(withText(expected)));
     }
 
     @Test
     public void gameScore() {
         setupGames();
         String expected = String.format("%d/%d", xboxOneGame.getEarnedGamerscore(), xboxOneGame.getTotalGamerscore());
-        onView(allOf(withId(R.id.game_score), isDisplayed())).check(matches(withText(expected)));
+        onView(allOf(withId(R.id.game_score), isDisplayed()))
+                .check(matches(withText(expected)));
     }
 
     @Test
@@ -167,7 +170,8 @@ public class GameActivityUnitTest {
     }
 
     private void assertOn360GameList() {
-        onView(allOf(withId(R.id.game_name), isDisplayed())).check(matches(withText(xbox360Game.getName())));
+        onView(allOf(withId(R.id.game_name), isDisplayed()))
+                .check(matches(withText(xbox360Game.getName())));
     }
 
     private void sendGameListWith(Game game) {

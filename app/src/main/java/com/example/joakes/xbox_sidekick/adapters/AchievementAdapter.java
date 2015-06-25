@@ -2,6 +2,7 @@ package com.example.joakes.xbox_sidekick.adapters;
 
 import android.content.Context;
 import android.content.Intent;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.view.ViewGroup;
 import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
+import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.WebService;
@@ -26,6 +28,11 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
     public AchievementAdapter(Context context) {
         this.context = context;
         achievements = new ArrayList<>();
+    }
+
+    public AchievementAdapter(Context context, ArrayList<Achievement> achievements) {
+        this.context = context;
+        this.achievements = achievements;
     }
 
     @Override

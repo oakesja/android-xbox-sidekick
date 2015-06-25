@@ -2,22 +2,18 @@ package com.example.joakes.xbox_sidekick.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 
-import com.bartoszlipinski.recyclerviewheader.RecyclerViewHeader;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.adapters.pager.AchievementPagerAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
 import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
-
-import java.util.ArrayList;
+import com.github.florent37.materialviewpager.MaterialViewPager;
 
 import javax.inject.Inject;
 
@@ -26,27 +22,29 @@ import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class AchievementsActivity extends AppCompatActivity {
-    @InjectView(R.id.achievement_list)
-    RecyclerView achievementList;
+    @InjectView(R.id.achievement_view_pager)
+    MaterialViewPager achievementViewPager;
+    @InjectView(R.id.game_name)
+    TextView gameName;
+    @InjectView(R.id.game_achievements)
+    ImageTextView gameAchievements;
+    @InjectView(R.id.game_score)
+    ImageTextView gameScore;
+    @InjectView(R.id.gamerscore_progress)
+    CircularProgressBar gamerscoreProgress;
     @Inject
     WebService webService;
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
-    public TextView gameName;
-    public ImageTextView gameAchievements;
-    public ImageTextView gameScore;
-    public CircularProgressBar gameProgress;
     private final String REQUEST_TAG = getClass().getName();
-    private AchievementAdapter adapter;
-    private EventBus eventBus;
     private Game game;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
-        setupRecyclerView();
-        setRecyclerViewHeader();
-        webService.getAchievementsFor(game, REQUEST_TAG);
+        setupViewPager();
+        makeRequest();
+        setupHeader();
     }
 
     private void setupActivity() {
@@ -54,47 +52,27 @@ public class AchievementsActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         ((BaseApplication) getApplication()).component().inject(this);
         game = getIntent().getParcelableExtra(GAME);
-        eventBus = EventBus.getDefault();
         webService = new WebService(this);
     }
 
-    private void setupRecyclerView() {
-        achievementList.setHasFixedSize(true);
-        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
-        achievementList.setLayoutManager(layoutManager);
-        adapter = new AchievementAdapter(this);
-        achievementList.setAdapter(adapter);
+    private void setupViewPager() {
+        achievementViewPager.getViewPager().setAdapter(new AchievementPagerAdapter(this));
+        achievementViewPager.getViewPager().setOffscreenPageLimit(achievementViewPager.getViewPager().getAdapter().getCount());
+        achievementViewPager.getPagerTitleStrip().setViewPager(achievementViewPager.getViewPager());
     }
 
-    private void setRecyclerViewHeader() {
-        RecyclerViewHeader header = RecyclerViewHeader.fromXml(this, R.layout.game_info);
-        header.attachTo(achievementList);
-        setGameInfoViews();
+    private void makeRequest() {
+        webService.getAchievementsFor(game, REQUEST_TAG);
+    }
+
+    private void setupHeader() {
         new GameInfoPresenter(game).present(gameName, gameAchievements,
-                gameScore, gameProgress);
-    }
-
-    private void setGameInfoViews() {
-        gameName = (TextView) findViewById(R.id.game_name);
-        gameAchievements = (ImageTextView) findViewById(R.id.game_achievements);
-        gameScore = (ImageTextView) findViewById(R.id.game_score);
-        gameProgress = (CircularProgressBar) findViewById(R.id.gamerscore_progress);
-    }
-
-    public void onEvent(ArrayList<Achievement> achievements) {
-        adapter.addAchievements(achievements);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        eventBus.register(this);
+                gameScore, gamerscoreProgress);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        eventBus.unregister(this);
         webService.stop(REQUEST_TAG);
     }
 }

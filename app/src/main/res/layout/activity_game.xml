@@ -7,7 +7,7 @@
     tools:context=".GameActivity">
 
     <com.github.florent37.materialviewpager.MaterialViewPager
-        android:id="@+id/materialViewPager"
+        android:id="@+id/game_view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:viewpager_logo="@layout/profile"

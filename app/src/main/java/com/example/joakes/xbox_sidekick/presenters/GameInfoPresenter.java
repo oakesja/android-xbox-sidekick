@@ -18,6 +18,7 @@ public class GameInfoPresenter {
         mGame = game;
     }
 
+    //TODO refactor one method per
     public void present(TextView gameNameTextView, ImageTextView gameAchievementsImageTextview,
                         ImageTextView gamerscoreImageTextview, CircularProgressBar gamerscoreProgressBar) {
         gameNameTextView.setText(mGame.getName());
