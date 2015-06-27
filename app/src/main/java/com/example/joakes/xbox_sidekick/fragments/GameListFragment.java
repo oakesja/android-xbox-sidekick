@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.joakes.xbox_sidekick.DividerItemDecoration;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.GameAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.GameAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.WebService;

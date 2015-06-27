@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.adapters;
+package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -6,7 +6,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

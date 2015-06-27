@@ -1,10 +1,12 @@
-package com.example.joakes.xbox_sidekick;
+package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+
+import com.example.joakes.xbox_sidekick.R;
 
 /**
  * Created by joakes on 6/27/15.

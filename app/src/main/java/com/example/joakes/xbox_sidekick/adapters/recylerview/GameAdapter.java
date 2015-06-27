@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.adapters;
+package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,8 +13,6 @@ import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Game;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Created by joakes on 5/11/15.

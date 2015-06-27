@@ -1,8 +1,7 @@
-package com.example.joakes.xbox_sidekick.adapters;
+package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.WebService;

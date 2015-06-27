@@ -5,21 +5,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
-import com.example.joakes.xbox_sidekick.adapters.pager.AchievementPagerAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Game;
-import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
 //import com.github.florent37.materialviewpager.MaterialViewPager;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
 public class AchievementsActivity extends AppCompatActivity {
 //    @InjectView(R.id.achievement_view_pager)
