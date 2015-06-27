@@ -9,13 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.joakes.xbox_sidekick.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.GameAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
 import java.util.ArrayList;
 
@@ -36,7 +35,6 @@ public class GameListFragment extends Fragment {
     public static final String GAME_TYPE = "GAME_TYPE";
     private final String REQUEST_TAG = getClass().getName();
     private GameAdapter recylerAdapter;
-    private RecyclerViewMaterialAdapter materialAdapter;
     private EventBus eventBus;
     private int type;
 
@@ -77,9 +75,8 @@ public class GameListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recylerAdapter = new GameAdapter(getActivity());
-        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
-        recyclerView.setAdapter(materialAdapter);
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+        recyclerView.setAdapter(recylerAdapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
     public void onEvent(ArrayList<Game> games) {
@@ -87,11 +84,10 @@ public class GameListFragment extends Fragment {
             return;
         }
         recylerAdapter = new GameAdapter(getActivity(), games);
-        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                recyclerView.setAdapter(materialAdapter);
+                recyclerView.setAdapter(recylerAdapter);
             }
         });
     }

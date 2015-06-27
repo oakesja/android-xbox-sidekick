@@ -19,7 +19,8 @@ public class AchievementPagerAdapter extends FragmentStatePagerAdapter {
 
     public AchievementPagerAdapter(AchievementsActivity activity) {
         super(activity.getSupportFragmentManager());
-        tabNames = activity.getResources().getStringArray(R.array.achievement_tabs);
+//        tabNames = activity.getResources().getStringArray(R.array.achievement_tabs);
+        tabNames = new String[0];
     }
 
     @Override

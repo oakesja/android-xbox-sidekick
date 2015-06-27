@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.AchievementAdapter;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.github.florent37.materialviewpager.MaterialViewPagerHelper;
-import com.github.florent37.materialviewpager.adapter.RecyclerViewMaterialAdapter;
 
 import java.util.ArrayList;
 
@@ -29,7 +27,7 @@ public class AchievementListFragment extends Fragment {
     RecyclerView recyclerView;
     public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMNT_IS_LOCKED";
     private AchievementAdapter recylerAdapter;
-    private RecyclerViewMaterialAdapter materialAdapter;
+//    private RecyclerViewMaterialAdapter materialAdapter;
     private EventBus eventBus;
     private boolean isLocked;
 
@@ -60,9 +58,9 @@ public class AchievementListFragment extends Fragment {
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
         recylerAdapter = new AchievementAdapter(getActivity());
-        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
-        recyclerView.setAdapter(materialAdapter);
-        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+//        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
+//        recyclerView.setAdapter(materialAdapter);
+//        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
@@ -72,14 +70,14 @@ public class AchievementListFragment extends Fragment {
                 filteredAchievements.add(achievement);
             }
         }
-        recylerAdapter = new AchievementAdapter(getActivity(), filteredAchievements);
-        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setAdapter(materialAdapter);
-            }
-        });
+//        recylerAdapter = new AchievementAdapter(getActivity(), filteredAchievements);
+//        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
+//        recyclerView.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                recyclerView.setAdapter(materialAdapter);
+//            }
+//        });
     }
 
     @Override

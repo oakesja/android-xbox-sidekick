@@ -13,7 +13,7 @@ import com.example.joakes.xbox_sidekick.presenters.GameInfoPresenter;
 import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
 import com.example.joakes.xbox_sidekick.views.ImageTextView;
-import com.github.florent37.materialviewpager.MaterialViewPager;
+//import com.github.florent37.materialviewpager.MaterialViewPager;
 
 import javax.inject.Inject;
 
@@ -22,16 +22,16 @@ import butterknife.InjectView;
 import de.greenrobot.event.EventBus;
 
 public class AchievementsActivity extends AppCompatActivity {
-    @InjectView(R.id.achievement_view_pager)
-    MaterialViewPager achievementViewPager;
+//    @InjectView(R.id.achievement_view_pager)
+//    MaterialViewPager achievementViewPager;
     @InjectView(R.id.game_name)
     TextView gameName;
-    @InjectView(R.id.game_achievements)
-    ImageTextView gameAchievements;
-    @InjectView(R.id.game_score)
-    ImageTextView gameScore;
-    @InjectView(R.id.gamerscore_progress)
-    CircularProgressBar gamerscoreProgress;
+//    @InjectView(R.id.game_achievements)
+//    ImageTextView gameAchievements;
+//    @InjectView(R.id.game_score)
+//    ImageTextView gameScore;
+//    @InjectView(R.id.gamerscore_progress)
+//    CircularProgressBar gamerscoreProgress;
     @Inject
     WebService webService;
     public static final String GAME = "com.example.joakes.xbox_sidekick.game";
@@ -42,7 +42,7 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
-        setupViewPager();
+//        setupViewPager();
         makeRequest();
         setupHeader();
     }
@@ -55,19 +55,19 @@ public class AchievementsActivity extends AppCompatActivity {
         webService = new WebService(this);
     }
 
-    private void setupViewPager() {
-        achievementViewPager.getViewPager().setAdapter(new AchievementPagerAdapter(this));
-        achievementViewPager.getViewPager().setOffscreenPageLimit(achievementViewPager.getViewPager().getAdapter().getCount());
-        achievementViewPager.getPagerTitleStrip().setViewPager(achievementViewPager.getViewPager());
-    }
+//    private void setupViewPager() {
+//        achievementViewPager.getViewPager().setAdapter(new AchievementPagerAdapter(this));
+//        achievementViewPager.getViewPager().setOffscreenPageLimit(achievementViewPager.getViewPager().getAdapter().getCount());
+//        achievementViewPager.getPagerTitleStrip().setViewPager(achievementViewPager.getViewPager());
+//    }
 
     private void makeRequest() {
         webService.getAchievementsFor(game, REQUEST_TAG);
     }
 
     private void setupHeader() {
-        new GameInfoPresenter(game).present(gameName, gameAchievements,
-                gameScore, gamerscoreProgress);
+//        new GameInfoPresenter(game).present(gameName, gameAchievements,
+//                gameScore, gamerscoreProgress);
     }
 
     @Override
