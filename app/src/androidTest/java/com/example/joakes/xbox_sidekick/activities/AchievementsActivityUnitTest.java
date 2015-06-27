@@ -116,13 +116,13 @@ public class AchievementsActivityUnitTest {
     @Test
     public void gameAchievements() {
         String text = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
-//        assertThat(activity.gameAchievements).containsText(text);
+        onView(withId(R.id.game_achievements)).check(matches(withText(text)));
     }
 
     @Test
     public void gameScore() {
         String text = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
-//        assertThat(activity.gameScore).containsText(text);
+        onView(withId(R.id.game_score)).check(matches(withText(text)));
     }
 
     @Test
@@ -148,12 +148,6 @@ public class AchievementsActivityUnitTest {
         String text = "Unlocked on 10-16-2014";
         onView(allOf(withId(R.id.achievement_unlocked_time), isDisplayed()))
                 .check(matches(withText(text)));
-    }
-
-    @Test
-    public void swipeRightGoesToLockedAchievements(){
-//        onView(withId(R.id.viewPager)).perform(swipeLeft());
-        assertOnLockedList();
     }
 
     @Test

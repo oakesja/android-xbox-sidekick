@@ -1,10 +1,12 @@
 package com.example.joakes.xbox_sidekick.adapters.pager;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.example.joakes.xbox_sidekick.activities.GameActivity;
+import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.fragments.GameListFragment;
 import com.example.joakes.xbox_sidekick.models.Game;
 
@@ -14,9 +16,9 @@ import com.example.joakes.xbox_sidekick.models.Game;
 public class GamePagerAdapter extends FragmentStatePagerAdapter {
     private final String[] tabNames;
 
-    public GamePagerAdapter(GameActivity gameActivity) {
-        super(gameActivity.getSupportFragmentManager());
-        tabNames = new String[]{"Xbox One", "Xbox 360"};
+    public GamePagerAdapter(Context context, FragmentManager fm) {
+        super(fm);
+        tabNames = context.getResources().getStringArray(R.array.game_tabs);
     }
 
     @Override

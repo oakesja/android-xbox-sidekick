@@ -1,7 +1,6 @@
 package com.example.joakes.xbox_sidekick.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +33,7 @@ public class GameListFragment extends Fragment {
     WebService webService;
     public static final String GAME_TYPE = "GAME_TYPE";
     private final String REQUEST_TAG = getClass().getName();
-    private GameAdapter recylerAdapter;
+    private GameAdapter adapter;
     private EventBus eventBus;
     private int type;
 
@@ -69,13 +68,13 @@ public class GameListFragment extends Fragment {
     }
 
     @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recylerAdapter = new GameAdapter(getActivity());
-        recyclerView.setAdapter(recylerAdapter);
+        adapter = new GameAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
@@ -83,11 +82,11 @@ public class GameListFragment extends Fragment {
         if(games.size() < 1 || games.get(0).getType() != type) {
             return;
         }
-        recylerAdapter = new GameAdapter(getActivity(), games);
+        adapter = new GameAdapter(getActivity(), games);
         recyclerView.post(new Runnable() {
             @Override
             public void run() {
-                recyclerView.setAdapter(recylerAdapter);
+                recyclerView.setAdapter(adapter);
             }
         });
     }

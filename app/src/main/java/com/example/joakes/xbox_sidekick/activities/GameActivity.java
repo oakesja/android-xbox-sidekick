@@ -13,7 +13,6 @@ import com.example.joakes.xbox_sidekick.adapters.pager.GamePagerAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Profile;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
 
 import javax.inject.Inject;
 
@@ -24,12 +23,17 @@ import de.greenrobot.event.EventBus;
 public class GameActivity extends AppCompatActivity {
     @InjectView(R.id.view_pager)
     ViewPager viewPager;
+    @InjectView(R.id.toolbar)
+    Toolbar toolbar;
+    @InjectView(R.id.tabs)
+    TabLayout tabs;
+    @InjectView(R.id.header_image)
+    ImageView headerImage;
     @Inject
     WebService webService;
 
     private final String REQUEST_TAG = getClass().getName();
     private EventBus eventBus;
-    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,17 +56,13 @@ public class GameActivity extends AppCompatActivity {
     }
 
     private void setupToolbar() {
-        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        toolbar.setTitle("PoizonOakes");
-        toolbar.setTitle("32434");
     }
 
     private void setupViewPager() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        viewPager.setAdapter(new GamePagerAdapter(this));
+        viewPager.setAdapter(new GamePagerAdapter(this, getSupportFragmentManager()));
         viewPager.setOffscreenPageLimit(viewPager.getAdapter().getCount());
-        tabLayout.setupWithViewPager(viewPager);
+        tabs.setupWithViewPager(viewPager);
     }
 
     @Override
@@ -72,14 +72,9 @@ public class GameActivity extends AppCompatActivity {
     }
 
     public void onEvent(Profile profile) {
-        ImageView headerImage = (ImageView) findViewById(R.id.header_image);
         webService.loadImageFromUrl(headerImage, profile.getGamerPictureUrl());
-
         CollapsingToolbarLayout cToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_tool_bar);
         cToolbar.setTitle(profile.getGamertag());
-        ImageTextView imageTextView = new ImageTextView(this);
-        imageTextView.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
-        toolbar.addView(imageTextView);
 //        profileGamerscore.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
     }
 

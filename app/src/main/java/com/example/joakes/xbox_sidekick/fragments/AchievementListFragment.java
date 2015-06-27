@@ -1,6 +1,7 @@
 package com.example.joakes.xbox_sidekick.fragments;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -26,8 +27,7 @@ public class AchievementListFragment extends Fragment {
     @InjectView(R.id.list)
     RecyclerView recyclerView;
     public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMNT_IS_LOCKED";
-    private AchievementAdapter recylerAdapter;
-//    private RecyclerViewMaterialAdapter materialAdapter;
+    private AchievementAdapter adapter;
     private EventBus eventBus;
     private boolean isLocked;
 
@@ -57,27 +57,29 @@ public class AchievementListFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        recylerAdapter = new AchievementAdapter(getActivity());
-//        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
-//        recyclerView.setAdapter(materialAdapter);
-//        MaterialViewPagerHelper.registerRecyclerView(getActivity(), recyclerView, null);
+        adapter = new AchievementAdapter(getActivity());
+        recyclerView.setAdapter(adapter);
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
+        ArrayList<Achievement> filteredAchievements = filterAchievements(achievements);
+        adapter = new AchievementAdapter(getActivity(), filteredAchievements);
+        recyclerView.post(new Runnable() {
+            @Override
+            public void run() {
+                recyclerView.setAdapter(adapter);
+            }
+        });
+    }
+
+    private ArrayList<Achievement> filterAchievements(ArrayList<Achievement> achievements) {
         ArrayList<Achievement> filteredAchievements = new ArrayList<>();
-        for (Achievement achievement: achievements) {
-            if(achievement.isLocked() == isLocked){
+        for (Achievement achievement : achievements) {
+            if (achievement.isLocked() == isLocked) {
                 filteredAchievements.add(achievement);
             }
         }
-//        recylerAdapter = new AchievementAdapter(getActivity(), filteredAchievements);
-//        materialAdapter = new RecyclerViewMaterialAdapter(recylerAdapter);
-//        recyclerView.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                recyclerView.setAdapter(materialAdapter);
-//            }
-//        });
+        return filteredAchievements;
     }
 
     @Override
