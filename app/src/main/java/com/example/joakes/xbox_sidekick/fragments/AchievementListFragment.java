@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 
 import java.util.ArrayList;
@@ -59,6 +60,7 @@ public class AchievementListFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         adapter = new AchievementAdapter(getActivity());
         recyclerView.setAdapter(adapter);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
