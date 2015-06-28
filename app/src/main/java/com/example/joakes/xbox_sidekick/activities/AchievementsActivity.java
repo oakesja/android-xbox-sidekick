@@ -60,7 +60,6 @@ public class AchievementsActivity extends AppCompatActivity {
         ButterKnife.inject(this);
         ((BaseApplication) getApplication()).component().inject(this);
         game = getIntent().getParcelableExtra(GAME);
-        webService = new WebService(this);
     }
 
     private void setupToolbar() {

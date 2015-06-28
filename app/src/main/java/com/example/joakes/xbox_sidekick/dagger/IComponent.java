@@ -5,6 +5,7 @@ import com.example.joakes.xbox_sidekick.fragments.GameListFragment;
 import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.activities.GameActivity;
+import com.example.joakes.xbox_sidekick.fragments.VideosFragment;
 
 /**
  * Created by joakes on 6/19/15.
@@ -15,4 +16,5 @@ public interface IComponent {
     void inject(GameActivity activity);
     void inject(GameListFragment fragment);
     void inject(AchievementListFragment fragment);
+    void inject(VideosFragment fragment);
 }
