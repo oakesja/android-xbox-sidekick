@@ -1,7 +1,6 @@
 package com.example.joakes.xbox_sidekick.fragments;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -9,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementAdapter;
@@ -25,10 +25,11 @@ import de.greenrobot.event.EventBus;
  * Created by joakes on 6/23/15.
  */
 public class AchievementListFragment extends Fragment {
-    @InjectView(R.id.list)
-    RecyclerView recyclerView;
     public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMNT_IS_LOCKED";
-    private AchievementAdapter adapter;
+    @InjectView(R.id.list)
+    RecyclerView list;
+    @InjectView(R.id.empty_message)
+    TextView emptyMessage;
     private EventBus eventBus;
     private boolean isLocked;
 
@@ -47,7 +48,7 @@ public class AchievementListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.list, container, false);
+        View v = inflater.inflate(R.layout.list_with_empty_message, container, false);
         ButterKnife.inject(this, v);
         return v;
     }
@@ -55,23 +56,24 @@ public class AchievementListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        recyclerView.setHasFixedSize(true);
+        list.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        adapter = new AchievementAdapter(getActivity());
-        recyclerView.setAdapter(adapter);
-        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        list.setLayoutManager(layoutManager);
+        list.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
     public void onEvent(ArrayList<Achievement> achievements) {
         ArrayList<Achievement> filteredAchievements = filterAchievements(achievements);
-        adapter = new AchievementAdapter(getActivity(), filteredAchievements);
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setAdapter(adapter);
-            }
-        });
+        if(filteredAchievements.size() > 0){
+            createAndSetAdapter(filteredAchievements);
+            emptyMessage.setVisibility(View.GONE);
+        } else {
+            int text = isLocked ? R.string.no_locked_achievements_message : R.string.no_unlocked_achievements_message;
+            emptyMessage.setText(text);
+            emptyMessage.setVisibility(View.VISIBLE);
+            list.setVisibility(View.GONE);
+        }
+
     }
 
     private ArrayList<Achievement> filterAchievements(ArrayList<Achievement> achievements) {
@@ -84,10 +86,26 @@ public class AchievementListFragment extends Fragment {
         return filteredAchievements;
     }
 
+    private void createAndSetAdapter(ArrayList<Achievement> filteredAchievements) {
+        final AchievementAdapter adapter = new AchievementAdapter(getActivity(), filteredAchievements);
+        list.post(new Runnable() {
+            @Override
+            public void run() {
+                list.setAdapter(adapter);
+            }
+        });
+    }
+
     @Override
     public void onStop() {
         super.onStop();
         eventBus.unregister(this);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 }
 

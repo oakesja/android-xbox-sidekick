@@ -2,10 +2,12 @@ package com.example.joakes.xbox_sidekick.activities;
 
 import android.app.Instrumentation;
 import android.content.Intent;
+import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
+import android.view.View;
 
 import com.android.volley.Request;
 import com.example.joakes.xbox_sidekick.R;
@@ -19,6 +21,7 @@ import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.WebService;
 import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 
+import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -37,9 +40,11 @@ import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withParent;
 import static android.support.test.espresso.matcher.ViewMatchers.withText;
 import static org.assertj.android.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
@@ -91,14 +96,6 @@ public class AchievementsActivityUnitTest {
         unlockedAchievement.setLocked(false);
         eventBus = new EventBusHelper(activityRule);
         launchActivity();
-        setupAchievements();
-    }
-
-    private void setupAchievements() {
-        ArrayList<Achievement> achievements = new ArrayList<>();
-        achievements.add(lockedAchievement);
-        achievements.add(unlockedAchievement);
-        eventBus.post(achievements);
     }
 
     private void launchActivity() {
@@ -110,41 +107,48 @@ public class AchievementsActivityUnitTest {
 
     @Test
     public void gameName() {
+        setupAchievements();
         assertThat(activity.gameName).containsText(xboxGame.getName());
     }
 
     @Test
     public void gameAchievements() {
+        setupAchievements();
         String text = String.format("%d/%d", xboxGame.getEarnedAchievements(), xboxGame.getTotalAchivements());
         onView(withId(R.id.game_achievements)).check(matches(withText(text)));
     }
 
     @Test
     public void gameScore() {
+        setupAchievements();
         String text = String.format("%d/%d", xboxGame.getEarnedGamerscore(), xboxGame.getTotalGamerscore());
         onView(withId(R.id.game_score)).check(matches(withText(text)));
     }
 
     @Test
     public void achievementName() {
+        setupAchievements();
         onView(allOf(withId(R.id.achievement_name), isDisplayed()))
                 .check(matches(withText(unlockedAchievement.getName())));
     }
 
     @Test
     public void achievementDescription() {
+        setupAchievements();
         onView(allOf(withId(R.id.achievement_description), isDisplayed()))
                 .check(matches(withText(unlockedAchievement.getDescription())));
     }
 
     @Test
     public void achievementScore() {
+        setupAchievements();
         onView(allOf(withId(R.id.achievement_score), isDisplayed()))
                 .check(matches(withText("" + unlockedAchievement.getValue())));
     }
 
     @Test
     public void achievementUnlockTime(){
+        setupAchievements();
         String text = "Unlocked on 10-16-2014";
         onView(allOf(withId(R.id.achievement_unlocked_time), isDisplayed()))
                 .check(matches(withText(text)));
@@ -152,9 +156,75 @@ public class AchievementsActivityUnitTest {
 
     @Test
     public void touchingLockedTabGoesThere(){
+        setupAchievements();
+        navigateToLockedList();
+        assertOnLockedList();
+    }
+
+    @Test
+    public void emptyMessageNotVisibleWhenAchievementsAreThere(){
+        setupAchievements();
+        onView(currentEmptyMessage())
+                .check(matches(not(isDisplayed())));
+    }
+
+    @Test
+    public void noLockedAchievement(){
+        setupUnlockedAchievement();
+        navigateToLockedList();
+        String text = activity.getString(R.string.no_locked_achievements_message);
+        onView(currentEmptyMessage())
+                .check(matches(isDisplayed()))
+                .check(matches(withText(text)));
+
+    }
+
+    @Test
+    public void noUnlockedAchievement(){
+        setupLockedAchievement();
+        navigateToUnlockedList();
+        String text = activity.getString(R.string.no_unlocked_achievements_message);
+        onView(currentEmptyMessage())
+                .check(matches(isDisplayed()))
+                .check(matches(withText(text)));
+
+    }
+
+    private void setupAchievements() {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        achievements.add(lockedAchievement);
+        achievements.add(unlockedAchievement);
+        eventBus.post(achievements);
+    }
+
+    private void setupUnlockedAchievement() {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        achievements.add(unlockedAchievement);
+        eventBus.post(achievements);
+    }
+
+    private void setupLockedAchievement() {
+        ArrayList<Achievement> achievements = new ArrayList<>();
+        achievements.add(lockedAchievement);
+        eventBus.post(achievements);
+    }
+
+    private void navigateToLockedList() {
         String text = "Locked";
         onView(withText(text)).perform(click());
-        assertOnLockedList();
+    }
+
+    private void navigateToUnlockedList() {
+        String text = "Unlocked";
+        onView(withText(text)).perform(click());
+    }
+
+    private Matcher<View> currentEmptyMessage() {
+        return allOf(parentIsCurrentAchievementList(), withId(R.id.empty_message));
+    }
+
+    private Matcher<View> parentIsCurrentAchievementList() {
+        return withParent(allOf(withId(R.id.list_or_empty_message), isDisplayed()));
     }
 
     private void assertOnLockedList() {

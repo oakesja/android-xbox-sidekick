@@ -14,4 +14,6 @@
     <string name="secret_achievement">Secret Achievement</string>
     <string name="secret_achievement_description">This achievement is secret</string>
     <string name="by_author_formatted">By %s</string>
+    <string name="no_locked_achievements_message">You unlocked everything! Great Job!</string>
+    <string name="no_unlocked_achievements_message">No achievements unlocked yet</string>
 </resources>
