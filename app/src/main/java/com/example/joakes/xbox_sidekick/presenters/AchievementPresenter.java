@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.AchievementViewHolder;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementViewHolder;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.requests.WebService;
 

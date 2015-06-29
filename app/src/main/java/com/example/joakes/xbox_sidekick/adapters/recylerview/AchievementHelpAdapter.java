@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.adapters;
+package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
 import android.app.FragmentManager;
 import android.content.Context;

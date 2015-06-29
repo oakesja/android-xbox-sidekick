@@ -4,18 +4,21 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.joakes.xbox_sidekick.adapters.recylerview.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.adapters.recylerview.GameAdapter;
+import com.example.joakes.xbox_sidekick.adapters.pager.AchievementHelpPagerAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementHelpAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.models.Game;
+import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.requests.WebService;
+import com.google.api.services.youtube.model.SearchResult;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -26,36 +29,34 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joakes on 6/23/15.
  */
-public class GameListFragment extends Fragment {
+public class VideosFragment extends Fragment {
     @InjectView(R.id.list)
     RecyclerView recyclerView;
     @Inject
     WebService webService;
-    public static final String GAME_TYPE = "GAME_TYPE";
-    private final String REQUEST_TAG = getClass().getName();
-    private GameAdapter adapter;
+    private final String TAG = getClass().getName();
+    private AchievementHelpAdapter adapter;
     private EventBus eventBus;
-    private int type;
 
     @Override
     public void onStart() {
         super.onStart();
         setupFragment();
-        makeRequests();
+        makeRequest();
     }
 
     private void setupFragment() {
         eventBus = EventBus.getDefault();
         eventBus.register(this);
-        ((BaseApplication) getActivity().getApplication()).component().inject(this);
-        type = getArguments().getInt(GAME_TYPE);
     }
 
-    private void makeRequests(){
-        if(type == Game.XBOX_ONE){
-            webService.getXboxOneList(REQUEST_TAG);
+    private void makeRequest() {
+        Achievement achievement = getArguments().getParcelable(AchievementHelpPagerAdapter.ACHIEVEMENT);
+        if(achievement != null){
+            String searchTerms = String.format("%s achievement xbox", achievement.getName());
+            webService.searchForYoutubeVideos(searchTerms);
         } else {
-            webService.getXbox360List(REQUEST_TAG);
+            Log.e(TAG, "makeRequest could not get achievement from arguments");
         }
     }
 
@@ -69,26 +70,18 @@ public class GameListFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
+        ((BaseApplication) getActivity().getApplication()).component().inject(this);
         super.onViewCreated(view, savedInstanceState);
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new GameAdapter(getActivity());
+        adapter = new AchievementHelpAdapter(getActivity(), getActivity().getFragmentManager(), webService);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
     }
 
-    public void onEvent(ArrayList<Game> games) {
-        if(games.size() < 1 || games.get(0).getType() != type) {
-            return;
-        }
-        adapter = new GameAdapter(getActivity(), games);
-        recyclerView.post(new Runnable() {
-            @Override
-            public void run() {
-                recyclerView.setAdapter(adapter);
-            }
-        });
+    public void onEvent(List<SearchResult> results) {
+        adapter.addSearchResults(results);
     }
 
     @Override
