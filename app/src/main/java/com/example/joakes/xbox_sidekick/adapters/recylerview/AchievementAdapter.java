@@ -7,8 +7,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
+import com.example.joakes.xbox_sidekick.AchievementSorter;
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
@@ -23,14 +24,9 @@ public class AchievementAdapter extends RecyclerView.Adapter<AchievementViewHold
     private ArrayList<Achievement> achievements;
     private Context context;
 
-    public AchievementAdapter(Context context) {
-        this.context = context;
-        achievements = new ArrayList<>();
-    }
-
     public AchievementAdapter(Context context, ArrayList<Achievement> achievements) {
         this.context = context;
-        this.achievements = achievements;
+        this.achievements = AchievementSorter.sort(achievements);
     }
 
     @Override

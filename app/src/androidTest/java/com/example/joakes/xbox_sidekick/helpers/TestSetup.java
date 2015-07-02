@@ -28,4 +28,14 @@ public class TestSetup {
         return new Achievement(1, "name", false, "description", "locked", 1, "icon/url",
                 false, date);
     }
+
+    public static Achievement createLockedAchievement() {
+        GregorianCalendar date = new GregorianCalendar(2014, 9, 16);
+        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url",
+                true, date);
+    }
+
+    public static Achievement createUnlockedAchievement() {
+        return createAchievement();
+    }
 }
