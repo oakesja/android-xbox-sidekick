@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -17,13 +16,14 @@ import java.util.TimeZone;
  * Created by joakes on 4/28/15.
  */
 
-public class AchievementJsonAdapter extends JsonAdapter{
+public class AchievementJsonAdapter extends JsonAdapter {
     private final String TAG = getClass().getName();
 
-    public Achievement toAchievement(JSONObject json) {
+    public Achievement toAchievement(JSONObject json, String gameName) {
         return new Achievement(
                 getFieldAsInt(json, "id"),
                 getFieldAsString(json, "name"),
+                gameName,
                 getFieldAsBoolean(json, "isSecret"),
                 getFieldAsString(json, "description"),
                 getFieldAsString(json, "lockedDescription"),

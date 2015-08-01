@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,51 +12,28 @@ import android.view.ViewGroup;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.pager.AchievementHelpPagerAdapter;
-import com.example.joakes.xbox_sidekick.adapters.recylerview.YoutubeVideoAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementHelpAdapter;
 import com.example.joakes.xbox_sidekick.adapters.recylerview.DividerItemDecoration;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
+import com.example.joakes.xbox_sidekick.models.AchievementHelp;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.google.api.services.youtube.model.SearchResult;
+import com.example.joakes.xbox_sidekick.scrapers.AchievementHelpGatherer;
 
-import java.util.List;
+import java.util.Arrays;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
-public class VideosFragment extends Fragment {
+public class AchievementHelpFragment extends Fragment {
     @InjectView(R.id.list)
     RecyclerView recyclerView;
     @Inject
     WebService webService;
     private final String TAG = getClass().getName();
-    private YoutubeVideoAdapter adapter;
-    private EventBus eventBus;
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        setupFragment();
-        makeRequest();
-    }
-
-    private void setupFragment() {
-        eventBus = EventBus.getDefault();
-        eventBus.register(this);
-    }
-
-    private void makeRequest() {
-        Achievement achievement = getArguments().getParcelable(AchievementHelpPagerAdapter.ACHIEVEMENT);
-        if(achievement != null){
-            String searchTerms = String.format("%s %s achievement xbox", achievement.getGameName(), achievement.getName());
-            webService.searchForYoutubeVideos(searchTerms);
-        } else {
-            Log.e(TAG, "makeRequest could not get achievement from arguments");
-        }
-    }
+    private AchievementHelpAdapter adapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -72,19 +50,38 @@ public class VideosFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new YoutubeVideoAdapter(getActivity(), getActivity().getFragmentManager(), webService);
+        adapter = new AchievementHelpAdapter(getActivity(), webService);
         recyclerView.setAdapter(adapter);
         recyclerView.addItemDecoration(new DividerItemDecoration(getActivity()));
+        makeRequest();
     }
 
-    public void onEvent(List<SearchResult> results) {
-        adapter.addSearchResults(results);
+    private void makeRequest() {
+        Achievement achievement = getArguments().getParcelable(AchievementHelpPagerAdapter.ACHIEVEMENT);
+        if (achievement != null) {
+            new GetHelp(achievement.getName(), achievement.getGameName()).execute();
+        } else {
+            Log.e(TAG, "makeRequest could not get achievement from arguments");
+        }
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        eventBus.unregister(this);
+    private class GetHelp extends AsyncTask<Void, Void, AchievementHelp[]> {
+        private String achievementName;
+        private String gameName;
+
+        public GetHelp(String achievementName, String gameName) {
+            this.achievementName = achievementName;
+            this.gameName = gameName;
+        }
+
+        @Override
+        protected AchievementHelp[] doInBackground(Void... params) {
+            return new AchievementHelpGatherer(gameName).gatherHelpForAchievement(achievementName);
+        }
+
+        @Override
+        protected void onPostExecute(AchievementHelp[] help) {
+            adapter.addHelp(Arrays.asList(help));
+        }
     }
 }
-

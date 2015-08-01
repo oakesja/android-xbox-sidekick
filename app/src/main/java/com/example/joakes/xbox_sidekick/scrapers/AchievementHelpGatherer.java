@@ -13,8 +13,8 @@ public class AchievementHelpGatherer {
     public AchievementHelpGatherer(String gameName) {
         gameName = encodeGameName(gameName);
         scrapers = new AchievementHelpScraper[]{
+                new TrueAchievementScraper(gameName),
                 new XboxAchievementScraper(gameName),
-                new TrueAchievementScraper(gameName)
         };
     }
 

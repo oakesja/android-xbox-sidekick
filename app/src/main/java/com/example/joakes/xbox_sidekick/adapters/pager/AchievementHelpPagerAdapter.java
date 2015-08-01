@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.fragments.AchievementHelpFragment;
 import com.example.joakes.xbox_sidekick.fragments.VideosFragment;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 
@@ -35,6 +36,8 @@ public class AchievementHelpPagerAdapter extends FragmentStatePagerAdapter {
 
     private Fragment getFragment(int position) {
         switch (position) {
+            case 0:
+                return new AchievementHelpFragment();
             case 1:
                 return new VideosFragment();
             default:

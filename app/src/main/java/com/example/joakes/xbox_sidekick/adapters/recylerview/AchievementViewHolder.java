@@ -11,9 +11,7 @@ import com.example.joakes.xbox_sidekick.views.ImageTextView;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by joakes on 6/4/15.
- */
+// TODO place with adapter
 public class AchievementViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.achievement_icon)
     public ImageView achievementImageview;

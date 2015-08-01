@@ -10,10 +10,8 @@ import com.example.joakes.xbox_sidekick.R;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 
-/**
- * Created by joakes on 6/4/15.
- */
-public class AchievementHelpViewHolder extends RecyclerView.ViewHolder {
+// TODO place with adapter
+public class YoutubeVideoViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.youtube_icon)
     ImageView youtubeIcon;
     @InjectView(R.id.youtube_title)
@@ -21,7 +19,7 @@ public class AchievementHelpViewHolder extends RecyclerView.ViewHolder {
     @InjectView(R.id.youtube_author)
     TextView youtubeAuthor;
 
-    public AchievementHelpViewHolder(View view) {
+    public YoutubeVideoViewHolder(View view) {
         super(view);
         ButterKnife.inject(this, view);
     }

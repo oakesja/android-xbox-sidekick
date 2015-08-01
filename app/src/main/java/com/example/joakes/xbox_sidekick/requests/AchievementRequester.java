@@ -23,8 +23,12 @@ import de.greenrobot.event.EventBus;
  */
 public class AchievementRequester extends JSONArrayRequester {
 
+    private final String TAG = getClass().getName();
+    private Game game;
+
     public AchievementRequester(Context context, String tag, Game game) {
         super(context, getUrl(game), tag, XboxApiHeaders.getHeaders());
+        this.game = game;
     }
 
     private static String getUrl(Game game) {
@@ -36,17 +40,17 @@ public class AchievementRequester extends JSONArrayRequester {
         ArrayList<Achievement> achievements = new ArrayList<>();
         try {
             for (int i = 0; i < response.length(); i++) {
-                Achievement game = new AchievementJsonAdapter().toAchievement(response.getJSONObject(i));
-                achievements.add(game);
+                Achievement achievement = new AchievementJsonAdapter().toAchievement(response.getJSONObject(i), game.getName());
+                achievements.add(achievement);
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "could not parse achievemnt json: " + e.getMessage());
         }
         EventBus.getDefault().post(achievements);
     }
 
     @Override
     public void handleError(VolleyError error) {
-        Log.e(getClass().getName(), error.getMessage());
+        Log.e(TAG, error.getMessage());
     }
 }

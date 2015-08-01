@@ -6,9 +6,7 @@ import com.example.joakes.xbox_sidekick.models.Profile;
 
 import java.util.GregorianCalendar;
 
-/**
- * Created by joakes on 6/3/15.
- */
+// TODO use builders instead
 public class TestSetup {
 
     public static Game createXboxOneGame() {
@@ -25,13 +23,13 @@ public class TestSetup {
 
     public static Achievement createAchievement() {
         GregorianCalendar date = new GregorianCalendar(2014, 9, 16);
-        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url",
+        return new Achievement(1, "name", "gameName", false, "description", "locked", 1, "icon/url",
                 false, date);
     }
 
     public static Achievement createLockedAchievement() {
         GregorianCalendar date = new GregorianCalendar(2014, 9, 16);
-        return new Achievement(1, "name", false, "description", "locked", 1, "icon/url",
+        return new Achievement(1, "name", "gameName", false, "description", "locked", 1, "icon/url",
                 true, date);
     }
 

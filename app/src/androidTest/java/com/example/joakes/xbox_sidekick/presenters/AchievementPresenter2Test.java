@@ -5,9 +5,6 @@ import android.test.AndroidTestCase;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 
-/**
- * Created by joakes on 6/3/15.
- */
 public class AchievementPresenter2Test extends AndroidTestCase {
     private Achievement achievement;
 

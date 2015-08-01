@@ -1,68 +1,80 @@
 package com.example.joakes.xbox_sidekick.adapters.recylerview;
 
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.YoutubeIntentGateway;
+import com.example.joakes.xbox_sidekick.models.AchievementHelp;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.google.api.services.youtube.model.SearchResult;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by joakes on 5/11/15.
- */
-public class AchievementHelpAdapter extends RecyclerView.Adapter<AchievementHelpViewHolder> {
-    private ArrayList<SearchResult> mResults;
-    private Context mContext;
-    private WebService mWebService;
-    private FragmentManager mFragmentManager;
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
-    public AchievementHelpAdapter(Context context, FragmentManager fragmentManager, WebService webService) {
-        mFragmentManager = fragmentManager;
-        mResults = new ArrayList<>();
-        mContext = context;
-        mWebService = webService;
+public class AchievementHelpAdapter extends RecyclerView.Adapter<AchievementHelpAdapter.AchievmentHelpViewHolder> {
+    private ArrayList<AchievementHelp> help;
+    private Context context;
+    private WebService webService;
+
+    public AchievementHelpAdapter(Context context, WebService webService) {
+        this.context = context;
+        this.webService = webService;
+        help = new ArrayList<>();
     }
 
     @Override
-    public AchievementHelpViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public AchievmentHelpViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.youtube_video, parent, false);
-        return new AchievementHelpViewHolder(v);
+                .inflate(R.layout.achievement_help, parent, false);
+        return new AchievmentHelpViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(AchievementHelpViewHolder holder, int position) {
-        final SearchResult result = getResult(position);
-        holder.youtubeTitle.setText(result.getSnippet().getTitle());
-        holder.youtubeAuthor.setText(mContext.getString(R.string.by_author_formatted, result.getSnippet().getChannelTitle()));
-        mWebService.loadImageFromUrl(holder.youtubeIcon, result.getSnippet().getThumbnails().getDefault().getUrl());
+    public void onBindViewHolder(AchievmentHelpViewHolder holder, int position) {
+        final AchievementHelp help = getHelpAt(position);
+        holder.helpTitle.setText(help.getName());
+        webService.loadImageFromUrl(holder.helpIcon, help.getIconUrl());
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoutubeIntentGateway.ensurePlayVideo(mContext, mFragmentManager, result.getId().getVideoId());
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(help.getUrl()));
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mResults.size();
+        return help.size();
     }
 
-    public void addSearchResults(List<SearchResult> results) {
-        mResults.addAll(results);
+    public void addHelp(List<AchievementHelp> helpList) {
+        help.addAll(helpList);
         notifyDataSetChanged();
     }
 
-    public SearchResult getResult(int position) {
-        return mResults.get(position);
+    public AchievementHelp getHelpAt(int position) {
+        return help.get(position);
+    }
+
+    protected class AchievmentHelpViewHolder extends RecyclerView.ViewHolder {
+        @InjectView(R.id.help_icon)
+        ImageView helpIcon;
+        @InjectView(R.id.help_title)
+        TextView helpTitle;
+
+        public AchievmentHelpViewHolder(View view) {
+            super(view);
+            ButterKnife.inject(this, view);
+        }
     }
 }

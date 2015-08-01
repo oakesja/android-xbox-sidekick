@@ -16,13 +16,13 @@ public class AchievementHelpGathererTest extends AndroidTestCase {
         super.setUp();
         game = "The Witcher 3: Wild Hunt";
         AchievementHelp help1 = new AchievementHelp(
-                "XboxAchievements",
-                "http://www.xboxachievements.com/game/the-witcher-3-wild-hunt/achievement/100610-Let-s-Cook-.html",
-                "http://www.xboxachievements.com/apple-touch-icon.png");
-        AchievementHelp help2 = new AchievementHelp(
                 "TrueAchievements",
                 "http://www.trueachievements.com/a200112/lets-cook-achievement.htm",
                 "http://www.trueachievements.com/images/TA_podcast.png");
+        AchievementHelp help2 = new AchievementHelp(
+                "XboxAchievements",
+                "http://www.xboxachievements.com/game/the-witcher-3-wild-hunt/achievement/100610-Let-s-Cook-.html",
+                "http://www.xboxachievements.com/apple-touch-icon.png");
         expected = new AchievementHelp[]{help1, help2};
     }
 

@@ -25,7 +25,7 @@ import de.greenrobot.event.EventBus;
  * Created by joakes on 6/23/15.
  */
 public class AchievementListFragment extends Fragment {
-    public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMNT_IS_LOCKED";
+    public static final String ACHIEVEMNT_IS_LOCKED = "ACHIEVEMENT_IS_LOCKED";
     @InjectView(R.id.list)
     RecyclerView list;
     @InjectView(R.id.empty_message)

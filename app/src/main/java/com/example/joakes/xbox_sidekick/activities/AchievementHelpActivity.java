@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.pager.AchievementHelpPagerAdapter;
-import com.example.joakes.xbox_sidekick.adapters.recylerview.AchievementHelpAdapter;
+import com.example.joakes.xbox_sidekick.adapters.recylerview.YoutubeVideoAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
 import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
@@ -37,8 +37,6 @@ public class AchievementHelpActivity extends AppCompatActivity {
     WebService webService;
 
     public static final String ACHIEVEMENT = "com.example.joakes.xbox_sidekick.achievement";
-    private EventBus eventBus;
-    private AchievementHelpAdapter adapter;
     private Achievement achievement;
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick.dagger;
 
+import com.example.joakes.xbox_sidekick.fragments.AchievementHelpFragment;
 import com.example.joakes.xbox_sidekick.fragments.AchievementListFragment;
 import com.example.joakes.xbox_sidekick.fragments.GameListFragment;
 import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
@@ -17,4 +18,5 @@ public interface IComponent {
     void inject(GameListFragment fragment);
     void inject(AchievementListFragment fragment);
     void inject(VideosFragment fragment);
+    void inject(AchievementHelpFragment fragment);
 }
