@@ -18,14 +18,4 @@ before_script:
   - adb shell input keyevent 82 &
 
 script:
-  - ./gradlew test connectedCheck --info
-
-after_success:
-  - ls
-  - mkdir -p app/build/reports/jacoco/test
-  - ls app/build
-  - ls app/build/reports
-  - ls app/build/reports/coverage
-  - ls app/build/reports/coverage/debug
-  - mv app/build/reports/coverage/debug/report.xml app/build/reports/jacoco/test/jacocoTestReport.xml
-  - ./gradlew coveralls
+  - ./gradlew createDebugCoverageReport

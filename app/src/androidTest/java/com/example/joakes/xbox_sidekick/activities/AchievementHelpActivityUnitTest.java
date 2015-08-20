@@ -129,7 +129,7 @@ public class AchievementHelpActivityUnitTest {
 
     @Test
     public void searchesForYoutubeVideos(){
-        String searchTerms = achievement.getName() + " achievement xbox";
+        String searchTerms = String.format("%s %s achievement xbox", achievement.getGameName(), achievement.getName());
         verify(webService).searchForYoutubeVideos(eq(searchTerms));
     }
 
