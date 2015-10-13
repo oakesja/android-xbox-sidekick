@@ -1,12 +1,12 @@
-package com.example.joakes.xbox_sidekick.presenters;
+package com.example.joakes.xbox_sidekick.presenters_old;
 
 import android.view.View;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.models.Game;
-import com.example.joakes.xbox_sidekick.views.CircularProgressBar;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
+import com.example.joakes.xbox_sidekick.custom_views.CircularProgressBar;
+import com.example.joakes.xbox_sidekick.custom_views.ImageTextView;
 
 /**
  * Created by joakes on 6/9/15.

@@ -11,18 +11,16 @@ import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.adapters.pager.AchievementHelpPagerAdapter;
-import com.example.joakes.xbox_sidekick.adapters.recylerview.YoutubeVideoAdapter;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
+import com.example.joakes.xbox_sidekick.presenters_old.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.WebService;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
+import com.example.joakes.xbox_sidekick.custom_views.ImageTextView;
 
 import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
 public class AchievementHelpActivity extends AppCompatActivity {
     @InjectView(R.id.view_pager)

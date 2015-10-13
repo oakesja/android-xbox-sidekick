@@ -6,16 +6,13 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
-/**
- * Created by joakes on 6/19/15.
- */
 public class BaseApplication extends Application {
     @Singleton
     @Component(modules = {WebServiceModule.class, AndroidModule.class})
-    public interface ApplicationComponent extends IComponent {
+    public interface ApplicationComponent extends DaggerComponent {
     }
 
-    private IComponent component = null;
+    private DaggerComponent component = null;
 
     @Override public void onCreate() {
         super.onCreate();
@@ -27,11 +24,11 @@ public class BaseApplication extends Application {
         }
     }
 
-    public void setComponent(IComponent component) {
+    public void setComponent(DaggerComponent component) {
         this.component = component;
     }
 
-    public IComponent component() {
+    public DaggerComponent component() {
         return component;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.views;
+package com.example.joakes.xbox_sidekick.custom_views;
 
 /**
  * Created by joakes on 6/9/15.

@@ -11,8 +11,8 @@ import com.example.joakes.xbox_sidekick.AchievementSorter;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.models.Achievement;
-import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter;
-import com.example.joakes.xbox_sidekick.presenters.AchievementPresenter2;
+import com.example.joakes.xbox_sidekick.presenters_old.AchievementPresenter;
+import com.example.joakes.xbox_sidekick.presenters_old.AchievementPresenter2;
 import com.example.joakes.xbox_sidekick.requests.WebService;
 
 import java.util.ArrayList;

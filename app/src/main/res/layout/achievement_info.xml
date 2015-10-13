@@ -17,7 +17,7 @@
             android:lines="1"
             android:textStyle="bold" />
 
-        <com.example.joakes.xbox_sidekick.views.ImageTextView
+        <com.example.joakes.xbox_sidekick.custom_views.ImageTextView
             android:id="@+id/achievement_value"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -9,9 +9,6 @@ import com.example.joakes.xbox_sidekick.models.Game;
 import com.example.joakes.xbox_sidekick.requests.utils.WebRequestQueue;
 import com.squareup.picasso.Picasso;
 
-/**
- * Created by joakes on 4/28/15.
- */
 public class WebService {
     private Context mContext;
 

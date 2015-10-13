@@ -10,9 +10,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-/**
- * Created by joakes on 7/1/15.
- */
+// TODO make junit test
 public class AchievementSorterTest extends AndroidTestCase {
     private ArrayList<Achievement> achievements;
 

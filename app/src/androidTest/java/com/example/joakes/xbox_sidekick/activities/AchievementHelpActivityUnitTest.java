@@ -9,7 +9,7 @@ import android.widget.ImageView;
 
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.dagger.IComponent;
+import com.example.joakes.xbox_sidekick.dagger.DaggerComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
@@ -54,7 +54,7 @@ public class AchievementHelpActivityUnitTest {
 
     @Singleton
     @Component(modules = {MockWebServiceModule.class})
-    public interface TestComponent extends IComponent {
+    public interface TestComponent extends DaggerComponent {
     }
 
     @Rule

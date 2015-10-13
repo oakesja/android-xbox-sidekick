@@ -5,7 +5,7 @@
     android:orientation="horizontal"
     android:padding="10dp">
 
-    <com.example.joakes.xbox_sidekick.views.AspectRatioImageView
+    <com.example.joakes.xbox_sidekick.custom_views.AspectRatioImageView
         android:id="@+id/help_icon"
         android:layout_width="?android:attr/listPreferredItemHeight"
         android:layout_height="?android:attr/listPreferredItemHeight"

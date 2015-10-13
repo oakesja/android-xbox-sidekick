@@ -1,15 +1,19 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'spoon'
+apply plugin: 'me.tatarka.retrolambda'
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 23
     buildToolsVersion "22.0.1"
-
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
     defaultConfig {
         applicationId "com.example.joakes.xbox_sidekick"
         minSdkVersion 11
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -31,12 +35,16 @@ android {
         exclude 'NOTICE'
         exclude 'asm-license.txt'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
-ext.supportLibVersion = '22.2.1'
+ext.supportLibVersion = '23.0.1'
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+    // TODO Need to clean and update
     compile 'com.android.support:appcompat-v7:'
     compile "com.android.support:design:$supportLibVersion"
     compile "com.android.support:support-v4:$supportLibVersion"
@@ -47,17 +55,16 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3.1'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
-    compile 'com.bartoszlipinski.recyclerviewheader:library:1.2.0'
     compile 'com.google.apis:google-api-services-youtube:v3-rev140-1.20.0'
     compile 'org.jsoup:jsoup:1.8.1'
     // fix version issue between main and test
     compile 'com.google.code.findbugs:jsr305:2.0.1'
-    compile "com.android.support:support-annotations:$supportLibVersion"
 
-            // dagger
-    compile "com.google.dagger:dagger:2.0"
+    // dagger
     apt "com.google.dagger:dagger-compiler:2.0"
+    compile "com.google.dagger:dagger:2.0"
     provided 'org.glassfish:javax.annotation:10.0-b28'
+    testProvided 'com.google.dagger:dagger-compiler:2.0'
 
     androidTestCompile "com.android.support:support-annotations:$supportLibVersion"
     // Espresso
@@ -68,16 +75,20 @@ dependencies {
     // Mockito
     androidTestCompile "com.google.dexmaker:dexmaker-mockito:1.2"
     androidTestCompile 'org.mockito:mockito-core:1.10.19'
-
     androidTestCompile 'com.squareup.assertj:assertj-android:1.0.0'
-    androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.2.1'
 
     //dagger
     androidTestCompile "com.google.dexmaker:dexmaker:1.2"
     androidTestApt "com.google.dagger:dagger-compiler:2.0"
 
-    testCompile 'junit:junit:4.12'
-    androidTestCompile 'junit:junit:4.12'
 
     androidTestCompile 'com.squareup.spoon:spoon-client:1.1.9'
+
+    ///////////////////////////////////////////////////////////////////////
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
+    compile 'com.squareup.retrofit:retrofit:2.0.0-beta2'
+    compile 'com.squareup.retrofit:adapter-rxjava:2.0.0-beta2'
+    compile 'com.squareup.retrofit:converter-gson:2.0.0-beta2'
+
 }

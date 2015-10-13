@@ -1,5 +1,6 @@
 package com.example.joakes.xbox_sidekick.activities;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
@@ -9,37 +10,34 @@ import android.support.v7.widget.Toolbar;
 import android.widget.ImageView;
 
 import com.example.joakes.xbox_sidekick.R;
+import com.example.joakes.xbox_sidekick.XboxApiService;
 import com.example.joakes.xbox_sidekick.adapters.pager.GamePagerAdapter;
-import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.models.Profile;
-import com.example.joakes.xbox_sidekick.requests.WebService;
-
-import javax.inject.Inject;
+import com.example.joakes.xbox_sidekick.presenters.ProfilePresenter;
+import com.example.joakes.xbox_sidekick.views.ProfileView;
+import com.google.common.base.Function;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import de.greenrobot.event.EventBus;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends AppCompatActivity implements ProfileView {
+
     @InjectView(R.id.view_pager)
     ViewPager viewPager;
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
+    @InjectView(R.id.collapsing_tool_bar)
+    CollapsingToolbarLayout cToolbar;
     @InjectView(R.id.tabs)
     TabLayout tabs;
     @InjectView(R.id.header_image)
     ImageView headerImage;
-    @Inject
-    WebService webService;
 
-    private final String REQUEST_TAG = getClass().getName();
-    private EventBus eventBus;
+    private ProfilePresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupActivity();
-        makeRequest();
         setupToolbar();
         setupViewPager();
     }
@@ -47,12 +45,8 @@ public class GameActivity extends AppCompatActivity {
     private void setupActivity() {
         setContentView(R.layout.activity_game);
         ButterKnife.inject(this);
-        ((BaseApplication) getApplication()).component().inject(this);
-        eventBus = EventBus.getDefault();
-    }
-
-    private void makeRequest() {
-        webService.getProfile(REQUEST_TAG);
+        presenter = new ProfilePresenter();
+        presenter.attachToView(this);
     }
 
     private void setupToolbar() {
@@ -66,22 +60,38 @@ public class GameActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        eventBus.register(this);
-    }
-
-    public void onEvent(Profile profile) {
-        webService.loadImageFromUrl(headerImage, profile.getGamerPictureUrl());
-        CollapsingToolbarLayout cToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_tool_bar);
-        cToolbar.setTitle(profile.getGamertag());
-//        profileGamerscore.setImageAndTextIfValid(profile.getGamerscore(), R.drawable.ic_gamerscore);
+    protected void onDestroy() {
+        super.onDestroy();
+        presenter.detachFromView();
     }
 
     @Override
-    protected void onStop() {
-        super.onStop();
-        eventBus.unregister(this);
-        webService.stop(REQUEST_TAG);
+    public void showGamertag(String gamertag) {
+        cToolbar.setTitle(gamertag);
+    }
+
+    @Override
+    public void showGamerscore(String gamerscore) {
+
+    }
+
+    @Override
+    public void showGamerPicture(Function<ImageView, Void> setGamerPicture) {
+        setGamerPicture.apply(headerImage);
+    }
+
+    @Override
+    public void handleError() {
+
+    }
+
+    @Override
+    public XboxApiService getXboxApiService() {
+        return XboxApiService.Factory.create();
+    }
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
     }
 }

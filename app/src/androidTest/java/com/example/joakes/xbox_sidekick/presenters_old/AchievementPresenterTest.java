@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.presenters;
+package com.example.joakes.xbox_sidekick.presenters_old;
 
 import android.test.AndroidTestCase;
 import android.view.LayoutInflater;

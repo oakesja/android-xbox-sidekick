@@ -24,7 +24,7 @@
         android:layout_toEndOf="@id/gamer_picture"
         android:layout_toRightOf="@id/gamer_picture">
 
-        <com.example.joakes.xbox_sidekick.views.ImageTextView
+        <com.example.joakes.xbox_sidekick.custom_views.ImageTextView
             android:id="@+id/profile_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
             android:singleLine="true"
             android:textStyle="bold" />
 
-        <com.example.joakes.xbox_sidekick.views.ImageTextView
+        <com.example.joakes.xbox_sidekick.custom_views.ImageTextView
             android:id="@+id/profile_gamerscore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.joakes.xbox_sidekick.R;
-import com.example.joakes.xbox_sidekick.views.ImageTextView;
+import com.example.joakes.xbox_sidekick.custom_views.ImageTextView;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;

@@ -2,9 +2,7 @@ package com.example.joakes.xbox_sidekick.activities;
 
 import android.app.Instrumentation;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.test.InstrumentationRegistry;
-import android.support.test.espresso.matcher.ViewMatchers;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
 import android.view.View;
@@ -12,7 +10,7 @@ import android.view.View;
 import com.android.volley.Request;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
-import com.example.joakes.xbox_sidekick.dagger.IComponent;
+import com.example.joakes.xbox_sidekick.dagger.DaggerComponent;
 import com.example.joakes.xbox_sidekick.helpers.EventBusHelper;
 import com.example.joakes.xbox_sidekick.helpers.MockWebServiceModule;
 import com.example.joakes.xbox_sidekick.helpers.TestSetup;
@@ -36,7 +34,6 @@ import dagger.Component;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.action.ViewActions.swipeLeft;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
@@ -59,7 +56,7 @@ public class AchievementsActivityUnitTest {
 
     @Singleton
     @Component(modules = {MockWebServiceModule.class})
-    public interface TestComponent extends IComponent {
+    public interface TestComponent extends DaggerComponent {
     }
 
     @Rule

@@ -7,11 +7,11 @@ import com.example.joakes.xbox_sidekick.activities.AchievementHelpActivity;
 import com.example.joakes.xbox_sidekick.activities.AchievementsActivity;
 import com.example.joakes.xbox_sidekick.activities.GameActivity;
 import com.example.joakes.xbox_sidekick.fragments.VideosFragment;
+import com.example.joakes.xbox_sidekick.presenters.Presenter;
+import com.example.joakes.xbox_sidekick.presenters.ProfilePresenter;
 
-/**
- * Created by joakes on 6/19/15.
- */
-public interface IComponent {
+public interface DaggerComponent {
+//    TODO cleanup
     void inject(AchievementHelpActivity activity);
     void inject(AchievementsActivity activity);
     void inject(GameActivity activity);
@@ -19,4 +19,6 @@ public interface IComponent {
     void inject(AchievementListFragment fragment);
     void inject(VideosFragment fragment);
     void inject(AchievementHelpFragment fragment);
+
+    void inject(ProfilePresenter presenter);
 }

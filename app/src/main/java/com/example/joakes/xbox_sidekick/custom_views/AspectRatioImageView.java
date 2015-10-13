@@ -1,4 +1,4 @@
-package com.example.joakes.xbox_sidekick.views;
+package com.example.joakes.xbox_sidekick.custom_views;
 
 import android.content.Context;
 import android.util.AttributeSet;
