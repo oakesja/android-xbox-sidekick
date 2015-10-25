@@ -12,9 +12,12 @@ import android.widget.ImageView;
 import com.example.joakes.xbox_sidekick.R;
 import com.example.joakes.xbox_sidekick.XboxApiService;
 import com.example.joakes.xbox_sidekick.adapters.pager.GamePagerAdapter;
+import com.example.joakes.xbox_sidekick.dagger.BaseApplication;
 import com.example.joakes.xbox_sidekick.presenters.ProfilePresenter;
 import com.example.joakes.xbox_sidekick.views.ProfileView;
 import com.google.common.base.Function;
+
+import javax.inject.Inject;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -26,11 +29,13 @@ public class GameActivity extends AppCompatActivity implements ProfileView {
     @InjectView(R.id.toolbar)
     Toolbar toolbar;
     @InjectView(R.id.collapsing_tool_bar)
-    CollapsingToolbarLayout cToolbar;
+    public CollapsingToolbarLayout cToolbar;
     @InjectView(R.id.tabs)
     TabLayout tabs;
     @InjectView(R.id.header_image)
     ImageView headerImage;
+    @Inject
+    XboxApiService xboxApiService;
 
     private ProfilePresenter presenter;
 
@@ -45,6 +50,7 @@ public class GameActivity extends AppCompatActivity implements ProfileView {
     private void setupActivity() {
         setContentView(R.layout.activity_game);
         ButterKnife.inject(this);
+        ((BaseApplication) getApplication()).component().inject(this);
         presenter = new ProfilePresenter();
         presenter.attachToView(this);
     }
@@ -87,7 +93,7 @@ public class GameActivity extends AppCompatActivity implements ProfileView {
 
     @Override
     public XboxApiService getXboxApiService() {
-        return XboxApiService.Factory.create();
+        return xboxApiService;
     }
 
     @Override
